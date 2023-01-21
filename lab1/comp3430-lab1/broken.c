@@ -12,12 +12,14 @@ int main()
 {
     int i;
     char a[] = "Hello";
-    Data d[DATA_LENGTH];
-    Data* data [DATA_LENGTH] = {&d[0], &d[0], &d[0], &d[0], &d[0], &d[0], &d[0], &d[0], &d[0], &d[0]};
+    Data* data [DATA_LENGTH];
     for (i = 0; i < DATA_LENGTH; i++)
     {
+        data[i] = malloc(sizeof(Data));
         data[i]->number = i;
-        sprintf("%x %d %s\n", data[i]->name, data[i]->number, a);
+
+        data[i]->name = malloc(sizeof(char[10]));
+        sprintf(data[i]->name, "%d %s\n", data[i]->number, a);
     }
     printf("%s\n", data[8]->name);
 
