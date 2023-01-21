@@ -1,0 +1,3 @@
+C:/Users/kamer/University/Winter 2023/COMP 3430/COMP-3430/cmake-build-debug/CMakeFiles/COMP_3430.dir
+C:/Users/kamer/University/Winter 2023/COMP 3430/COMP-3430/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/kamer/University/Winter 2023/COMP 3430/COMP-3430/cmake-build-debug/CMakeFiles/rebuild_cache.dir
