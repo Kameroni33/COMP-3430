@@ -17,8 +17,7 @@ int main()
     {
         data[i] = malloc(sizeof(Data));
         data[i]->number = i;
-
-        data[i]->name = malloc(sizeof(char[10]));
+        data[i]->name = malloc(sizeof(char[7]));
         sprintf(data[i]->name, "%d %s\n", data[i]->number, a);
     }
     printf("%s\n", data[8]->name);
