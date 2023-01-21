@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define DATA_LENGTH 10
+
 typedef struct {
     int number;
     char* name;
@@ -10,8 +12,8 @@ int main()
 {
     int i;
     char a[] = "Hello";
-#define DATA_LENGTH 10
-    Data* data [DATA_LENGTH];
+    Data d[DATA_LENGTH];
+    Data* data = &d;
     for (i = 0; i < DATA_LENGTH; i++)
     {
         data[i]->number = i;
