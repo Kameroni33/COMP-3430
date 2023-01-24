@@ -21,5 +21,5 @@ int main()
         sprintf(data[i]->name, "%d %s\n", data[i]->number, a);
     }
     printf("%s\n", data[8]->name);
-
+    return 0;
 }
