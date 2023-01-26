@@ -60,6 +60,12 @@ which does not contribute to the array's size in this case). This addresses issu
 Thus, broken.c can now compile and run without any errors. I'm still not sure what it's supposed to be doing, but
 regardless it can now do it worry-free and happy.
 
+**Note:** I have not added usages of free() to clean up memory allocation of the program. By default, the OS should
+clean up any memory on termination of this process. That said, it is a good practice to implement free() calls in order
+to explicitly clean up variables and avoid any potential memory leaks. In this situation, I have just implemented the
+minimum requirements in order to get this program running bug-free and thus have not used any calls to free(). But in
+most other cases, one should not fully rely on the OS to clean up memory. 
+
 Expected Output:
 ```shell
 8 Hello
