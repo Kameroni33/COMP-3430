@@ -4,7 +4,7 @@ CFLAGS = -Wall -Werror -Wpedantic -Wextra
 all: readpe
 
 readpe: readpe.c
-	clang $(CFLAGS) read.pe -o readpe
+	clang $(CFLAGS) readpe.c -o readpe
 
 clean:
 	rm -f readpe
