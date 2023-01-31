@@ -10,4 +10,4 @@ process: process.c
 	clang $(CFLAGS) process.c -o process
 
 clean:
-	rm -f a.out readpe
+	rm -f a.out readpe process thread
