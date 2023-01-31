@@ -3,7 +3,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#define PE_SIGNATURE 1346699264  // "PE\0\0"
+#define PE_SIGNATURE 17744  // "PE\0\0" -> int
 
 //struct pe_coff_info {
 //    uint16_t
@@ -25,13 +25,13 @@ int main(int argc, char* argv[]) {
 
     // read file signature and verify it's an PE format image file
     uint8_t sig_offset;
-    char* pe_signature[4];
+    uint32_t pe_signature;
     lseek(file_ptr, 0x3c, SEEK_SET);  // read signature offset at 0x3c (per documentation)
     read(file_ptr, &sig_offset, 1);
     lseek(file_ptr, sig_offset, SEEK_SET);  // read signature offset at sig_offset
-    read(file_ptr, pe_signature, 4);
+    read(file_ptr, &pe_signature, 4);
 
-    if (*pe_signature[0] == 'P' && *pe_signature[1] == 'E' && *pe_signature[2] == '\0' && *pe_signature[3] == '\0') {
+    if (pe_signature != PE_SIGNATURE) {
         printf("Error: Not a PE format image file.\n");
         return 0;
     }
