@@ -33,8 +33,8 @@ print "Hello World". Answers to the lab questions can be found below.
 
 1. *What system calls have you written into your programs?*
 
-For the first part of the lab, I used the system calls `open`, `read`, and `lseek`. In the second part, I used `getpid`
-and `fork` (for processes) as well as `pthread_create`, `pthread_join` and `pthread_exit` (for threads). 
+For the first part of the lab, I used the system calls `open`, `read`, and `lseek`. In the second part, I used `getpid`;
+`wait` and `fork` (for processes); and `pthread_create`, `pthread_exit` and `pthread_join` (for threads). 
 
 2. *What system calls does your program actually make to create a process or thread?*
 
