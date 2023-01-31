@@ -17,19 +17,24 @@ int main(int argc, char* argv[]) {
     }
 
     // open file for processing
-    unsigned int pe_file = open(argv[1], O_RDONLY);
-    if (pe_file < 0) {
+    unsigned int file_ptr = open(argv[1], O_RDONLY);
+    if (file_ptr < 0) {
         printf("Error: Unable to open file '%s'.\n", argv[1]);
         return 0;
     }
 
     // read file signature and verify it's an PE format image file
+    uint8_t sig_offset;
     uint32_t pe_signature;
-    lseek(pe_file, 0x3c, SEEK_SET);
-    read(pe_file, &pe_signature, 4);
+    lseek(file_ptr, 0x3c, SEEK_SET);  // read signature offset at 0x3c (per documentation)
+    read(file_ptr, &sig_offset, 1);
+    lseek(file_ptr, sig_offset, SEEK_SET);  // read signature offset at sig_offset
+    read(file_ptr, &pe_signature, 4);
 
     // test
-    printf("int: %d\n hex: %x", pe_signature, pe_signature);
+
+    printf("offset: %2x\n", sig_offset);
+    printf("int: %d\nhex: %x\n", pe_signature, pe_signature);
 
     if (pe_signature != PE_SIGNATURE) {
         printf("Error: Not a PE format image file.\n");
