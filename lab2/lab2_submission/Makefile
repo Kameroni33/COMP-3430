@@ -1,4 +1,4 @@
-LDLIBS = -lpthread -lcurl
+LDLIBS = -lpthread
 CFLAGS = -Wall -Werror -Wpedantic -Wextra
 
 all: readpe process thread

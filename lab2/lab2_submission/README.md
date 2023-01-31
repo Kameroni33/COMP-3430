@@ -7,7 +7,7 @@ ronaldk1@myumanitoba.ca
 
 ## Build Directions
 
-`make` can be used to compile the following files. `make clean` can be used to delete any compiled files.
+`make` can be used to compile the following files. `make clean` can be used to delete all compiled files.
 
 ```
 ├── process.c
@@ -31,4 +31,10 @@ print "Hello World". Answers to the lab questions can be found below.
 
 ## Lab Questions
 
+1. *What system calls have you written into your programs?*
+
+For the first part of the lab, I used the system calls `open`, `read`, and `lseek`. In the second part, I used `getpid`
+and `fork` (for processes) as well as `pthread_create`, `pthread_join` and `pthread_exit` (for threads). 
+
+2. *What system calls does your program actually make to create a process or thread?*
 
