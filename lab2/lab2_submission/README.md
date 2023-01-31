@@ -38,3 +38,11 @@ and `fork` (for processes) as well as `pthread_create`, `pthread_join` and `pthr
 
 2. *What system calls does your program actually make to create a process or thread?*
 
+Creating a new process calls the `clone` system call. Taken from `strace` we can see the actual call made:
+
+```
+clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7f90e9687a10) = 242572
+```
+
+Creating a new thread calls a number of system calls, including: `rt_sigaction`, `rt_sigprocmask`, `mmap`, `mprotect`,
+`clone3`, and `futex`.

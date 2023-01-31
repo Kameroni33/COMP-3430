@@ -12,9 +12,10 @@ void* thread_task() {
 
 int main() {
     printf("pid: %d\n", getpid());
-    printf("creating new process...\n\n");
-    // create a new thread
     pthread_t new_thread;
+    printf("creating new thread...\n\n");
+    // create a new thread
+//    pthread_t new_thread;
     pthread_create( &new_thread, NULL, thread_task, NULL );
     // wait for thread to finish
     pthread_join(new_thread, NULL);
