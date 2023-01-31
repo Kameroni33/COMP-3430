@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
     }
 
     // read COFF header from file into struct
-    coff_header_t coff = {0};
+    struct coff_header_t coff = {0};
     read(file_ptr, &coff, 20);
 
     // print out file information
