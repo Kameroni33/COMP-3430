@@ -5,9 +5,15 @@
 
 #define PE_SIGNATURE 17744  // "PE\0\0" -> int
 
-//struct pe_coff_info {
-//    uint16_t
-//};
+struct coff_header_t {
+    uint16_t machine;
+    uint16_t num_sections;
+    uint32_t time_date_stamp;
+    uint32_t symbol_table_ptr;
+    uint32_t num_symbols;
+    uint16_t optional_header_size;
+    uint16_t characteristics;
+};
 
 int main(int argc, char* argv[]) {
     // check that we have exactly 1 parameter passed into the program call
@@ -28,7 +34,7 @@ int main(int argc, char* argv[]) {
     uint32_t pe_signature;
     lseek(file_ptr, 0x3c, SEEK_SET);  // read signature offset at 0x3c (per documentation)
     read(file_ptr, &sig_offset, 1);
-    lseek(file_ptr, sig_offset, SEEK_SET);  // read signature offset at sig_offset
+    lseek(file_ptr, sig_offset, SEEK_SET);  // read signature at offset sig_offset
     read(file_ptr, &pe_signature, 4);
 
     if (pe_signature != PE_SIGNATURE) {
@@ -37,18 +43,19 @@ int main(int argc, char* argv[]) {
     }
 
     // read COFF header from file into struct
-
+    coff_header_t coff = {0};
+    read(file_ptr, &coff, 20);
 
     // print out file information
     printf("File: %s\n\n"
-           "Machine type: 0x____\n"
-           "Number of sections: _\n"
+           "Machine type: 0x%4x\n"
+           "Number of sections: %d\n"
            "Created: Sat Jul 10 09:51:55 2021\n"
-           "Symbol table start: 0x________ (should be 0)\n"
-           "Number of symbols: _ (should be 0)\n"
-           "Size of optional header: ___\n"
-           "Characteristics: 0x____\n",
-           argv[1]);
+           "Symbol table start: 0x%8x (should be 0)\n"
+           "Number of symbols: %d (should be 0)\n"
+           "Size of optional header: %d\n"
+           "Characteristics: 0x%4x\n",
+           argv[1], coff.machine, coff.num_sections, coff.symbol_table_ptr, coff.num_symbols, coff.optional_header_size, coff.characteristics);
 
     printf("\nend of process.\n");
     return 0;
