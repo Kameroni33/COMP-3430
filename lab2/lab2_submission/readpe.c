@@ -25,18 +25,13 @@ int main(int argc, char* argv[]) {
 
     // read file signature and verify it's an PE format image file
     uint8_t sig_offset;
-    uint32_t pe_signature;
+    char* pe_signature[4];
     lseek(file_ptr, 0x3c, SEEK_SET);  // read signature offset at 0x3c (per documentation)
     read(file_ptr, &sig_offset, 1);
     lseek(file_ptr, sig_offset, SEEK_SET);  // read signature offset at sig_offset
-    read(file_ptr, &pe_signature, 4);
+    read(file_ptr, pe_signature, 4);
 
-    // test
-
-    printf("offset: %2x\n", sig_offset);
-    printf("int: %d\nhex: %x\nstr: %s\n", pe_signature, pe_signature, (char*)&pe_signature);
-
-    if (pe_signature != PE_SIGNATURE) {
+    if (*pe_signature[0] == 'P' && *pe_signature[1] == 'E' && *pe_signature[2] == '\0' && *pe_signature[3] == '\0') {
         printf("Error: Not a PE format image file.\n");
         return 0;
     }
