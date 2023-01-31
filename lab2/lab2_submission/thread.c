@@ -18,6 +18,6 @@ int main() {
 //    pthread_t new_thread;
     pthread_create( &new_thread, NULL, thread_task, NULL );
     // wait for thread to finish
-    pthread_join(new_thread, NULL);
+//    pthread_join(new_thread, NULL);
     return 0;
 }
