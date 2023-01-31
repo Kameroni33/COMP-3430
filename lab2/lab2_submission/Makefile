@@ -1,10 +1,13 @@
 LDLIBS = -lpthread -lcurl
 CFLAGS = -Wall -Werror -Wpedantic -Wextra
 
-all: readpe
+all: readpe process
 
 readpe: readpe.c
 	clang $(CFLAGS) readpe.c -o readpe
 
+process: process.c
+	clang $(CFLAGS) process.c -o process
+
 clean:
-	rm -f readpe
+	rm -f a.out readpe
