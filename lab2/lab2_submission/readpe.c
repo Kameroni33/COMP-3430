@@ -27,8 +27,12 @@ int main(int argc, char* argv[]) {
     uint32_t pe_signature;
     lseek(pe_file, 0x3c, SEEK_SET);
     read(pe_file, &pe_signature, 4);
+
+    // test
+    printf("int: %d\n hex: %x", pe_signature, pe_signature);
+
     if (pe_signature != PE_SIGNATURE) {
-        printf("Error: Not a PE format image file.");
+        printf("Error: Not a PE format image file.\n");
         return 0;
     }
 
