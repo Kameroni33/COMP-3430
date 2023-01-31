@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
     }
 
     // open file for processing
-    pe_file = open(argv[1], O_RDONLY);
+    unsigned int pe_file = open(argv[1], O_RDONLY);
     if (pe_file < 0) {
         printf("Unable to open file '%s'.\n", argv[1]);
         return 0;
