@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <fcntl.h>
+#include <unistd.h>
 
 #define PE_SIGNATURE 1346699264  // "PE\0\0"
 
-struct pe_coff_info {
-    uint16_t
-};
+//struct pe_coff_info {
+//    uint16_t
+//};
 
 int main(int argc, char* argv[]) {
     // check that we have exactly 1 parameter passed into the program call
@@ -43,8 +44,8 @@ int main(int argc, char* argv[]) {
            "Number of symbols: _ (should be 0)\n"
            "Size of optional header: ___\n"
            "Characteristics: 0x____\n",
-           argv[1], );
+           argv[1]);
 
-    printf("\nend of process.\n")
+    printf("\nend of process.\n");
     return 0;
 }
