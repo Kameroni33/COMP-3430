@@ -48,13 +48,13 @@ int main(int argc, char* argv[]) {
 
     // print out file information
     printf("File: %s\n\n"
-           "Machine type: 0x%4x\n"
+           "Machine type: 0x%40x\n"
            "Number of sections: %d\n"
            "Created: Sat Jul 10 09:51:55 2021\n"
-           "Symbol table start: 0x%8x (should be 0)\n"
+           "Symbol table start: 0x%80x (should be 0)\n"
            "Number of symbols: %d (should be 0)\n"
            "Size of optional header: %d\n"
-           "Characteristics: 0x%4x\n",
+           "Characteristics: 0x%40x\n",
            argv[1], coff.machine, coff.num_sections, coff.symbol_table_ptr, coff.num_symbols, coff.optional_header_size, coff.characteristics);
 
     printf("\nend of process.\n");
