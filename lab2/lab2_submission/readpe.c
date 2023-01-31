@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
            "Number of symbols: %d (should be 0)\n"
            "Size of optional header: %d\n"
            "Characteristics: 0x%04x\n",
-           argv[1], coff.machine, coff.num_sections, asctime_s(gmtime_s(coff.time_date_stamp)), coff.symbol_table_ptr, coff.num_symbols,
+           argv[1], coff.machine, coff.num_sections, asctime(gmtime(coff.time_date_stamp)), coff.symbol_table_ptr, coff.num_symbols,
            coff.optional_header_size, coff.characteristics);
 
     printf("\nend of process.\n");
