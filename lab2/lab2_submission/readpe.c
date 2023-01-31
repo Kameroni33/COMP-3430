@@ -9,7 +9,7 @@
 struct coff_header_t {
     uint16_t machine;
     uint16_t num_sections;
-    time_t time_date_stamp;
+    uint32_t time_date_stamp;
     uint32_t symbol_table_ptr;
     uint32_t num_symbols;
     uint16_t optional_header_size;
@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
            "Number of symbols: %d (should be 0)\n"
            "Size of optional header: %d\n"
            "Characteristics: 0x%04x\n",
-           argv[1], coff.machine, coff.num_sections, asctime(gmtime(&coff.time_date_stamp)), sizeof(coff.time_date_stamp), coff.symbol_table_ptr, coff.num_symbols,
+           argv[1], coff.machine, coff.num_sections, asctime(gmtime(&(time_t)coff.time_date_stamp)), sizeof(coff.time_date_stamp), coff.symbol_table_ptr, coff.num_symbols,
            coff.optional_header_size, coff.characteristics);
 
     printf("\nend of process.\n");
