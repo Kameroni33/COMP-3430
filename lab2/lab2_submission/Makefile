@@ -1,7 +1,7 @@
 LDLIBS = -lpthread -lcurl
 CFLAGS = -Wall -Werror -Wpedantic -Wextra
 
-all: download
+all: readpe
 
 readpe: readpe.c
 	clang $(CFLAGS) read.pe -o readpe
