@@ -12,14 +12,14 @@
 int main(int argc, char* argv[]) {
     // check that we have exactly 1 parameter passed into the program call
     if (argc != 2) {
-        printf("Incorrect number of arguments (%d). Please specify file to open (ex. './readpe <file.name>').\n", argc);
+        printf("Error: Incorrect number of arguments (%d). Please specify file to open (ex. './readpe <file.name>').\n", argc);
         return 0;
     }
 
     // open file for processing
     unsigned int pe_file = open(argv[1], O_RDONLY);
     if (pe_file < 0) {
-        printf("Unable to open file '%s'.\n", argv[1]);
+        printf("Error: Unable to open file '%s'.\n", argv[1]);
         return 0;
     }
 
@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
     lseek(pe_file, 0x3c, SEEK_SET);
     read(pe_file, &pe_signature, 4);
     if (pe_signature != PE_SIGNATURE) {
-        printf("Not a PE format image file.");
+        printf("Error: Not a PE format image file.");
         return 0;
     }
 
