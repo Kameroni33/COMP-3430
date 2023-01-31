@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
     // read file signature and verify it's an PE format image file
     uint32_t pe_signature;
     lseek(pe_file, 0x3c, SEEK_SET);
-    read(pe_file, &pe_signature);
+    read(pe_file, &pe_signature, 4);
     if (pe_signature != PE_SIGNATURE) {
         printf("Not a PE format image file.");
         return 0;
