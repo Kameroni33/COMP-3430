@@ -2,13 +2,14 @@
 #include <stdint.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <time.h>
 
-#define PE_SIGNATURE 17744  // "PE\0\0" -> int
+#define PE_SIGNATURE_INT 17744  // "PE\0\0" -> int
 
 struct coff_header_t {
     uint16_t machine;
     uint16_t num_sections;
-    uint32_t time_date_stamp;
+    time_t time_date_stamp;
     uint32_t symbol_table_ptr;
     uint32_t num_symbols;
     uint16_t optional_header_size;
@@ -37,7 +38,7 @@ int main(int argc, char* argv[]) {
     lseek(file_ptr, sig_offset, SEEK_SET);  // read signature at offset sig_offset
     read(file_ptr, &pe_signature, 4);
 
-    if (pe_signature != PE_SIGNATURE) {
+    if (pe_signature != PE_SIGNATURE_INT) {
         printf("Error: Not a PE format image file.\n");
         return 0;
     }
@@ -50,12 +51,13 @@ int main(int argc, char* argv[]) {
     printf("File: %s\n\n"
            "Machine type: 0x%04x\n"
            "Number of sections: %d\n"
-           "Created: Sat Jul 10 09:51:55 2021\n"
+           "Created: %lulu\n"
            "Symbol table start: 0x%08x (should be 0)\n"
            "Number of symbols: %d (should be 0)\n"
            "Size of optional header: %d\n"
            "Characteristics: 0x%04x\n",
-           argv[1], coff.machine, coff.num_sections, coff.symbol_table_ptr, coff.num_symbols, coff.optional_header_size, coff.characteristics);
+           argv[1], coff.machine, coff.num_sections, asctime_s(gmtime_s(coff.time_date_stamp)), coff.symbol_table_ptr, coff.num_symbols,
+           coff.optional_header_size, coff.characteristics);
 
     printf("\nend of process.\n");
     return 0;
