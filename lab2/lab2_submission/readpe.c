@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
     // test
 
     printf("offset: %2x\n", sig_offset);
-    printf("int: %d\nhex: %x\n", pe_signature, pe_signature);
+    printf("int: %d\nhex: %x\nstr: %s\n", pe_signature, pe_signature, (char*)&pe_signature);
 
     if (pe_signature != PE_SIGNATURE) {
         printf("Error: Not a PE format image file.\n");
