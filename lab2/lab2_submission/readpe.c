@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
     printf("File: %s\n\n"
            "Machine type: 0x%04x\n"
            "Number of sections: %d\n"
-           "Created: %s (size: %llu)"
+           "Created: %s (size: %lu)"
            "Symbol table start: 0x%08x (should be 0)\n"
            "Number of symbols: %d (should be 0)\n"
            "Size of optional header: %d\n"
