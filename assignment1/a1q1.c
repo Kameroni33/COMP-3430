@@ -139,7 +139,7 @@ int main(int argc, char** argv) {
 	printf(" * there are %d section headers, each is %d bytes\n", f_header.e_shnum, f_header.e_shentsize);
 	printf(" * the section header string table is entry %d\n\n", f_header.e_shstrndx);
 
-	printf("%d | %d", f_header.e_phentsize, sizeof(p_header));
+	printf("%d | %lu", f_header.e_phentsize, sizeof(p_header));
 
 	// move to program header offset
 	fseek(f_ptr, f_header.e_phoff, SEEK_SET);
