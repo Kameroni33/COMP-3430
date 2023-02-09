@@ -139,13 +139,15 @@ int main(int argc, char** argv) {
 	printf(" * there are %d section headers, each is %d bytes\n", f_header.e_shnum, f_header.e_shentsize);
 	printf(" * the section header string table is entry %d\n\n", f_header.e_shstrndx);
 
+	printf("%d | %d", f_header.e_phentsize, sizeof(p_header));
+
 	// move to program header offset
 	fseek(f_ptr, f_header.e_phoff, SEEK_SET);
 
 	for (int section = 0; section < f_header.e_phnum; section++) {
 
 		// read header data into struct
-		fread(&p_header, sizeof(char), sizeof(f_header.e_phentsize), f_ptr);
+		fread(&p_header, sizeof(char), sizeof(p_header), f_ptr);
 
 		// limit number of bytes to print to at most 32 bytes
 		if (p_header.p_filesz >= 32) {
