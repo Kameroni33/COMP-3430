@@ -188,8 +188,13 @@ int main(int argc, char** argv) {
 	printf("Section Headers:\n");
 	printf("============================================================\n\n");
 
-	printf("%d", f_header.e_shstrndx);
-	printf("%#018lx", f_header.e_shoff + (f_header.e_shstrndx * f_header.e_shentsize) + s_header.sh_name);
+
+	printf("f_header.e_shoff:     %x\n", f_header.e_shoff);
+	printf("f_header.e_shstrndx:  %x\n", f_header.e_shstrndx);
+	printf("f_header.e_shentsize: %x\n", f_header.e_shentsize);
+	printf("s_header.sh_name:     %x\n", s_header.sh_name);
+
+	printf("%#018lx\n", f_header.e_shoff + (f_header.e_shstrndx * f_header.e_shentsize) + s_header.sh_name);
 
 	// handle section headers
 	for (int section = 0; section < f_header.e_shnum; section++) {
