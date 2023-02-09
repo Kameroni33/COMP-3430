@@ -1,10 +1,10 @@
 CFLAGS = -Wall -Wextra -Wpedantic -Werror -g
 CC = clang
 
-all: sampleProgram a1q1
+all: a1q1
 
-sampleProgram: sampleProgram.c
 a1q1: a1q1.c
+	$(CC) $(CFLAGS) a1q1.c -o a1q1
 
 clean:
-	rm -f sampleProgram
+	rm -f a1q1
