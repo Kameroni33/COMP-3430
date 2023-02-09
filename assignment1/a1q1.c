@@ -48,13 +48,11 @@ struct elf_program_header_t {
 	uint64_t p_paddr;
 	uint64_t p_filesz;
 	uint64_t p_memsz;
-	uint32_t p_flags;
 	uint64_t p_align;
 };
 
 struct elf_section_header_t {
 	uint32_t sh_name;
-	uint32_t sh_type;
 	uint32_t sh_type;
 	uint64_t sh_flags;
 	uint64_t sh_addr;
@@ -175,7 +173,7 @@ int main(int argc, char** argv) {
 		printf(" * segment type %#010x\n", p_header.p_type);
 		printf(" * virtual address of segment %018lx\n", p_header.p_vaddr);
 		printf(" * size in file %lu bytes\n", p_header.p_filesz);
-		printf(" * first %d bytes starting at file offset %#018lx:\n", p_header.p_offset);
+		printf(" * first %d bytes starting at file offset %#018lx:\n", 1, p_header.p_offset);
 		
 	// 	// print first (up to) 32 bytes of file
 	// 	fseek(f_ptr, *segOffset, SEEK_SET);
