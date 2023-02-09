@@ -78,6 +78,8 @@ int main(int argc, char** argv) {
 
 	// file section header variables
 	struct elf_program_header_t p_header;
+	int display_num_bytes;
+	unsigned char seg_byte;
 
 	// file section header variables
 	// struct elf_section_header_t s_header;
@@ -144,55 +146,31 @@ int main(int argc, char** argv) {
 
 		// read header data into struct
 		fread(&p_header, sizeof(char), sizeof(p_header), f_ptr);
-		
-	// 	// bytes 0x00 to 0x03 identifies the type of segment
-	// 	fseek(f_ptr, (*f_programheader + (*f_programheader_size * i)), SEEK_SET);
-	// 	unsigned int* segmentType = malloc(sizeof(int));
-	// 	fread(segmentType, 4, 1, f_ptr);
 
-	// 	// bytes 0x08 to 0x0F is the offest of the segment in memory
-	// 	fseek(f_ptr, 4, SEEK_CUR);
-	// 	unsigned long* segOffset = malloc(sizeof(long));
-	// 	fread(segOffset, 8, 1, f_ptr);
+		// limit number of bytes to print to at most 32 bytes
+		if (p_header.p_filesz >= 32) {
+			display_num_bytes = 32;
+		} else {
+			display_num_bytes = p_header.p_filesz;
+		}
 
-	// 	// bytes 0x10 to 0x17 hold the virtual address of the segment in memory
-	// 	unsigned long* virtualAddress = malloc(sizeof(long));
-	// 	fread(virtualAddress, 8, 1, f_ptr);
-
-	// 	// bytes 0x20 to 0x28 is the size of the segement in the file image
-	// 	fseek(f_ptr, 8, SEEK_CUR);
-	// 	unsigned long* sizeOnFileImage = malloc(sizeof(long));
-	// 	fread(sizeOnFileImage, 8, 1, f_ptr);
-
-	// 	int displayNumBytes = 32;
-	// 	if (*sizeOnFileImage < 32) {
-	// 		displayNumBytes = *sizeOnFileImage;
-	// 	}
-
+		// print program header information
 		printf("Program header #%d:\n", section);
 		printf(" * segment type %#010x\n", p_header.p_type);
-		printf(" * virtual address of segment %018lx\n", p_header.p_vaddr);
+		printf(" * virtual address of segment %#018lx\n", p_header.p_vaddr);
 		printf(" * size in file %lu bytes\n", p_header.p_filesz);
-		printf(" * first %d bytes starting at file offset %#018lx:\n", 1, p_header.p_offset);
+		printf(" * first %d bytes starting at file offset %#018lx:\n", display_num_bytes, p_header.p_offset);
 		
-	// 	// print first (up to) 32 bytes of file
-	// 	fseek(f_ptr, *segOffset, SEEK_SET);
-	// 	unsigned char segByte;
-	// 	for (int i = 0; i <displayNumBytes; i++) {
-	// 		segByte = fgetc(f_ptr);
-	// 		printf("%02x ", segByte);
-	// 		if (i == 15) {
-	// 			printf("\n");
-	// 		}
-	// 	}
-
-	// 	printf("\n\n");
-
-	// 	// free allocated memory
-	// 	free(segmentType);
-	// 	free(segOffset);
-	// 	free(virtualAddress);
-	// 	free(sizeOnFileImage);
+		// print first (up to) 32 bytes of file
+		fseek(f_ptr, p_header.p_offset, SEEK_SET);
+		for (int i = 0; i < display_num_bytes; i++) {
+			seg_byte = fgetc(f_ptr);
+			printf("%02x ", seg_byte);
+			if (i == 15) {
+				printf("\n");
+			}
+		}
+		printf("\n\n");
 	}
 
 
