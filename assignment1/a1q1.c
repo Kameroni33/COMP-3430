@@ -189,7 +189,7 @@ int main(int argc, char** argv) {
 	printf("============================================================\n\n");
 
 
-	printf("f_header.e_shoff:     %x\n", f_header.e_shoff);
+	printf("f_header.e_shoff:     %lx\n", f_header.e_shoff);
 	printf("f_header.e_shstrndx:  %x\n", f_header.e_shstrndx);
 	printf("f_header.e_shentsize: %x\n", f_header.e_shentsize);
 	printf("s_header.sh_name:     %x\n", s_header.sh_name);
