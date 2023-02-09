@@ -101,17 +101,14 @@ int main(int argc, char** argv) {
 	fread(&f_header, sizeof(char), sizeof(f_header), f_ptr);
 
 	// Verify it's an ELF file
-	if (1) {
-		printf("%c", f_header.e_ident[EI_MAG0]);
-		printf("%c", f_header.e_ident[EI_MAG1]);
-		printf("%c", f_header.e_ident[EI_MAG2]);
-		printf("%c", f_header.e_ident[EI_MAG3]);
+	if (f_header.e_ident[EI_MAG1] != 'E' || f_header.e_ident[EI_MAG2] != 'L' || f_header.e_ident[EI_MAG3] != 'F') {
+		printf("\nError: Not an ELF file.\n");
+		exit(0);
 	}
-
 
 	// assert that file is 64-bit
 	if (f_header.e_ident[EI_CLASS] != 2) {
-		printf("\nError: ELF file must be 64-bit.\n");
+		printf("\nError: Not 64-bit.\n");
 		exit(0);
 	} else {
 		bit = 64;  // for representation later
