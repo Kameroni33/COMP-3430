@@ -100,7 +100,7 @@ int main(int argc, char** argv) {
 	printf("ELF Header:\n");
 	printf(" * %d-bit\n", bit);
 	printf(" * %s endian\n", endian);
-	printf(" * compiled for %#04x (operating system)\n", f_header.e_ident[EI_OSABI]);
+	printf(" * compiled for 0x%02x (operating system)\n", f_header.e_ident[EI_OSABI]);
 	printf(" * object type is %#04x\n", f_header.e_type);
 	printf(" * compiled for %#04x (isa)\n", f_header.e_machine);
 	printf(" * entry point address is %#018lx\n", f_header.e_entry);
