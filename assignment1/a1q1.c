@@ -100,12 +100,12 @@ int main(int argc, char** argv) {
 	printf("ELF Header:\n");
 	printf(" * %d-bit\n", bit);
 	printf(" * %s endian\n", endian);
-	printf(" * compiled for 0x%02d (operating system)\n", f_header.e_ident[EI_OSABI]);
-	printf(" * object type is 0x%02d\n", f_header.e_type);
-	printf(" * compiled for 0x%02d (isa)\n", f_header.e_machine);
-	printf(" * entry point address is 0x%016lu\n", f_header.e_entry);
-	printf(" * program header table starts at 0x%016lu\n", f_header.e_phoff);
-	printf(" * section header table starts at 0x%016lu\n", f_header.e_shoff);
+	printf(" * compiled for %#04x (operating system)\n", f_header.e_ident[EI_OSABI]);
+	printf(" * object type is %#04x\n", f_header.e_type);
+	printf(" * compiled for %#04x (isa)\n", f_header.e_machine);
+	printf(" * entry point address is %#018lx\n", f_header.e_entry);
+	printf(" * program header table starts at %#018lx\n", f_header.e_phoff);
+	printf(" * section header table starts at %#018lx\n", f_header.e_shoff);
 	printf(" * there are %d program headers, each is %d bytes\n", f_header.e_phnum, f_header.e_phentsize);
 	printf(" * there are %d section headers, each is %d bytes\n", f_header.e_shnum, f_header.e_shentsize);
 	printf(" * the section header string table is entry %d\n\n", f_header.e_shstrndx);
