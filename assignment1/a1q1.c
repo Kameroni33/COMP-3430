@@ -76,14 +76,11 @@ int main(int argc, char** argv) {
 	char endian[10];  // need at least 7 characters for 'endian\0'
 	uint8_t bit;  // integer should be 32 or 64, so 8 bits is fine
 
-	// file section header variables
+	// file program/section header variables
 	struct elf_program_header_t p_header;
-	int display_num_bytes;
+	struct elf_section_header_t s_header;
 	unsigned char seg_byte;
-
-	// file section header variables
-	// struct elf_section_header_t s_header;
-
+	int display_num_bytes;  // number of bytes to print out (at most 32)
 
 	if (argc > 1) {
 		// read file name from the command line if provided
@@ -129,7 +126,7 @@ int main(int argc, char** argv) {
 	printf("ELF Header:\n");
 	printf(" * %d-bit\n", bit);
 	printf(" * %s endian\n", endian);
-	printf(" * compiled for 0x%02x (operating system)\n", f_header.e_ident[EI_OSABI]);
+	printf(" * compiled for 0x%02x (operating system)\n", f_header.e_ident[Eelf_header_tI_OSABI]);
 	printf(" * object type is %#04x\n", f_header.e_type);
 	printf(" * compiled for %#04x (isa)\n", f_header.e_machine);
 	printf(" * entry point address is %#018lx\n", f_header.e_entry);
@@ -139,10 +136,11 @@ int main(int argc, char** argv) {
 	printf(" * there are %d section headers, each is %d bytes\n", f_header.e_shnum, f_header.e_shentsize);
 	printf(" * the section header string table is entry %d\n\n", f_header.e_shstrndx);
 
-	for (int section = 0; section < f_header.e_phnum; section++) {
+	// handle program headers
+	for (int program = 0; program < f_header.e_phnum; program++) {
 
 		// move to program header offset
-		fseek(f_ptr, f_header.e_phoff + (section * f_header.e_phentsize), SEEK_SET);
+		fseek(f_ptr, f_header.e_phoff + (program * f_header.e_phentsize), SEEK_SET);
 
 		// read header data into struct
 		fread(&p_header, sizeof(char), f_header.e_phentsize, f_ptr);
@@ -155,7 +153,7 @@ int main(int argc, char** argv) {
 		}
 
 		// print program header information
-		printf("Program header #%d:\n", section);
+		printf("Program header #%d:\n", program);
 		printf(" * segment type %#010x\n", p_header.p_type);
 		printf(" * virtual address of segment %#018lx\n", p_header.p_vaddr);
 		printf(" * size in file %lu bytes\n", p_header.p_filesz);
@@ -166,13 +164,53 @@ int main(int argc, char** argv) {
 		for (int i = 0; i < display_num_bytes; i++) {
 			seg_byte = fgetc(f_ptr);
 			printf("%02x ", seg_byte);
-			if (i == 15) {
+			if (i == 15 || i == 31) {
 				printf("\n");
 			}
 		}
-		printf("\n\n");
+		printf("\n");
 	}
 
+	// handle section headers
+	for (int section = 0; section < f_header.e_shnum; section++) {
+
+		// move to section header offset
+		fseek(f_ptr, f_header.e_shoff + (section * f_header.e_shentsize), SEEK_SET);
+
+		// read header data into struct
+		fread(&s_header, sizeof(char), f_header.e_shentsize, f_ptr);
+
+		// limit number of bytes to print to at most 32 bytes
+		if (s_header.sh_size >= 32) {
+			display_num_bytes = 32;
+		} else {
+			display_num_bytes = s_header.sh_size;
+		}
+
+		// determine section name
+
+
+		
+
+		printf("Section header #%d:\n", section);
+		printf("* section name >>%s<<\n", "unknown");
+		printf("* type %#04x\n", s_header.sh_type);
+		printf("* virtual address of section %#018x\n", s_header.sh_addr);
+		printf("* size in file %lu bytes\n", s_header.sh_size);
+		printf("* first %d bytes starting at file offset %#018lx:\n", display_num_bytes, s_header.sh_offset);
+
+		// print first (up to) 32 bytes of file
+		fseek(f_ptr, s_header.sh_offset, SEEK_SET);
+		for (int i = 0; i < display_num_bytes; i++) {
+			seg_byte = fgetc(f_ptr);
+			printf("%02x ", seg_byte);
+			if (i == 15 || i == 31) {
+				printf("\n");
+			}
+		}
+		printf("\n");
+
+	}
 
 	// close file
 	fclose(f_ptr);
