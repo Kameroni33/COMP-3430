@@ -51,7 +51,6 @@ int main(int argc, char** argv) {
 
 	// file header variables
 	struct elf_header_t f_header;
-	enum e_ident_pos ident_pos;
 	char* endian[ENDIAN_STR_LEN];
 	uint8_t bit;
 
@@ -91,9 +90,9 @@ int main(int argc, char** argv) {
 
 	// determine endian
 	if (f_header.e_ident[EI_DATA] == 1) {
-		strcpy(endian, "little");
+		strcpy(&endian, "little");
 	} else if (f_header.e_ident[EI_DATA] == 2) {
-		strcpy(endian, "big");
+		strcpy(&endian, "big");
 	} else {
 		printf("\nError: unknown endian.\n");
 		exit(0);
