@@ -126,7 +126,7 @@ int main(int argc, char** argv) {
 	printf("ELF Header:\n");
 	printf(" * %d-bit\n", bit);
 	printf(" * %s endian\n", endian);
-	printf(" * compiled for 0x%02x (operating system)\n", f_header.e_ident[Eelf_header_tI_OSABI]);
+	printf(" * compiled for 0x%02x (operating system)\n", f_header.e_ident[EI_OSABI]);
 	printf(" * object type is %#04x\n", f_header.e_type);
 	printf(" * compiled for %#04x (isa)\n", f_header.e_machine);
 	printf(" * entry point address is %#018lx\n", f_header.e_entry);
@@ -190,12 +190,12 @@ int main(int argc, char** argv) {
 		// determine section name
 
 
-		
+
 
 		printf("Section header #%d:\n", section);
 		printf("* section name >>%s<<\n", "unknown");
 		printf("* type %#04x\n", s_header.sh_type);
-		printf("* virtual address of section %#018x\n", s_header.sh_addr);
+		printf("* virtual address of section %#018lx\n", s_header.sh_addr);
 		printf("* size in file %lu bytes\n", s_header.sh_size);
 		printf("* first %d bytes starting at file offset %#018lx:\n", display_num_bytes, s_header.sh_offset);
 
