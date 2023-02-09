@@ -205,15 +205,15 @@ int main(int argc, char** argv) {
 		}
 
 		printf("f_header.e_shoff:     %lx (x)\n", f_header.e_shoff);
+		printf("s_header.sh_offset:   %lx (x)\n", s_header.sh_offset);
 		printf("f_header.e_shstrndx:  %d (d)\n", f_header.e_shstrndx);
 		printf("f_header.e_shentsize: %d (d)\n", f_header.e_shentsize);
 		printf("s_header.sh_name:     %x (x)\n", s_header.sh_name);
 		printf("total:                %lx (x)\n", f_header.e_shoff + (f_header.e_shstrndx * f_header.e_shentsize) + s_header.sh_name);
-		printf("total2:               %lx (x)\n", f_header.e_shoff + (section * f_header.e_shentsize));
-		printf("total3:               %lx (x)\n", f_header.e_shoff + (37 * f_header.e_shentsize));
+		printf("total2:               %lx (x)\n", s_header.sh_offset + (section * f_header.e_shentsize));
 
 		// get section name
-		fseek(f_ptr, f_header.e_shoff + (f_header.e_shstrndx * f_header.e_shentsize) + s_header.sh_name, SEEK_SET);
+		fseek(f_ptr, s_header.sh_offset + (f_header.e_shstrndx * f_header.e_shentsize) + s_header.sh_name, SEEK_SET);
 		char c;
 		while ((c = fgetc(f_ptr)) != '\0') {
 			printf("%c\n", c);
