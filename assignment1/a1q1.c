@@ -188,8 +188,6 @@ int main(int argc, char** argv) {
 	printf("Section Headers:\n");
 	printf("============================================================\n\n");
 
-	printf("%#018lx\n", f_header.e_shoff + (f_header.e_shstrndx * f_header.e_shentsize) + s_header.sh_name);
-
 	// handle section headers
 	for (int section = 0; section < f_header.e_shnum; section++) {
 
@@ -211,6 +209,8 @@ int main(int argc, char** argv) {
 		printf("f_header.e_shentsize: %d (d)\n", f_header.e_shentsize);
 		printf("s_header.sh_name:     %x (x)\n", s_header.sh_name);
 		printf("total:                %lx (x)\n", f_header.e_shoff + (f_header.e_shstrndx * f_header.e_shentsize) + s_header.sh_name);
+		printf("total2:               %lx (x)\n", f_header.e_shoff + (section * f_header.e_shentsize));
+		printf("total3:               %lx (x)\n", f_header.e_shoff + (37 * f_header.e_shentsize));
 
 		// get section name
 		fseek(f_ptr, f_header.e_shoff + (f_header.e_shstrndx * f_header.e_shentsize) + s_header.sh_name, SEEK_SET);
