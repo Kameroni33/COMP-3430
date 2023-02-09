@@ -164,7 +164,7 @@ int main(int argc, char** argv) {
 		for (int i = 0; i < display_num_bytes; i++) {
 			seg_byte = fgetc(f_ptr);
 			printf("%02x ", seg_byte);
-			if (i == 15 || i == 31) {
+			if (i == 15 || i == 31 || (i == display_num_bytes -1 && display_num_bytes < 32)) {
 				printf("\n");
 			}
 		}
@@ -204,7 +204,7 @@ int main(int argc, char** argv) {
 		for (int i = 0; i < display_num_bytes; i++) {
 			seg_byte = fgetc(f_ptr);
 			printf("%02x ", seg_byte);
-			if (i == 15 || i == 31) {
+			if (i == 15 || i == 31 || (i == display_num_bytes -1 && display_num_bytes < 32)) {
 				printf("\n");
 			}
 		}
