@@ -122,6 +122,10 @@ int main(int argc, char** argv) {
 		exit(0);
 	}
 
+	printf("\n==============================\n");
+	printf("File Header:\n");
+	printf("==============================\n\n");
+
 	// print out header information
 	printf("ELF Header:\n");
 	printf(" * %d-bit\n", bit);
@@ -135,6 +139,10 @@ int main(int argc, char** argv) {
 	printf(" * there are %d program headers, each is %d bytes\n", f_header.e_phnum, f_header.e_phentsize);
 	printf(" * there are %d section headers, each is %d bytes\n", f_header.e_shnum, f_header.e_shentsize);
 	printf(" * the section header string table is entry %d\n\n", f_header.e_shstrndx);
+
+	printf("==============================\n");
+	printf("Program Headers:\n");
+	printf("==============================\n\n");
 
 	// handle program headers
 	for (int program = 0; program < f_header.e_phnum; program++) {
@@ -170,6 +178,10 @@ int main(int argc, char** argv) {
 		}
 		printf("\n");
 	}
+
+	printf("==============================\n");
+	printf("Section Headers:\n");
+	printf("==============================\n\n");
 
 	// handle section headers
 	for (int section = 0; section < f_header.e_shnum; section++) {
