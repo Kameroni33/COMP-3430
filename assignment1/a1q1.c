@@ -3,6 +3,9 @@
 #include <string.h>
 #include <stdint.h>
 
+
+#define ENDIAN_STR_LEN 6
+
 enum e_ident_pos {
 	EI_MAG0,
 	EI_MAG1,
@@ -49,6 +52,8 @@ int main(int argc, char** argv) {
 	// file header variables
 	struct elf_header_t f_header;
 	enum e_ident_pos ident_pos;
+	char* endian[ENDIAN_STR_LEN];
+	uint8_t bit;
 
 	// file section header variables
 	// ...
@@ -72,28 +77,45 @@ int main(int argc, char** argv) {
 	// read header data into struct
 	fread(&f_header, sizeof(char), sizeof(f_header), f_ptr);
 
-	// printf("ELF Header:\n"
-	// 	" * 64-bit\n"  // since we have not exited execution, we can assume the file is 64-bit
-	// 	" * %s endian\n"
-	// 	" * compiled for 0x%02d (operating system)\n"
-	// 	" * object type is 0x%02d\n"
-	// 	" * compiled for 0x%02d (isa)\n"
-	// 	" * entry point address is 0x%016lu\n"
-	// 	" * program header table starts at 0x%016lu\n"
-	// 	" * section header table starts at 0x%016lu\n"
-	// 	" * there are %d program headers, each is %d bytes\n"
-	// 	" * there are %d section headers, each is %d bytes\n"
-	// 	" * the section header string table is entry %d\n\n",
-	// 	f_header->, f_abi, *f_objtype, *f_isa, *f_entrypoint, *f_programheader, *f_sectionheader,
-	// 	*f_programheader_num, *f_programheader_size, *f_sectionheader_num, *f_sectionheader_size,
-	// 	*f_stringtable);
+	// Verify it's an ELF file
+
+
 
 	// assert that file is 64-bit
-	ident_pos = EI_CLASS;
-	if (f_header.e_ident[ident_pos] != 2) {
+	if (f_header.e_ident[EI_CLASS] != 2) {
 		printf("\nError: ELF file must be 64-bit.\n");
 		exit(0);
+	} else {
+		bit = 64;  // for representation later
 	}
+
+	// determine endian
+	if (f_header.e_ident[EI_DATA] == 1) {
+		strcpy(endian, "little");
+	} else if (f_header.e_ident[EI_DATA] == 2) {
+		strcpy(endian, "big");
+	} else {
+		printf("\nError: unknown endian.\n");
+		exit(0);
+	}
+
+
+	printf("ELF Header:\n");
+	printf(" * %d-bit\n", bit);
+	printf(" * %s endian\n", endian);
+	printf(" * compiled for 0x%02d (operating system)\n", f_header.e_ident[EI_OSABI]);
+	printf(" * object type is 0x%02d\n", );
+	printf(" * compiled for 0x%02d (isa)\n", );
+	printf(" * entry point address is 0x%016lu\n", );
+	printf(" * program header table starts at 0x%016lu\n", );
+	printf(" * section header table starts at 0x%016lu\n", );
+	printf(" * there are %d program headers, each is %d bytes\n", );
+	printf(" * there are %d section headers, each is %d bytes\n", );
+	printf(" * the section header string table is entry %d\n\n", );
+		f_header.e_ident,
+		 f_abi, *f_objtype, *f_isa, *f_entrypoint, *f_programheader, *f_sectionheader,
+		*f_programheader_num, *f_programheader_size, *f_sectionheader_num, *f_sectionheader_size,
+		*f_stringtable);
 
 	// // byte 0x05 determines endianness
 	// char f_endian = fgetc(f_ptr);
