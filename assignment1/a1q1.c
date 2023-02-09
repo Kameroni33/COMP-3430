@@ -145,7 +145,7 @@ int main(int argc, char** argv) {
 		fseek(f_ptr, f_header.e_phoff + (section * f_header.e_phentsize), SEEK_SET);
 
 		// read header data into struct
-		fread(&p_header, sizeof(char), sizeof(f_header.e_phentsize), f_ptr);
+		fread(&p_header, sizeof(char), f_header.e_phentsize, f_ptr);
 
 		// limit number of bytes to print to at most 32 bytes
 		if (p_header.p_filesz >= 32) {
