@@ -4,8 +4,6 @@
 #include <stdint.h>
 
 
-#define ENDIAN_STR_LEN 6
-
 enum e_ident_pos {
 	EI_MAG0,
 	EI_MAG1,
@@ -51,8 +49,8 @@ int main(int argc, char** argv) {
 
 	// file header variables
 	struct elf_header_t f_header;
-	char endian[ENDIAN_STR_LEN];
-	uint8_t bit;
+	char endian[10];  // need at least 7 characters for 'endian\0'
+	uint8_t bit;  // integer should be 32 or 64, so 8 bits is fine
 
 	// file section header variables
 	// ...
