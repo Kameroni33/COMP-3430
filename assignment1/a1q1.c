@@ -210,15 +210,6 @@ int main(int argc, char** argv) {
 			display_num_bytes = s_header.sh_size;
 		}
 
-		printf("f_header.e_shoff:     %lx (x)\n", f_header.e_shoff);
-		printf("s_header.sh_offset:   %lx (x)\n", s_header.sh_offset);
-		printf("f_header.e_shstrndx:  %d (d)\n", f_header.e_shstrndx);
-		printf("f_header.e_shentsize: %d (d)\n", f_header.e_shentsize);
-		printf("s_header.sh_name:     %x (x)\n", s_header.sh_name);
-		printf("total:                %lx (x)\n", f_header.e_shoff + (f_header.e_shstrndx * f_header.e_shentsize) + s_header.sh_name);
-		printf("str_table_offset:     %lx (x)\n", str_table_offset);
-		printf("str_table_offset+:    %lx (x)\n", str_table_offset + s_header.sh_name);
-
 		// get section name
 		fseek(f_ptr, str_table_offset + s_header.sh_name, SEEK_SET);
 		char c;
@@ -251,8 +242,7 @@ int main(int argc, char** argv) {
 	// close file
 	fclose(f_ptr);
 
-	// free alloced memory
-	
+	printf("End of Processing.");
 
 	return 0;
 }
