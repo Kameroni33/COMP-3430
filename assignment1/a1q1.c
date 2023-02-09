@@ -214,7 +214,10 @@ int main(int argc, char** argv) {
 
 		// get section name
 		fseek(f_ptr, f_header.e_shoff + (f_header.e_shstrndx * f_header.e_shentsize) + s_header.sh_name, SEEK_SET);
-		fgets(s_name, MAX_NAME, f_ptr);
+		char c;
+		while ((c = fgetc(f_ptr)) != '\0') {
+			printf("%c\n", c);
+		}
 
 		printf("Section header #%d:\n", section);
 		printf("* section name >>%s<<\n", s_name);
