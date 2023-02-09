@@ -81,6 +81,7 @@ int main(int argc, char** argv) {
 	// file program/section header variables
 	struct elf_program_header_t p_header;
 	struct elf_section_header_t s_header;
+	uint64_t str_table_offset;
 	unsigned char seg_byte;
 	int display_num_bytes;  // number of bytes to print out (at most 32)
 	char s_name[MAX_NAME];
@@ -188,6 +189,11 @@ int main(int argc, char** argv) {
 	printf("Section Headers:\n");
 	printf("============================================================\n\n");
 
+	// get string table address
+	fseek(f_ptr, f_header.e_shoff + (f_header.e_shstrndx * f_header.e_shentsize), SEEK_SET);
+	fread(&s_header, sizeof(char), f_header.e_shentsize, f_ptr);
+	str_table_offset = s_header.sh_offset;
+
 	// handle section headers
 	for (int section = 0; section < f_header.e_shnum; section++) {
 
@@ -210,14 +216,17 @@ int main(int argc, char** argv) {
 		printf("f_header.e_shentsize: %d (d)\n", f_header.e_shentsize);
 		printf("s_header.sh_name:     %x (x)\n", s_header.sh_name);
 		printf("total:                %lx (x)\n", f_header.e_shoff + (f_header.e_shstrndx * f_header.e_shentsize) + s_header.sh_name);
-		printf("total2:               %lx (x)\n", s_header.sh_offset + (section * f_header.e_shentsize));
+		printf("str_table_offset:     %lx (x)\n", str_table_offset);
+		printf("str_table_offset+:    %lx (x)\n", str_table_offset + s_header.sh_name);
 
 		// get section name
-		fseek(f_ptr, s_header.sh_offset + (f_header.e_shstrndx * f_header.e_shentsize) + s_header.sh_name, SEEK_SET);
+		fseek(f_ptr, str_table_offset + s_header.sh_name, SEEK_SET);
 		char c;
 		while ((c = fgetc(f_ptr)) != '\0') {
 			printf("%c\n", c);
 		}
+
+		fgets(s_name, MAX_NAME, f_ptr);
 
 		printf("Section header #%d:\n", section);
 		printf("* section name >>%s<<\n", s_name);
