@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdint.h>
 
+#define MAX_NAME 100
+
 
 enum e_ident_pos {
 	EI_MAG0,
@@ -81,6 +83,7 @@ int main(int argc, char** argv) {
 	struct elf_section_header_t s_header;
 	unsigned char seg_byte;
 	int display_num_bytes;  // number of bytes to print out (at most 32)
+	char s_name[MAX_NAME];
 
 	if (argc > 1) {
 		// read file name from the command line if provided
@@ -201,13 +204,12 @@ int main(int argc, char** argv) {
 			display_num_bytes = s_header.sh_size;
 		}
 
-		// determine section name
-
-
-
+		// get section name
+		fseek(f_ptr, f_header.e_shoff + (f_header.e_shstrndx * f_header.e_shentsize) + s_header.sh_name, SEEK_SET);
+		strcpy(s_name, f_ptr);
 
 		printf("Section header #%d:\n", section);
-		printf("* section name >>%s<<\n", "unknown");
+		printf("* section name >>%s<<\n", s_name);
 		printf("* type %#04x\n", s_header.sh_type);
 		printf("* virtual address of section %#018lx\n", s_header.sh_addr);
 		printf("* size in file %lu bytes\n", s_header.sh_size);
