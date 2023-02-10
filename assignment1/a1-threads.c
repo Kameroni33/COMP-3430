@@ -40,8 +40,8 @@ void* worker_thread() {
     pthread_mutex_unlock(&signal_lock);
 
     pthread_mutex_lock(&workers_lock);
-    printf("thread %d exiting\n", workers);
     workers--;
+    printf("thread %d exiting\n", workers);
     workers_updated = true;
     pthread_cond_signal(&workers_cond);
     pthread_mutex_unlock(&workers_lock);
