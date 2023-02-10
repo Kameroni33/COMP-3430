@@ -20,7 +20,7 @@ void* worker_thread(void* value) {
     
     int* thread_num = value;
     bool* check = &worker_signals[*thread_num];
-    printf("thread %d starting\n", *thread_num);
+    printf("thread %d starting\n", *value);
 
     while(!*check) ;  // wait for our signal to to set true
 
