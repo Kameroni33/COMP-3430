@@ -31,6 +31,7 @@ void* worker_thread(void* value) {
 static void create_thread() {
     pthread_t new_thread;
     int curr_worker = workers;
+    printf("current_worker: %d\n", curr_worker);
     pthread_create(&new_thread, NULL, &worker_thread, &curr_worker);
     worker_threads[workers] = new_thread;
     worker_signals[workers] = false;
