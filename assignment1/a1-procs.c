@@ -37,27 +37,33 @@ static int read_config() {
 }
 
 static void update_workers(int num_workers) {
-	printf("updating workers...\n");
 	while (workers != num_workers && workers < MAX_WORKERS && workers >= 0) {
 		// printf("workers: %d | num: %d\n", workers, num_workers);  // testing
 		if (workers < num_workers) {
+
 			int new_pid = fork();
 			if (new_pid == 0) {
+
 				// child process
 				printf("worker (pid: %d)\n", getpid());
 				signal(SIGINT, worker_exit);
 				while (1) ;  // just wait for the process herder to stop us
 				printf("Worker exited unexpectedly.\n");
 				exit(0);
+				
 			} else {
+
 				// parent process
 				workers++;
 				worker_ids[workers] = new_pid;
+
 			}
 		} else if (workers > num_workers) {
-			printf("signaling process (%d)\n", worker_ids[workers]);
+
+			// printf("signaling process (%d)\n", worker_ids[workers]);  // testing
 			kill(worker_ids[workers], SIGINT);
 			workers--;
+
 		} else {
 			printf("Umm... something ain't right\n");
 		}
@@ -67,11 +73,12 @@ static void update_workers(int num_workers) {
 }
 
 void handle_update() {
+	printf("updating workers...\n");
 	update_workers(read_config());
 }
 
 void herder_exit() {
-	printf(" exiting...\n");
+	printf("cleaning up...\n");
 	update_workers(0);
 	run_herder = 0;
 }
