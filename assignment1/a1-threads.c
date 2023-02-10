@@ -130,8 +130,10 @@ int main() {
 	signal(SIGHUP, herder_update);
 	signal(SIGINT, herder_exit);
 
-    pthread_cond_init(&signal_available, NULL);
+    pthread_cond_init(&signal_cond, NULL);
+    pthread_cond_init(&workers_cond, NULL);
     pthread_mutex_init(&signal_lock, NULL);
+    pthread_mutex_init(&workers_lock, NULL);
 
 	update_workers(read_config());
 	while (run_herder) ;  // infinite while loop until run_herder is set false
