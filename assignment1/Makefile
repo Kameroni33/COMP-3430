@@ -2,7 +2,7 @@ CFLAGS = -Wall -Wextra -Wpedantic -Werror -g
 LL = -lpthread
 CC = clang
 
-all: a1-elf a1-procs a1-threads
+all: a1-elf a1-procs a1-threads a1-threads-locks
 
 a1-elf: a1-elf.c
 	$(CC) $(CFLAGS) a1-elf.c -o a1-elf
