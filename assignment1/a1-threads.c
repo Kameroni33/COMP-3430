@@ -61,7 +61,6 @@ static void update_workers(int num_workers) {
 		} else if (workers > num_workers) {
 
 			// printf("signaling process (%d)\n", worker_ids[workers]);  // testing
-            int status = 1;
 			kill(worker_ids[workers], SIGINT);
             workers--;
 
