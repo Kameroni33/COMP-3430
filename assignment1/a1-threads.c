@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 
 
 int start_thread() {
@@ -32,11 +32,11 @@ int main(int argc, char** argv) {
 		exit(0);
 	}
 
-    fscanf(f_ptr, "%d");
+    fscanf(f_ptr, "%d", workers);
 
     // start worker threads
     for (int i = 0; i < workers; i++) {
-        assert(start_proc());
+        start_proc();
     }
 
 	// close file
