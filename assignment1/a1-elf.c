@@ -90,7 +90,7 @@ int main(int argc, char** argv) {
 		// read file name from the command line if provided
 		f_name = argv[1];
 	} else {
-		// if no file name is provided, use this file as the default (ie. "a1q1")
+		// if no file name is provided, use this file as the default (ie. "a1-elf")
 		f_name = argv[0];
 	}
 
@@ -238,6 +238,5 @@ int main(int argc, char** argv) {
 	fclose(f_ptr);
 
 	printf("End of Processing.");
-
 	return 0;
 }
