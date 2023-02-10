@@ -62,8 +62,13 @@ static void update_workers(int num_workers) {
 		} else if (workers > num_workers) {
 
 			// printf("signaling process (%d)\n", worker_ids[workers]);  // testing
+            int status = 1;
 			kill(worker_ids[workers], SIGINT);
-			workers--;
+            while (status != 0) {
+                waitpid(worker_ids[workers], &status, 0);
+            }
+            printf("worker exited!");
+            workers--;
 
 		} else {
 			printf("Umm... something ain't right\n");
