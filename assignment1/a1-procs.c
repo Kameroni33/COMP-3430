@@ -18,8 +18,6 @@ void worker_exit() {
 	exit(0);
 }
 
-void worker_ignore() {}
-
 static int read_config() {
 
 	FILE* f_ptr;  // file pointer
@@ -47,8 +45,7 @@ static void update_workers(int num_workers) {
 			if (new_pid == 0) {
 				// child process
 				printf("worker (pid: %d)\n", getpid());
-				signal(SIGINT, worker_ignore);
-				signal(SIGHUP, worker_exit);
+				signal(SIGINT, worker_exit);
 				while (1) ;  // just wait for the process herder to stop us
 				printf("Worker exited unexpectedly.\n");
 				exit(0);
@@ -75,10 +72,9 @@ void handle_update() {
 
 void herder_exit() {
 	printf(" exiting...\n");
-	kill(0, SIGHUP);
+	kill(0, SIGINT);
 	sleep(1);
-	printf("\nEnd of process.\n\n");
-	exit(0);
+	run_herder = 0;
 }
 
 int main() {
@@ -93,6 +89,6 @@ int main() {
 	update_workers(read_config());
 	while (run_herder) ;  // infinite while loop until run_herder is set false
 
-	printf("Process ended unexpectedly.\n");
+	printf("\nend of process.\n\n");
 	return 0;
 }
