@@ -27,7 +27,7 @@ int main() {
 		fscanf(f_ptr, "%d", &workers);
 		printf("workers: %d\n", workers);
 	} else {
-		printf("Error: unable to open config file.\n\n", f_name);
+		printf("Error: unable to open config file.\n\n");
 		exit(0);
 	}
     
