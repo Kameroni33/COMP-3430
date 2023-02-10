@@ -3,11 +3,12 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <sys/wait.h>
+#include <stdbool.h>
 
 #define MAX_WORKERS 100
 
 
-int run_herder = 1;
+bool run_herder = true;
 
 char config[] = "./config.txt";  // config file name
 int workers = 0;  // number of worker processes
@@ -37,6 +38,7 @@ static int read_config() {
 }
 
 static void update_workers(int num_workers) {
+	int status;  // status code for exiting child processes
 	printf("updating workers...\n");
 	while (workers != num_workers && workers < MAX_WORKERS && workers >= 0) {
 		// printf("workers: %d | num: %d\n", workers, num_workers);  // testing
@@ -62,12 +64,12 @@ static void update_workers(int num_workers) {
 		} else if (workers > num_workers) {
 
 			// printf("signaling process (%d)\n", worker_ids[workers]);  // testing
-            int status = 1;
+            status = 1;
 			kill(worker_ids[workers], SIGINT);
             while (status != 0) {
                 waitpid(worker_ids[workers], &status, 0);
             }
-            printf("worker exited!");
+            // printf("worker exited!");
             workers--;
 
 		} else {
@@ -78,14 +80,14 @@ static void update_workers(int num_workers) {
 	printf("\n");
 }
 
-void handle_update() {
+void herder_update() {
 	update_workers(read_config());
 }
 
 void herder_exit() {
 	printf("cleaning up\n\n");
 	update_workers(0);
-	run_herder = 0;
+	run_herder = false;
 }
 
 int main() {
@@ -94,7 +96,7 @@ int main() {
 	printf("Process Herder (pid: %d)\n", getpid());
 	printf("============================\n\n");
 
-	signal(SIGHUP, handle_update);
+	signal(SIGHUP, herder_update);
 	signal(SIGINT, herder_exit);
 
 	update_workers(read_config());

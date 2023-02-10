@@ -1,21 +1,39 @@
 #include <stdio.h>
 #include <unistd.h>
-#include <signal.h>
 #include <stdlib.h>
+#include <pthread.h>
+#include <stdbool.h>
 
 #define MAX_WORKERS 100
 
 
-int run_herder = 1;
-
+int run_herder = false;
 char config[] = "./config.txt";  // config file name
-int workers = 0;  // number of worker processes
-int worker_ids[MAX_WORKERS] = {0};
 
-void worker_exit() {
-	printf("exiting worker (pid: %d)\n", getpid());
-	exit(0);
+pthread_mutex_t signal_lock;
+pthread_cond_t signal_available;
+bool signal = false;
+
+int workers = 0;  // number of worker processes
+pthread_t worker_threads[MAX_WORKERS] = {0};
+
+
+void* worker_thread(void* num) {
+    
+    int thread_num = num;
+    printf("thread %d starting", thread_num);
+
+    pthread_mutex_lock(&signal_lock);
+    while(!signal) {
+        pthread_cond_wait(&signal_available, &signal_lock);
+    }
+    signal = false;
+    pthread_mutex_unlock(&signal_lock);
+
+    printf("thread %d exiting", thread_num);
+    pthread_exit(NULL);
 }
+
 
 static int read_config() {
 
@@ -41,28 +59,22 @@ static void update_workers(int num_workers) {
 		// printf("workers: %d | num: %d\n", workers, num_workers);  // testing
 		if (workers < num_workers) {
 
-			int new_pid = fork();
-			if (new_pid == 0) {
+            pthread_t new_thread;
+            worker_threads[workers] = new_thread;
+            pthread_create(&new_thread, NULL, &worker_thread, workers);
 
-				// child process
-				printf("worker (pid: %d)\n", getpid());
-				signal(SIGINT, worker_exit);
-				while (1) ;  // just wait for the process herder to stop us
-				printf("Worker exited unexpectedly.\n");
-				exit(0);
+            workers++;
 
-			} else {
-
-				// parent process
-				workers++;
-				worker_ids[workers] = new_pid;
-
-			}
 		} else if (workers > num_workers) {
 
-			// printf("signaling process (%d)\n", worker_ids[workers]);  // testing
-			kill(worker_ids[workers], SIGINT);
             workers--;
+
+            pthread_mutex_lock(&signal_lock);
+            signal = true;
+            pthread_cond_broadcast(&signal_available);
+            pthread_mutex_unlock(&signal_lock);
+
+            // pthread_join(worker_threads[workers], NULL);  // don't know which thread will exit
 
 		} else {
 			printf("Umm... something ain't right\n");
@@ -72,7 +84,7 @@ static void update_workers(int num_workers) {
 	printf("\n");
 }
 
-void handle_update() {
+void herder_update() {
 	update_workers(read_config());
 }
 
@@ -88,8 +100,11 @@ int main() {
 	printf("Thread Herder (pid: %d)\n", getpid());
 	printf("============================\n\n");
 
-	signal(SIGHUP, handle_update);
+	signal(SIGHUP, herder_update);
 	signal(SIGINT, herder_exit);
+
+    pthread_cond_init(&signal_available, NULL);
+    pthread_mutex_init(&signal_lock, NULL);
 
 	update_workers(read_config());
 	while (run_herder) ;  // infinite while loop until run_herder is set false
