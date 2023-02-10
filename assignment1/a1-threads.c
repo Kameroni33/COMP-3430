@@ -11,14 +11,6 @@
 bool run_herder = true;
 char config[] = "./config.txt";  // config file name
 
-pthread_mutex_t signal_lock;
-pthread_cond_t signal_cond;
-bool thread_signal = false;
-
-pthread_mutex_t workers_lock;
-pthread_cond_t workers_cond;
-bool workers_updated = false;
-
 int workers = 0;  // number of worker processes
 pthread_t worker_threads[MAX_WORKERS] = {0};
 bool worker_signals[MAX_WORKERS] = {0};
@@ -27,7 +19,7 @@ bool worker_signals[MAX_WORKERS] = {0};
 void* worker_thread(void* value) {
     
     int* thread_num = value;
-    int* check = worker_signals[*thread_num];
+    bool* check = &worker_signals[*thread_num];
     printf("thread %d starting\n", *thread_num);
 
     while(!*check) ;  // wait for our signal to to set true
@@ -67,14 +59,14 @@ static void update_workers(int num_workers) {
             int curr_worker = workers;
             pthread_create(&new_thread, NULL, &worker_thread, &curr_worker);
             worker_threads[workers] = new_thread;
-            thread_signal[workers] = false;
+            worker_signals[workers] = false;
             workers++;
 
 		} else if (workers > num_workers) {
 
 			workers--;
-            thread_signal[workers] = true;
-            pthread_join(worker_threads[workers]);
+            worker_signals[workers] = true;
+            pthread_join(worker_threads[workers], NULL);
 
 		} else {
 			printf("Umm... something ain't right\n");

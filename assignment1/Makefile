@@ -13,5 +13,8 @@ a1-procs: a1-procs.c
 a1-threads: a1-threads.c
 	$(CC) $(CFLAGS) a1-threads.c -o a1-threads $(LL)
 
+a1-threads-locks: a1-threads-locks.c
+	$(CC) $(CFLAGS) a1-threads-locks.c -o a1-threads-locks $(LL)
+
 clean:
 	rm -f a1-elf a1-procs a1-threads
