@@ -13,10 +13,12 @@ char config[] = "./config.txt";  // config file name
 int workers = 0;  // number of worker processes
 int worker_ids[MAX_WORKERS] = {0};
 
-void worker_handle_int() {
+void worker_exit() {
 	printf("exiting worker (pid: %d)\n", getpid());
 	exit(0);
 }
+
+void worker_ignore() {}
 
 static int read_config() {
 
@@ -44,7 +46,8 @@ static void update_workers(int num_workers) {
 			if (new_pid == 0) {
 				// child process
 				printf("worker (pid: %d)\n", getpid());
-				signal(SIGINT, worker_handle_int);
+				signal(SIGINT, worker_ignore);
+				signal(SIGHUP, worker_exit);
 				while (1) ;  // just wait for the process herder to stop us
 			} else {
 				// parent process
@@ -52,7 +55,7 @@ static void update_workers(int num_workers) {
 				worker_ids[workers] = new_pid;
 			}
 		} else if (workers > num_workers) {
-			// kill(worker_ids[workers], SIGINT);
+			kill(worker_ids[workers], SIGHUP);
 			workers--;
 		} else {
 			printf("Umm... something ain't right\n");
