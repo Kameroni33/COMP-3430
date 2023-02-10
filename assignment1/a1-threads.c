@@ -18,7 +18,7 @@ int workers = 0;  // number of worker processes
 pthread_t worker_threads[MAX_WORKERS] = {0};
 
 
-void* worker_thread(void* num) {
+void* worker_thread(int num) {
     
     int thread_num = num;
     printf("thread %d starting", thread_num);
@@ -60,8 +60,8 @@ static void update_workers(int num_workers) {
 		if (workers < num_workers) {
 
             pthread_t new_thread;
-            worker_threads[workers] = new_thread;
             pthread_create(&new_thread, NULL, &worker_thread, workers);
+            worker_threads[workers] = new_thread;
 
             workers++;
 
