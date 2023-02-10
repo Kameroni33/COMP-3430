@@ -9,29 +9,28 @@ static int start_proc() {
 }
 
 
-int main(int argc, char** argv) {
+int main() {
 
     // file variables
-	char f_name[] = "./config";
+	char f_name[] = "./config.txt";
 	FILE* f_ptr;
 
     // number of worker processes
     int workers = 0;
 
-    // if (argc > 1) {
-	// 	// read cofig file from the command line if provided
-	// 	f_name = argv[1];
-	// } else
+	printf("Herder (pid: %d)", getpid());
 
     // open file and read number of workers to start
     f_ptr = fopen(f_name, "r");
-	if (f_ptr == NULL) {
-		printf("Error: unable to open file '%s'.\n\n", f_name);
+	if (f_ptr != NULL) {
+		printf("reading config file...\n");
+		fscanf(f_ptr, "%d", &workers);
+		printf("workers: %d\n", workers);
+	} else {
+		printf("Error: unable to open config file.\n\n", f_name);
 		exit(0);
 	}
-
-    fscanf(f_ptr, "%d", &workers);
-    printf("workers: %d\n", workers);
+    
 
     // start worker processes
     for (int i = 0; i < workers; i++) {
