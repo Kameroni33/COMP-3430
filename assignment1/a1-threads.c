@@ -8,7 +8,7 @@
 #define MAX_WORKERS 100
 
 
-int run_herder = false;
+int run_herder = true;
 char config[] = "./config.txt";  // config file name
 
 pthread_mutex_t signal_lock;
@@ -22,7 +22,7 @@ pthread_t worker_threads[MAX_WORKERS] = {0};
 void* worker_thread(void* input) {
     
     int thread_num = *(int*)input;
-    printf("thread %d starting", thread_num);
+    printf("thread %d starting\n", thread_num);
 
     pthread_mutex_lock(&signal_lock);
     while(!thread_signal) {
@@ -31,7 +31,7 @@ void* worker_thread(void* input) {
     thread_signal = false;
     pthread_mutex_unlock(&signal_lock);
 
-    printf("thread %d exiting", thread_num);
+    printf("thread %d exiting\n", thread_num);
     pthread_exit(NULL);
 }
 
@@ -92,7 +92,7 @@ void herder_update() {
 void herder_exit() {
 	printf("cleaning up\n\n");
 	update_workers(0);
-	run_herder = 0;
+	run_herder = false;
 }
 
 int main() {
