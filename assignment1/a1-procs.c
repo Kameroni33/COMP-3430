@@ -38,7 +38,7 @@ static int read_config() {
 	return num_workers;
 }
 
-static int update_workers(int num_workers) {
+static void update_workers(int num_workers) {
 	while (workers != num_workers) {
 		if (workers < num_workers) {
 			int new_pid = fork();
