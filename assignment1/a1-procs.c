@@ -32,7 +32,7 @@ static int read_config() {
 	}
 
 	fclose(f_ptr);  // close file
-	printf("workers: %d\n", num_workers);
+	printf("workers: %d\n\n", num_workers);
 	return num_workers;
 }
 
@@ -61,6 +61,7 @@ static void update_workers(int num_workers) {
 			printf("Umm... something ain't right\n");
 		}
 	}
+	printf("\n");
 }
 
 void handle_hup() {
@@ -69,7 +70,8 @@ void handle_hup() {
 
 void herder_handle_int() {
 	update_workers(0);
-	printf("Exiting...\n");
+	sleep(1);
+	printf("\nExiting...\n");
 	exit(0);
 }
 
@@ -77,7 +79,7 @@ int main() {
 
 	printf("============================\n");
 	printf("Process Herder (pid: %d)\n", getpid());
-	printf("============================\n");
+	printf("============================\n\n");
 
 	signal(SIGHUP, handle_hup);
 	signal(SIGINT, herder_handle_int);
