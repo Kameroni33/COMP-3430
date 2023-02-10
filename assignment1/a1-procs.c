@@ -39,7 +39,8 @@ static int read_config() {
 }
 
 static void update_workers(int num_workers) {
-	while (workers != num_workers) {
+	printf("updating workers...")
+	while (workers != num_workers && workers < MAX_WORKERS && worker >= 0) {
 		if (workers < num_workers) {
 			int new_pid = fork();
 			if (new_pid == 0) {
@@ -80,6 +81,9 @@ int main() {
 
 	signal(SIGHUP, handle_hup);
 	signal(SIGINT, herder_handle_int);
+
+	printf("config: %d\n", read_config());
+	update_workers(read_config());
 	while (run_herder) ;  // infinite while loop until run_herder is set false
 
 	printf("End of Processing.\n");
