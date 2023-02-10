@@ -17,4 +17,4 @@ a1-threads-locks: a1-threads-locks.c
 	$(CC) $(CFLAGS) a1-threads-locks.c -o a1-threads-locks $(LL)
 
 clean:
-	rm -f a1-elf a1-procs a1-threads
+	rm -f a1-elf a1-procs a1-threads a1-threads-locks

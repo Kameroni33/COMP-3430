@@ -1,3 +1,10 @@
+//-------------------------------------------------------------------------------------------------
+// Kameron Ronald
+// 
+// This file does the same thing as 'a1-threads.c' does it using locks and condition variables.
+// Please mark 'a1-threads.c' instead. I've just included this one for shits and giggles (plus it's
+// terribly documented, so I'll spare you the time of try to decipher it all).
+//-------------------------------------------------------------------------------------------------
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>

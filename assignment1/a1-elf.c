@@ -1,9 +1,19 @@
+//-------------------------------------------------------------------------------------------------
+// NAME: Kameron Ronald
+// STUDENT NUMBER: 7880495
+// COURSE: COMP 3430
+// INSTRUCTOR: Rob G.
+// ASSIGNMENT: assignment 1, QUESTION: question 1
+// 
+// REMARKS: this file reads in an ELF formatted binary file and displays select information about
+//			the file, program, and section headers.
+//-------------------------------------------------------------------------------------------------
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
 
-#define MAX_NAME 100
+#define MAX_NAME 100  // Assumption: section header names will not exceed 100 characters (including \0)
 
 
 enum e_ident_pos {
@@ -69,22 +79,23 @@ struct elf_section_header_t {
 
 int main(int argc, char** argv) {
 
-	// file variables
+	// VARIABLE DECLARIONS
+
 	char* f_name;
 	FILE* f_ptr;
 
-	// file header variables
 	struct elf_file_header_t f_header;
-	char endian[10];  // need at least 7 characters for 'endian\0'
-	uint8_t bit;  // integer should be 32 or 64, so 8 bits is fine
-
-	// file program/section header variables
 	struct elf_program_header_t p_header;
 	struct elf_section_header_t s_header;
-	uint64_t str_table_offset;
-	unsigned char seg_byte;
-	int display_num_bytes;  // number of bytes to print out (at most 32)
-	char s_name[MAX_NAME];
+
+	char endian[10];						// need at least 7 characters for 'endian\0'
+	uint8_t bit;							// integer should be 32 or 64, so 8 bits is fine
+	uint64_t str_table_offset;				// offset from start of file to string table
+	unsigned char seg_byte;					// for reading segment information
+	int display_num_bytes;					// number of bytes to print out (at most 32)
+	char s_name[MAX_NAME];					// to store the name 'string' of the current section
+
+	// BEGIN PROCESSING
 
 	if (argc > 1) {
 		// read file name from the command line if provided
@@ -110,7 +121,7 @@ int main(int argc, char** argv) {
 		exit(0);
 	}
 
-	// assert that file is 64-bit
+	// verify that file is 64-bit
 	if (f_header.e_ident[EI_CLASS] != 2) {
 		printf("\nError: Not 64-bit.\n");
 		exit(0);
@@ -118,7 +129,7 @@ int main(int argc, char** argv) {
 		bit = 64;  // for representation later
 	}
 
-	// determine endian
+	// determine endian 'string' (for printing)
 	if (f_header.e_ident[EI_DATA] == 1) {
 		strcpy(endian, "little");
 	} else if (f_header.e_ident[EI_DATA] == 2) {
@@ -150,7 +161,7 @@ int main(int argc, char** argv) {
 	printf("Program Headers:\n");
 	printf("============================================================\n\n");
 
-	// handle program headers
+	// handle program headers (should probably be a seperate function, but alas 'deadlines'...)
 	for (int program = 0; program < f_header.e_phnum; program++) {
 
 		// move to program header offset
@@ -176,13 +187,17 @@ int main(int argc, char** argv) {
 		// print first (up to) 32 bytes of file
 		fseek(f_ptr, p_header.p_offset, SEEK_SET);
 		for (int i = 0; i < display_num_bytes; i++) {
-			seg_byte = fgetc(f_ptr);
-			printf("%02x ", seg_byte);
+			
+			seg_byte = fgetc(f_ptr);	// read next byte
+			printf("%02x ", seg_byte);	// print byte (hex formated)
+
+			// Add whitespace for readablility (after 16/32 bytes or end of segment data)
 			if (i == 15 || i == 31 || (i == display_num_bytes -1 && display_num_bytes < 32)) {
 				printf("\n");
 			}
 		}
-		printf("\n");
+
+		printf("\n");  // more whitespace for readablility
 	}
 
 	printf("============================================================\n");
@@ -194,7 +209,7 @@ int main(int argc, char** argv) {
 	fread(&s_header, sizeof(char), f_header.e_shentsize, f_ptr);
 	str_table_offset = s_header.sh_offset;
 
-	// handle section headers
+	// handle section headers (should probably be a seperate function, but alas 'deadlines'...)
 	for (int section = 0; section < f_header.e_shnum; section++) {
 
 		// move to section header offset
@@ -224,14 +239,17 @@ int main(int argc, char** argv) {
 		// print first (up to) 32 bytes of file
 		fseek(f_ptr, s_header.sh_offset, SEEK_SET);
 		for (int i = 0; i < display_num_bytes; i++) {
-			seg_byte = fgetc(f_ptr);
-			printf("%02x ", seg_byte);
+			
+			seg_byte = fgetc(f_ptr);	// read next byte
+			printf("%02x ", seg_byte);	// print byte (hex formated)
+
+			// Add whitespace for readablility (after 16/32 bytes or end of segment data)
 			if (i == 15 || i == 31 || (i == display_num_bytes -1 && display_num_bytes < 32)) {
 				printf("\n");
 			}
 		}
-		printf("\n");
 
+		printf("\n");  // more whitespace for readablility
 	}
 
 	// close file
