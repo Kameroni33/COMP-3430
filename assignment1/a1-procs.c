@@ -41,6 +41,7 @@ static int read_config() {
 static void update_workers(int num_workers) {
 	printf("updating workers...\n");
 	while (workers != num_workers && workers < MAX_WORKERS && workers >= 0) {
+		printf("workers: %d | num: %d", workers, num_workers);
 		if (workers < num_workers) {
 			int new_pid = fork();
 			if (new_pid == 0) {
@@ -49,6 +50,8 @@ static void update_workers(int num_workers) {
 				signal(SIGINT, worker_ignore);
 				signal(SIGHUP, worker_exit);
 				while (1) ;  // just wait for the process herder to stop us
+				printf("Worker exited unexpectedly.\n");
+				exit(0);
 			} else {
 				// parent process
 				workers++;
