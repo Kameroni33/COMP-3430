@@ -63,11 +63,11 @@ static void update_workers(int num_workers) {
 	}
 }
 
-void handle_hup(int arg) {
+void handle_hup() {
 	update_workers(read_config());
 }
 
-void herder_handle_int(int arg) {
+void herder_handle_int() {
 	update_workers(0);
 	printf("Exiting...\n");
 	exit(0);
