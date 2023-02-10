@@ -70,9 +70,8 @@ void handle_hup() {
 }
 
 void herder_handle_int() {
-	printf("exiting...\n\n");
+	printf(" exiting...\n\n");
 	update_workers(0);
-	sleep(1);
 	printf("End of process.\n\n");
 	exit(0);
 }
