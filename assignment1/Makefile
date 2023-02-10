@@ -11,7 +11,7 @@ a1-procs: a1-procs.c
 	$(CC) $(CFLAGS) a1-procs.c -o a1-procs
 
 a1-threads: a1-threads.c
-	$(CC) $(CFLAGS) a1-threads.c -o a1-threads -l $(LL)
+	$(CC) $(CFLAGS) a1-threads.c -o a1-threads $(LL)
 
 clean:
 	rm -f a1-elf a1-procs a1-threads
