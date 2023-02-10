@@ -12,7 +12,7 @@ static int start_proc() {
 int main(int argc, char** argv) {
 
     // file variables
-	char* f_name;
+	char* f_name = "./config";
 	FILE* f_ptr;
 
     // number of worker processes
@@ -21,9 +21,7 @@ int main(int argc, char** argv) {
     if (argc > 1) {
 		// read cofig file from the command line if provided
 		f_name = argv[1];
-	} else {
-		strcpy(f_name, "./config");
-	}
+	} else
 
     // open file and read number of workers to start
     f_ptr = fopen(f_name, "r");
