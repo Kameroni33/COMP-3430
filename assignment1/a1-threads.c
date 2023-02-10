@@ -28,6 +28,20 @@ void* worker_thread(void* value) {
     pthread_exit(NULL);
 }
 
+static void create_thread() {
+    pthread_t new_thread;
+    int curr_worker = workers;
+    pthread_create(&new_thread, NULL, &worker_thread, &curr_worker);
+    worker_threads[workers] = new_thread;
+    worker_signals[workers] = false;
+    workers++;
+}
+
+static void remove_thread() {
+    workers--;
+    worker_signals[workers] = true;
+    pthread_join(worker_threads[workers], NULL);
+}
 
 static int read_config() {
 
@@ -53,20 +67,9 @@ static void update_workers(int num_workers) {
     while (workers != num_workers && workers < MAX_WORKERS && workers >= 0) {
 		// printf("workers: %d | num: %d\n", workers, num_workers);  // testing
 		if (workers < num_workers) {
-
-			pthread_t new_thread;
-            int curr_worker = workers;
-            pthread_create(&new_thread, NULL, &worker_thread, &curr_worker);
-            worker_threads[workers] = new_thread;
-            worker_signals[workers] = false;
-            workers++;
-
+			create_thread();
 		} else if (workers > num_workers) {
-
-			workers--;
-            worker_signals[workers] = true;
-            pthread_join(worker_threads[workers], NULL);
-
+            remove_thread();
 		} else {
 			printf("Umm... something ain't right\n");
 		}
