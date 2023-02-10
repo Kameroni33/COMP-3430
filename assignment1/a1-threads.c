@@ -20,19 +20,21 @@ void* worker_thread(void* value) {
     
     int* thread_num = value;
     bool* check = &worker_signals[*thread_num];
-    printf("thread %d starting\n", *value);
+    printf("thread %d starting\n", *thread_num);
 
     while(!*check) ;  // wait for our signal to to set true
 
     printf("thread %d exiting\n", *thread_num);
+    free(thread_num);
     pthread_exit(NULL);
 }
 
 static void create_thread() {
     pthread_t new_thread;
-    int curr_worker = workers;
-    printf("current_worker: %d\n", curr_worker);
-    pthread_create(&new_thread, NULL, &worker_thread, &curr_worker);
+    int* curr_worker = malloc(sizeof(int));
+    *curr_worker = workers;
+    printf("current_worker: %d\n", *curr_worker);
+    pthread_create(&new_thread, NULL, &worker_thread, curr_worker);
     worker_threads[workers] = new_thread;
     worker_signals[workers] = false;
     workers++;
