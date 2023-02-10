@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
 		exit(0);
 	}
 
-    fscanf(f_ptr, "%d", workers);
+    fscanf(f_ptr, "%d", &workers);
 
     // start worker threads
     for (int i = 0; i < workers; i++) {
