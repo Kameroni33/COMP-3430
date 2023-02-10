@@ -14,7 +14,7 @@ int workers = 0;  // number of worker processes
 int worker_ids[MAX_WORKERS] = {0};
 
 void worker_handle_int(int arg) {
-	print("arg: %d\n", arg);
+	printf("arg: %d\n", arg);
 	printf("exiting worker (pid: %d)\n", getpid());
 	exit(0);
 }
@@ -35,7 +35,7 @@ static int read_config() {
 
 	fclose(f_ptr);  // close file
 	printf("workers: %d\n", num_workers);
-	return num_workers
+	return num_workers;
 }
 
 static int update_workers(int num_workers) {
@@ -65,12 +65,12 @@ static int update_workers(int num_workers) {
 }
 
 void handle_hup(int arg) {
-	print("arg: %d\n", arg);
+	printf("arg: %d\n", arg);
 	update_workers(read_config());
 }
 
 void herder_handle_int(int arg) {
-	print("arg: %d\n", arg);
+	printf("arg: %d\n", arg);
 	update_workers(0);
 }
 
