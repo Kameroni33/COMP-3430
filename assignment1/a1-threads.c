@@ -2,7 +2,6 @@
 #include <unistd.h>
 #include <signal.h>
 #include <stdlib.h>
-#include <sys/wait.h>
 
 #define MAX_WORKERS 100
 
@@ -64,10 +63,6 @@ static void update_workers(int num_workers) {
 			// printf("signaling process (%d)\n", worker_ids[workers]);  // testing
             int status = 1;
 			kill(worker_ids[workers], SIGINT);
-            while (status != 0) {
-                waitpid(worker_ids[workers], &status);
-            }
-            printf("worker exited!");
             workers--;
 
 		} else {
