@@ -52,7 +52,7 @@ static void update_workers(int num_workers) {
 				worker_ids[workers] = new_pid;
 			}
 		} else if (workers > num_workers) {
-			kill(worker_ids[workers], SIGINT);
+			// kill(worker_ids[workers], SIGINT);
 			workers--;
 		} else {
 			printf("Umm... something ain't right\n");
