@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
 	}
 
     fscanf(f_ptr, "%d", &workers);
-    printf("workers: %d", workers);
+    printf("workers: %d\n", workers);
 
     // start worker processes
     for (int i = 0; i < workers; i++) {
@@ -42,6 +42,6 @@ int main(int argc, char** argv) {
 	// close file
 	fclose(f_ptr);
 
-	printf("End of Processing.");
+	printf("End of Processing.\n");
 	return 0;
 }
