@@ -45,10 +45,7 @@ static void update_workers(int num_workers) {
 				// child process
 				printf("worker (pid: %d)\n", getpid());
 				signal(SIGINT, worker_handle_int);
-				while (1) {
-					// just wait for the process herder to stop us
-					sleep(1);
-				}  
+				while (1) ;  // just wait for the process herder to stop us
 			} else {
 				// parent process
 				workers++;
@@ -61,6 +58,7 @@ static void update_workers(int num_workers) {
 			printf("Umm... something ain't right\n");
 		}
 	}
+	sleep(1);
 	printf("\n");
 }
 
