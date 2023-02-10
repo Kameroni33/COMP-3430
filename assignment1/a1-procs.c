@@ -72,8 +72,7 @@ void handle_update() {
 
 void herder_exit() {
 	printf(" exiting...\n");
-	kill(0, SIGINT);
-	sleep(1);
+	update_workers(0);
 	run_herder = 0;
 }
 
@@ -89,6 +88,6 @@ int main() {
 	update_workers(read_config());
 	while (run_herder) ;  // infinite while loop until run_herder is set false
 
-	printf("\nend of process.\n\n");
+	printf("end of process.\n\n");
 	return 0;
 }
