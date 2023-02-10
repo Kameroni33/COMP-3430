@@ -41,7 +41,7 @@ static int read_config() {
 static void update_workers(int num_workers) {
 	printf("updating workers...\n");
 	while (workers != num_workers && workers < MAX_WORKERS && workers >= 0) {
-		printf("workers: %d | num: %d", workers, num_workers);
+		printf("workers: %d | num: %d\n", workers, num_workers);
 		if (workers < num_workers) {
 			int new_pid = fork();
 			if (new_pid == 0) {
