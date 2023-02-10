@@ -21,8 +21,7 @@ int main(int argc, char** argv) {
 		// read cofig file from the command line if provided
 		f_name = argv[1];
 	} else {
-		// if no config file is provided use default (ie. 'config')
-		f_name = argv[0];
+		strcpy(f_name, "./config");
 	}
 
     // open file and read number of workers to start
