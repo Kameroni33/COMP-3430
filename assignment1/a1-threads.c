@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-int start_thread() {
+static int start_thread() {
     printf("lol\n");
     return 1;
 }
@@ -16,7 +16,6 @@ int main(int argc, char** argv) {
 
     // number of worker threads
     int workers = 0;
-    int* workers_ptr = &workers;
 
     if (argc > 1) {
 		// read cofig file from the command line if provided
@@ -33,13 +32,12 @@ int main(int argc, char** argv) {
 		exit(0);
 	}
 
-    fscanf(f_ptr, "%d", workers_ptr);
-    workers = *workers_ptr;
+    fscanf(f_ptr, "%d", &workers);
     printf("workers: %d", workers);
 
     // start worker threads
     for (int i = 0; i < workers; i++) {
-        start_proc();
+        start_thread();
     }
 
 	// close file
