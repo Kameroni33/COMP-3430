@@ -58,7 +58,7 @@ static void update_workers(int num_workers) {
 				worker_ids[workers] = new_pid;
 			}
 		} else if (workers > num_workers) {
-			printf("signaling process &d\n", worker_ids[workers]);
+			printf("signaling process %d\n", worker_ids[workers]);
 			kill(worker_ids[workers], SIGHUP);
 			workers--;
 		} else {
