@@ -37,6 +37,7 @@ static int read_config() {
 }
 
 static void update_workers(int num_workers) {
+	printf("updating workers...\n");
 	while (workers != num_workers && workers < MAX_WORKERS && workers >= 0) {
 		// printf("workers: %d | num: %d\n", workers, num_workers);  // testing
 		if (workers < num_workers) {
@@ -50,7 +51,7 @@ static void update_workers(int num_workers) {
 				while (1) ;  // just wait for the process herder to stop us
 				printf("Worker exited unexpectedly.\n");
 				exit(0);
-				
+
 			} else {
 
 				// parent process
@@ -73,12 +74,11 @@ static void update_workers(int num_workers) {
 }
 
 void handle_update() {
-	printf("updating workers...\n");
 	update_workers(read_config());
 }
 
 void herder_exit() {
-	printf("cleaning up...\n");
+	printf("cleaning up\n\n");
 	update_workers(0);
 	run_herder = 0;
 }
