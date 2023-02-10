@@ -75,12 +75,13 @@ void herder_handle_int() {
 
 int main() {
 
-	printf("Process Herder (pid: %d)", getpid());
+	printf("============================\n");
+	printf("Process Herder (pid: %d)\n", getpid());
+	printf("============================\n");
 
 	signal(SIGHUP, handle_hup);
 	signal(SIGINT, herder_handle_int);
 
-	printf("config: %d\n", read_config());
 	update_workers(read_config());
 	while (run_herder) ;  // infinite while loop until run_herder is set false
 
