@@ -13,8 +13,7 @@ char config[] = "./config.txt";  // config file name
 int workers = 0;  // number of worker processes
 int worker_ids[MAX_WORKERS] = {0};
 
-void worker_handle_int(int arg) {
-	printf("arg: %d\n", arg);
+void worker_handle_int() {
 	printf("exiting worker (pid: %d)\n", getpid());
 	exit(0);
 }
@@ -28,7 +27,6 @@ static int read_config() {
 	if (f_ptr != NULL) {
 		printf("reading config file...\n");
 		fscanf(f_ptr, "%d", &num_workers);
-		return num_workers;
 	} else {
 		printf("Error: unable to open config file.\n");
 	}
@@ -39,7 +37,7 @@ static int read_config() {
 }
 
 static void update_workers(int num_workers) {
-	printf("updating workers...");
+	printf("updating workers...\n");
 	while (workers != num_workers && workers < MAX_WORKERS && workers >= 0) {
 		if (workers < num_workers) {
 			int new_pid = fork();
@@ -66,13 +64,13 @@ static void update_workers(int num_workers) {
 }
 
 void handle_hup(int arg) {
-	printf("arg: %d\n", arg);
 	update_workers(read_config());
 }
 
 void herder_handle_int(int arg) {
-	printf("arg: %d\n", arg);
 	update_workers(0);
+	printf("Exiting...\n");
+	exit(0);
 }
 
 int main() {
@@ -86,6 +84,6 @@ int main() {
 	update_workers(read_config());
 	while (run_herder) ;  // infinite while loop until run_herder is set false
 
-	printf("End of Processing.\n");
+	printf("Process ended unexpectedly.\n");
 	return 0;
 }
