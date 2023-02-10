@@ -33,8 +33,8 @@ int main(int argc, char** argv) {
 		exit(0);
 	}
 
-    fscanf(f_ptr, "%d", workers_ptr);
-    workers = *workers_ptr;
+    fscanf(f_ptr, "%d", &workers);
+    // workers = *workers_ptr;
     printf("workers: %d", workers);
 
     // start worker processes
