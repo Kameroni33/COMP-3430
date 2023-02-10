@@ -255,6 +255,6 @@ int main(int argc, char** argv) {
 	// close file
 	fclose(f_ptr);
 
-	printf("End of Processing.");
+	printf("End of Processing.\n\n");
 	return 0;
 }
