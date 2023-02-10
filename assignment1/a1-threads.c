@@ -13,7 +13,7 @@ char config[] = "./config.txt";  // config file name
 
 pthread_mutex_t signal_lock;
 pthread_cond_t signal_available;
-bool signal = false;
+bool thread_signal = false;
 
 int workers = 0;  // number of worker processes
 pthread_t worker_threads[MAX_WORKERS] = {0};
@@ -25,10 +25,10 @@ void* worker_thread(void* input) {
     printf("thread %d starting", thread_num);
 
     pthread_mutex_lock(&signal_lock);
-    while(!signal) {
+    while(!thread_signal) {
         pthread_cond_wait(&signal_available, &signal_lock);
     }
-    signal = false;
+    thread_signal = false;
     pthread_mutex_unlock(&signal_lock);
 
     printf("thread %d exiting", thread_num);
@@ -71,7 +71,7 @@ static void update_workers(int num_workers) {
             workers--;
 
             pthread_mutex_lock(&signal_lock);
-            signal = true;
+            thread_signal = true;
             pthread_cond_broadcast(&signal_available);
             pthread_mutex_unlock(&signal_lock);
 
