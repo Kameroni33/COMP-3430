@@ -12,26 +12,40 @@ int run_herder = true;
 char config[] = "./config.txt";  // config file name
 
 pthread_mutex_t signal_lock;
-pthread_cond_t signal_available;
+pthread_cond_t signal_cond;
 bool thread_signal = false;
+
+pthread_mutex_t workers_lock;
+pthread_cond_t workers_cond;
+bool workers_updated = false;
 
 int workers = 0;  // number of worker processes
 pthread_t worker_threads[MAX_WORKERS] = {0};
 
 
-void* worker_thread(void* input) {
+void* worker_thread() {
     
-    int thread_num = *(int*)input;
-    printf("thread %d starting\n", thread_num);
+    pthread_mutex_lock(&workers_lock);
+    printf("thread %d starting\n", workers);
+    workers++;
+    workers_updated = true;
+    pthread_cond_signal(&workers_cond);
+    pthread_mutex_unlock(&workers_lock);
 
     pthread_mutex_lock(&signal_lock);
     while(!thread_signal) {
-        pthread_cond_wait(&signal_available, &signal_lock);
+        pthread_cond_wait(&signal_cond, &signal_lock);
     }
     thread_signal = false;
     pthread_mutex_unlock(&signal_lock);
 
-    printf("thread %d exiting\n", thread_num);
+    pthread_mutex_lock(&workers_lock);
+    printf("thread %d exiting\n", workers);
+    workers--;
+    workers_updated = true;
+    pthread_cond_signal(&workers_cond);
+    pthread_mutex_unlock(&workers_lock);
+
     pthread_exit(NULL);
 }
 
@@ -56,31 +70,43 @@ static int read_config() {
 
 static void update_workers(int num_workers) {
 	printf("updating workers...\n");
-	while (workers != num_workers && workers < MAX_WORKERS && workers >= 0) {
-		// printf("workers: %d | num: %d\n", workers, num_workers);  // testing
-		if (workers < num_workers) {
 
+    pthread_mutex_lock(&workers_lock);
+    int to_create = num_workers - workers;
+    pthread_mutex_unlock(&workers_lock);
+
+    if (to_create > 0) {
+        for (int i = 0; i < to_create; i++) {
+
+            pthread_mutex_lock(&workers_lock);
             pthread_t new_thread;
-            pthread_create(&new_thread, NULL, &worker_thread, &workers);
+            pthread_create(&new_thread, NULL, &worker_thread, NULL);
             worker_threads[workers] = new_thread;
-
-            workers++;
-
-		} else if (workers > num_workers) {
-
-            workers--;
+            while(!workers_updated) {
+                pthread_cond_wait(&workers_cond, &workers_lock);
+            }
+            workers_updated = false;
+            pthread_mutex_unlock(&workers_lock);
+        }
+    } else if (to_create < 0) {
+        for (int i = 0; i > to_create; i--) {
 
             pthread_mutex_lock(&signal_lock);
             thread_signal = true;
-            pthread_cond_broadcast(&signal_available);
+            pthread_cond_signal(&signal_cond);
             pthread_mutex_unlock(&signal_lock);
 
-            // pthread_join(worker_threads[workers], NULL);  // don't know which thread will exit
+            pthread_mutex_lock(&workers_lock);
+            while(!workers_updated) {
+                pthread_cond_wait(&workers_cond, &workers_lock);
+            }
+            workers_updated = false;
+            pthread_mutex_unlock(&workers_lock);
+        }
+    } else {
+        printf("no changes required\n");
+    }
 
-		} else {
-			printf("Umm... something ain't right\n");
-		}
-	}
 	sleep(1);
 	printf("\n");
 }
