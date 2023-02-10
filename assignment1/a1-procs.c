@@ -41,7 +41,7 @@ static int read_config() {
 static void update_workers(int num_workers) {
 	printf("updating workers...\n");
 	while (workers != num_workers && workers < MAX_WORKERS && workers >= 0) {
-		printf("workers: %d | num: %d\n", workers, num_workers);
+		// printf("workers: %d | num: %d\n", workers, num_workers);  // testing
 		if (workers < num_workers) {
 			int new_pid = fork();
 			if (new_pid == 0) {
@@ -58,7 +58,7 @@ static void update_workers(int num_workers) {
 				worker_ids[workers] = new_pid;
 			}
 		} else if (workers > num_workers) {
-			printf("signaling process %d\n", worker_ids[workers]);
+			printf("signaling process (%d)\n", worker_ids[workers]);
 			kill(worker_ids[workers], SIGHUP);
 			workers--;
 		} else {
@@ -69,14 +69,15 @@ static void update_workers(int num_workers) {
 	printf("\n");
 }
 
-void handle_hup() {
+void handle_update() {
 	update_workers(read_config());
 }
 
-void herder_handle_int() {
-	printf(" exiting...\n\n");
-	update_workers(0);
-	printf("End of process.\n\n");
+void herder_exit() {
+	printf(" exiting...\n");
+	kill(0, SIGHUP);
+	sleep(1);
+	printf("\nEnd of process.\n\n");
 	exit(0);
 }
 
@@ -86,8 +87,8 @@ int main() {
 	printf("Process Herder (pid: %d)\n", getpid());
 	printf("============================\n\n");
 
-	signal(SIGHUP, handle_hup);
-	signal(SIGINT, herder_handle_int);
+	signal(SIGHUP, handle_update);
+	signal(SIGINT, herder_exit);
 
 	update_workers(read_config());
 	while (run_herder) ;  // infinite while loop until run_herder is set false
