@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
 
     // number of worker processes
     int workers = 0;
-	int* workers_ptr = &workers;
+	// int* workers_ptr = &workers;
 
     if (argc > 1) {
 		// read cofig file from the command line if provided
