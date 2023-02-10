@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-int start_proc() {
+static int start_proc() {
     printf("lol\n");
     return 1;
 }
