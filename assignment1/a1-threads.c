@@ -19,9 +19,9 @@ int workers = 0;  // number of worker processes
 pthread_t worker_threads[MAX_WORKERS] = {0};
 
 
-void* worker_thread(void* num) {
+void* worker_thread(void* input) {
     
-    int thread_num = num;
+    int thread_num = *(int*)input;
     printf("thread %d starting", thread_num);
 
     pthread_mutex_lock(&signal_lock);
