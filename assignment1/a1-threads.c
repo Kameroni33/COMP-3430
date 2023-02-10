@@ -1,48 +1,105 @@
 #include <stdio.h>
+#include <unistd.h>
+#include <signal.h>
 #include <stdlib.h>
+#include <string.h>
+
+#define MAX_WORKERS 100
 
 
-static int start_thread() {
-    printf("lol\n");
-    return 1;
+int run_herder = 1;
+
+char config[] = "./config.txt";  // config file name
+int workers = 0;  // number of worker processes
+int worker_ids[MAX_WORKERS] = {0};
+
+void worker_exit() {
+	printf("exiting worker (pid: %d)\n", getpid());
+	exit(0);
 }
 
+static int read_config() {
 
-int main(int argc, char** argv) {
+	FILE* f_ptr;  // file pointer
+	int num_workers = 0;  // new number of workers
 
-    // file variables
-	char* f_name;
-	FILE* f_ptr;
-
-    // number of worker threads
-    int workers = 0;
-
-    if (argc > 1) {
-		// read cofig file from the command line if provided
-		f_name = argv[1];
+    f_ptr = fopen(config, "r");
+	if (f_ptr != NULL) {
+		printf("reading config file...\n");
+		fscanf(f_ptr, "%d", &num_workers);
 	} else {
-		// if no config file is provided use default (ie. 'config')
-		f_name = argv[0];
+		printf("Error: unable to open config file.\n");
 	}
 
-    // open file and read number of workers to start
-    f_ptr = fopen(f_name, "r");
-	if (f_ptr == NULL) {
-		printf("Error: unable to open file '%s'.\n\n", f_name);
-		exit(0);
+	fclose(f_ptr);  // close file
+	printf("workers: %d\n\n", num_workers);
+	return num_workers;
+}
+
+static void update_workers(int num_workers) {
+	printf("updating workers...\n");
+	while (workers != num_workers && workers < MAX_WORKERS && workers >= 0) {
+		// printf("workers: %d | num: %d\n", workers, num_workers);  // testing
+		if (workers < num_workers) {
+
+			int new_pid = fork();
+			if (new_pid == 0) {
+
+				// child process
+				printf("worker (pid: %d)\n", getpid());
+				signal(SIGINT, worker_exit);
+				while (1) ;  // just wait for the process herder to stop us
+				printf("Worker exited unexpectedly.\n");
+				exit(0);
+
+			} else {
+
+				// parent process
+				workers++;
+				worker_ids[workers] = new_pid;
+
+			}
+		} else if (workers > num_workers) {
+
+			// printf("signaling process (%d)\n", worker_ids[workers]);  // testing
+            int status = 1;
+			kill(worker_ids[workers], SIGINT);
+            while (status != 0) {
+                waitpid(worker_ids[workers], &status);
+            }
+            printf("worker exited!");
+            workers--;
+
+		} else {
+			printf("Umm... something ain't right\n");
+		}
 	}
+	sleep(1);
+	printf("\n");
+}
 
-    fscanf(f_ptr, "%d", &workers);
-    printf("workers: %d", workers);
+void handle_update() {
+	update_workers(read_config());
+}
 
-    // start worker threads
-    for (int i = 0; i < workers; i++) {
-        start_thread();
-    }
+void herder_exit() {
+	printf("cleaning up\n\n");
+	update_workers(0);
+	run_herder = 0;
+}
 
-	// close file
-	fclose(f_ptr);
+int main() {
 
-	printf("End of Processing.");
+	printf("============================\n");
+	printf("Thread Herder (pid: %d)\n", getpid());
+	printf("============================\n\n");
+
+	signal(SIGHUP, handle_update);
+	signal(SIGINT, herder_exit);
+
+	update_workers(read_config());
+	while (run_herder) ;  // infinite while loop until run_herder is set false
+
+	printf("end of process.\n\n");
 	return 0;
 }
