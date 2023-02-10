@@ -55,7 +55,7 @@ static void update_workers(int num_workers) {
 			} else {
 				// parent process
 				workers++;
-				workeSr_ids[workers] = new_pid;
+				worker_ids[workers] = new_pid;
 			}
 		} else if (workers > num_workers) {
 			printf("signaling process &d\n", worker_ids[workers]);
