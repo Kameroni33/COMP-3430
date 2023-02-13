@@ -45,7 +45,7 @@ is handled in a single atomic operation, rather than 2 seperate steps that could
 
 ## Part 1: Questions
 
-To answer these questions, I used the following ocmmands to compare the number of system calls each
+To answer this question, I used the following commands to compare the number of system calls each
 process made:
 
 ```shell
@@ -59,15 +59,45 @@ diff spin-lock.txt lock-really.txt
 diff atomic-lock.txt lock-really.txt
 ```
 
-Both *spin-lock* and *atomic-lock* make the same system calls and each the same number of times. This
+All 3 processes: *spin-lock*, *atomic-lock*, and *lock-really* generally make the same system calls
+the same number of times. Ocassionally I would see a different number of calls to `futex` depending on
+the order threads executed/joined. However, overall they generally had the same output shown below.
+
+```
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+  0.00    0.000000           0         1           read
+  0.00    0.000000           0         1           write
+  0.00    0.000000           0         2           close
+  0.00    0.000000           0        10           mmap
+  0.00    0.000000           0         5           mprotect
+  0.00    0.000000           0         1           munmap
+  0.00    0.000000           0         3           brk
+  0.00    0.000000           0         1           rt_sigaction
+  0.00    0.000000           0         9           rt_sigprocmask
+  0.00    0.000000           0         4           pread64
+  0.00    0.000000           0         1         1 access
+  0.00    0.000000           0         2           madvise
+  0.00    0.000000           0         1           execve
+  0.00    0.000000           0         2         1 arch_prctl
+  0.00    0.000000           0         2           futex
+  0.00    0.000000           0         1           set_tid_address
+  0.00    0.000000           0         2           openat
+  0.00    0.000000           0         3           newfstatat
+  0.00    0.000000           0         3           set_robust_list
+  0.00    0.000000           0         1           prlimit64
+  0.00    0.000000           0         1           getrandom
+  0.00    0.000000           0         3           rseq
+  0.00    0.000000           0         2           clone3
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000000           0        61         2 total
+```s
+
+
+
 can be shown by running the following, which shows that the system calls and the number of times they
 are called is identical.
 
-```shell
-strace -o spin-lock.txt -f -c ./spin-lock
-strace -o atomic-lock.txt -f -c ./atomic-lock
-strace -o lock-really.txt -f -c ./lock-really
-diff spin-lock.txt atomic-lock.txt
-```
+
 
 
