@@ -10,7 +10,7 @@ ronaldk1@myumanitoba.ca
 make  # re-compile all files
 ```
 
-## Part 1
+## Part 1: Locks
 
 ```shell
 ./spin-lock
@@ -114,4 +114,6 @@ called `pthread_mutex_lock` when the lock was already held, it then made the sys
 wait until the lock was available and then grab it.
 
 
-## Part 2
+## Part 2: Pipeline
+
+sdfasdf
