@@ -45,34 +45,14 @@ is handled in a single atomic operation, rather than 2 seperate steps that could
 
 ## Part 1: Questions
 
-Both *spin-lock* and *atomic-lock* make the same system calls. This can be seen by running `strace -c`
-on both programs to get a summary of the number of system calls. Both yield the same result seen below:
+Both *spin-lock* and *atomic-lock* make the same system calls and each the same number of times. This
+can be shown by running the following, which shows that the system calls and the number of times they
+are called is identical.
 
+```shell
+strace -o spin-lock.txt -f -c ./spin-lock
+strace -o atomic-lock.txt -f -c ./atomic-lock
+strace -o lock-really.txt -f -c ./lock-really
+diff spin-lock.txt atomic-lock.txt
 ```
-% time     seconds  usecs/call     calls    errors syscall
------- ----------- ----------- --------- --------- ----------------
-  0.00    0.000000           0         1           read
-  0.00    0.000000           0         1           write
-  0.00    0.000000           0         2           close
-  0.00    0.000000           0        10           mmap
-  0.00    0.000000           0         5           mprotect
-  0.00    0.000000           0         1           munmap
-  0.00    0.000000           0         3           brk
-  0.00    0.000000           0         1           rt_sigaction
-  0.00    0.000000           0         5           rt_sigprocmask
-  0.00    0.000000           0         4           pread64
-  0.00    0.000000           0         1         1 access
-  0.00    0.000000           0         1           execve
-  0.00    0.000000           0         2         1 arch_prctl
-  0.00    0.000000           0         1           futex
-  0.00    0.000000           0         1           set_tid_address
-  0.00    0.000000           0         2           openat
-  0.00    0.000000           0         3           newfstatat
-  0.00    0.000000           0         1           set_robust_list
-  0.00    0.000000           0         1           prlimit64
-  0.00    0.000000           0         1           getrandom
-  0.00    0.000000           0         1           rseq
-  0.00    0.000000           0         2           clone3
------- ----------- ----------- --------- --------- ----------------
-100.00    0.000000           0        50         2 total
-```
+
