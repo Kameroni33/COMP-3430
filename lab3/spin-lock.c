@@ -39,11 +39,11 @@ int main( void )
 
 void mutex_lock( int *lock )
 {
-    while (lock == 1) ;  // "spin" and test flag
-    lock = 1;            // set flag
+    while (*lock == 1) ;  // "spin" and test flag
+    *lock = 1;            // set flag
 }
 
 void mutex_unlock( int *lock )
 {
-    lock = 0;            // un-set flag
+    *lock = 0;            // un-set flag
 }
