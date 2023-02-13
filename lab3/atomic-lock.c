@@ -5,8 +5,8 @@
 
 #define COUNT_UP_TO 100000000
 
-void mutex_lock( int * );
-void mutex_unlock( int * );
+void mutex_lock( atomic_int * );
+void mutex_unlock( atomic_int * );
 
 static atomic_int lock = 0;  // our flag to signal if the lock is held
 static int counter = 0;      // the object we wish to lock (update atomically)
@@ -38,13 +38,13 @@ int main( void )
     return EXIT_SUCCESS;
 }
 
-void mutex_lock( int *lock )
+void mutex_lock( atomic_int *lock )
 {
     while (*lock == 1) ;  // "spin" and test flag
     *lock = 1;            // set flag
 }
 
-void mutex_unlock( int *lock )
+void mutex_unlock( atomic_int *lock )
 {
     *lock = 0;            // un-set flag
 }
