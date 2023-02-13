@@ -46,5 +46,5 @@ void mutex_lock( atomic_flag *lock )
 
 void mutex_unlock( atomic_flag *lock )
 {
-    *lock = 0;            // un-set flag
+    atomic_flag_clear(lock);  // un-set flag
 }
