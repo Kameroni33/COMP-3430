@@ -41,7 +41,7 @@ int main( void )
 void mutex_lock( int *lock )
 {
     // atomically set lock to true and check if it was previously set
-    while (atomic_flag_test_and_set(lock, 1) == 1) ;
+    while (atomic_flag_test_and_set(lock) == 1) ;
 }
 
 void mutex_unlock( int *lock )
