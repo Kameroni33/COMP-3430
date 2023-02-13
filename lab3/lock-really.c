@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
-<stdatomic.h>
+#include <stdatomic.h>
 
 #define COUNT_UP_TO 100000000
 
