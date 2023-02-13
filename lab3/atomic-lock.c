@@ -7,8 +7,8 @@
 void mutex_lock( int * );
 void mutex_unlock( int * );
 
-static int lock = 0;     // our flag to signal if the lock is held
-static int counter = 0;  // the object we wish to lock (update atomically)
+static atomic_int lock = 0;  // our flag to signal if the lock is held
+static int counter = 0;      // the object we wish to lock (update atomically)
 
 void *count_up( void *args )
 {
