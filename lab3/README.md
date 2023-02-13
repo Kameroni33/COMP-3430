@@ -10,7 +10,7 @@ ronaldk1@myumanitoba.ca
 make  # re-compile all files
 ```
 
-## Part 1: Spin lock
+## Part 1
 
 ```shell
 ./spin-lock
@@ -20,7 +20,7 @@ Unfortunately, this spin lock does not work (counter: 104717276). There exists a
 the threads can be interupted during the execution of *mutex_lock* in a way such that they both set
 the *lock* to be 1.
 
-## Part 1: Atomic variables
+### Atomic variables
 
 ```shell
 ./atomic-lock
@@ -34,7 +34,7 @@ Therefore, I predict: "using atomic variables will **not** fix the lock".
 **Result:** The atomic-lock performed much beter than the spin-lock and lock-maybe, but ultimately
 it failed (counter: 196666944). Hence my hypothesis was correct.
 
-## Part 1: Atomic instructions
+### Atomic instructions
 
 ```shell
 ./lock-really
@@ -43,7 +43,7 @@ it failed (counter: 196666944). Hence my hypothesis was correct.
 This lock does work (counter: 200000000), because the entire operation to check and set the *lock*
 is handled in a single atomic operation, rather than 2 seperate steps that could possubly be interupted.
 
-## Part 1: Questions
+### Questions
 
 To answer this question, I used the following commands to compare the number of system calls each
 process made. `-f` tracks child processes and `-c` formats the output to be easily comparable.
@@ -95,7 +95,23 @@ which can be seen below.
 100.00    0.000000           0        61         2 total
 ```
 
+To test `pthread_mutex_lock`'s, I created an additional file *mutex-lock.c* and ran the following
+commands to compare the system calls with the previous 3 files.
+
+```shell
+# direct strace output to file
+strace -o mutex-lock.txt -f -c ./mutex-lock
+# compare strace outputs
+diff spin-lock.txt mutex-lock.txt
+diff atomic-lock.txt mutex-lock.txt
+diff lock-really.txt mutex-lock.txt
+```
+
+The main difference with *mutex-lock* is that it made a ton of calls to `futex` (usually int the
+range of 1000000 call), which makes sense because `futex` is the underlying system call that
+`pthread_mutex_lock` makes when trying to lock/unlock a *pthread_mutex* lock. So anytime a thread
+called `pthread_mutex_lock` when the lock was already held, it then made the system call `futex` to
+wait until the lock was available and then grab it.
 
 
-
-
+## Part 2
