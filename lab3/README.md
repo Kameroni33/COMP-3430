@@ -13,6 +13,8 @@ make clean  # remove all compiled files
 
 ## Part 1: Locks
 
+### Spin lock
+
 ```shell
 ./spin-lock
 ```
@@ -109,7 +111,7 @@ diff lock-really.txt mutex-lock.txt
 ```
 
 The main difference with *mutex-lock* is that it made a ton of calls to `futex` (usually int the
-range of 1000000 call), which makes sense because `futex` is the underlying system call that
+range of 1000000 calls), which makes sense because `futex` is the underlying system call that
 `pthread_mutex_lock` makes when trying to lock/unlock a *pthread_mutex* lock. So anytime a thread
 called `pthread_mutex_lock` when the lock was already held, it then made the system call `futex` to
 wait until the lock was available and then grab it.
