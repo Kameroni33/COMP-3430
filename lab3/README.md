@@ -7,7 +7,8 @@ ronaldk1@myumanitoba.ca
 ## Compliation
 
 ```shell
-make  # re-compile all files
+make        # compile all files
+make clean  # remove all compiled files
 ```
 
 ## Part 1: Locks
