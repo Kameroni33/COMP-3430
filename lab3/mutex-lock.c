@@ -25,7 +25,7 @@ int main( void )
 {
     pthread_t p1, p2;
 
-    thread_mutex_init(&lock, NULL);
+    pthread_mutex_init(&lock, NULL);
 
     pthread_create( &p1, NULL, count_up, NULL );
     pthread_create( &p2, NULL, count_up, NULL );
