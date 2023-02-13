@@ -61,7 +61,9 @@ diff atomic-lock.txt lock-really.txt
 
 All 3 processes: *spin-lock*, *atomic-lock*, and *lock-really* generally make the same system calls
 the same number of times. Ocassionally I would see a different number of calls to `futex` depending on
-the order threads executed/joined. However, overall they generally had the same output shown below.
+the order threads executed/joined. Or, depending on how long threads were stuck waiting for locks the
+number of microseconds per call would change. However, overall they generally had the same output
+which can be seen below.
 
 ```
 % time     seconds  usecs/call     calls    errors syscall
@@ -91,12 +93,8 @@ the order threads executed/joined. However, overall they generally had the same 
   0.00    0.000000           0         2           clone3
 ------ ----------- ----------- --------- --------- ----------------
 100.00    0.000000           0        61         2 total
-```s
+```
 
-
-
-can be shown by running the following, which shows that the system calls and the number of times they
-are called is identical.
 
 
 
