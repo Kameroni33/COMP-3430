@@ -4,7 +4,7 @@ CC = clang
 
 .PHONY: clean
 
-all: lock-maybe spin-lock atomic-lock
+all: lock-maybe spin-lock atomic-lock lock-really
 
 clean:
-	rm -f lock-maybe spin-lock atomic-lock
+	rm -f lock-maybe spin-lock atomic-lock lock-really
