@@ -46,7 +46,7 @@ is handled in a single atomic operation, rather than 2 seperate steps that could
 ## Part 1: Questions
 
 To answer this question, I used the following commands to compare the number of system calls each
-process made:
+process made. `-f` tracks child processes and `-c` formats the output to be easily comparable.
 
 ```shell
 # direct strace output to file
