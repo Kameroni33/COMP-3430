@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     int pipes[2][2];  // track file pointers ('read'/'write') for both pipelines
     int pid;          // track current process ID
 
-    char* f_name[MAXNAME];
+    char f_name[MAXNAME];
 
     if (argc > 1) {
         f_name = argv[1];
