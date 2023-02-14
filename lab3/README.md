@@ -8,7 +8,7 @@ ronaldk1@myumanitoba.ca
 
 ```shell
 make        # compile all files
-make clean  # remove all compiled files and `strace` files
+make clean  # remove all compiled files and `strace` .txt files
 make trace  # generate .txt files with `strace` output for part 1
 ```
 
