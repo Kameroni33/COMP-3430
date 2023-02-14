@@ -9,6 +9,7 @@ ronaldk1@myumanitoba.ca
 ```shell
 make        # compile all files
 make clean  # remove all compiled files
+make trace  # generate .txt files with `strace` output for part 1
 ```
 
 ## Part 1: Locks
