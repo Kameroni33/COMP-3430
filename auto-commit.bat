@@ -1,12 +1,7 @@
 @echo off
 
-if "%1"=="" (
-    rem If no message was provided use a generic one
-    set message=COMP 3430
-) else (
-    rem If a specific message was given use it
-    set message="%1"
-)
+rem Message to be displayed in auto-commits
+set message=COMP 3430 - lab 3
 
 :loop
     rem Check if any files have been updated
