@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <strlib.h>
 
 #define MAXNAME 100
 
@@ -14,10 +15,10 @@ int main(int argc, char *argv[]) {
     char f_name[MAXNAME];
 
     if (argc > 1) {
-        f_name = argv[1];
+        strcpy(f_name, argv[1]);
     } else {
         printf("Usage: './pipeline <file-name>'.\n Using default: 'README.md'\n");
-        f_name = "README.md";
+        strcpy(f_name, "README.md");
     }
 
     char *args1[] = {"/bin/cat", f_name, NULL};  // process(1) arguments
