@@ -3,35 +3,19 @@
 #define MAXLINE 100
 #define MAXARGS 10
 
-
-
-
-void link_process(int curr_cmd, int num_cmds, int pipes[][2], int argc[], char *args[][MAXARGS]);
-
+// void link_process(int curr_cmd, int num_cmds, int pipes[][2], int argc[], char *args[][MAXARGS]);
 
 int main(int argc, char *argv[]) {
 
-    // VARIABLES
-    FILE *f_ptr;
-    char *f_name;
-    int pipes[3][2];
-    int pid;
-    char line[MAXLINE];
+    int pipes[2][2];  // track file pointers ('read'/'write') for both pipelines
+    int pid;          // track current process ID
 
-    int commands = 3;
-
-    char *args1[][MAXARGS] = {{"/bin/cat", "hello-world.txt", NULL}, {"tr", "'a-z'", "'A-Z'"}, {"head", "-n", "5"}};
-
-    link_process(0, 3);
-
-}
-
-void link_process(int curr_cmd, int num_cmds, int pipes[][2], int argc[], char *args[][MAXARGS]) {
-
-    int pid;
+    char *args1[] = {"/bin/cat", "hello-world.txt", NULL};  // process(1) arguments
+    char *args2[] = {"/bin/tr", "'a-z'", "'A-Z'"};          // process(2) arguments
+    char *args3[] = {"/bin/head", "-n", "5"};               // process(3) arguments
 
     // create a new pipeline
-    if (pipe(pipes[curr_cmd]) < 0) {
+    if (pipe(pipes[0]) < 0) {
         printf("pipe error\n\n");
         exit(0);
     }
@@ -42,25 +26,81 @@ void link_process(int curr_cmd, int num_cmds, int pipes[][2], int argc[], char *
         exit(0);
     }
 
-    // parent Process
+    // Process 1 ==================================================================================
     else if (pid > 0) {
-        dup2(pipes[curr_cmd][1], stdout);  // link standard output to 'write' of pipe
-        const int num_args = argc[curr_cmd];
-        char curr_args[num_args];
-        for (int i = 0; i < num_args; i++) {
-            // copy args for current command into new array
-            curr_args[i] = args[curr_cmd][i+1];
-        }
-        execv(args[curr_cmd][0], &curr_args);  // execute next command
+        dup2(pipes[0][1], stdout);  // link standard output to pipeline(1) 'write'
+        close(pipes[0][0]);         // close pipeline(1) 'read' as we don't need it
+        execv("/bin/cat", args1);   // execute process(3)
     }
 
-    // child Process
     else {
-        if (curr_cmd < num_cmds) {
-            dup2(pipes[0][0], stdin);                               // link standard input to 'read' of pipe
-            link_process(++curr_cmd, num_cmds, pipes, argc, args);  // recursively link next command
-        } else {
-            return;  // we've reached the end of our chain of commands, so simply exit
+
+        // create a new pipeline
+        if (pipe(pipes[1]) < 0) {
+            printf("pipe error\n\n");
+            exit(0);
+        }
+
+        // create new process
+        if ((pid = fork()) < 0) {
+            printf("fork error\n\n");
+            exit(0);
+        }
+
+        // Process 2 ==============================================================================
+        else if (pid > 0) {
+            dup2(pipes[0][0], stdin);   // link standard input to pipeline(1) 'read'
+            close(pipes[0][1]);         // close pipeline(1) 'write' as we don't need it
+            dup2(pipes[1][1], stdout);  // link standard output to pipeline(2) 'write'
+            close(pipes[1][0]);         // close pipeline(2) 'read' as we don't need it
+            execv("/bin/tr", args2);    // execute process(2)
+        }
+
+        // Process 3 ==============================================================================
+        else {
+            dup2(pipes[1][0], stdin);   // link standard input to pipeline(2) 'read'
+            close(pipes[1][1]);         // close pipeline(2) 'write' as we don't need it
+            execv("/bin/head", args3);   // execute process(3)
         }
     }
+
 }
+
+// void link_process(int curr_cmd, int num_cmds, int pipes[][2], int argc[], char *args[][MAXARGS]) {
+
+//     int pid;
+
+//     // create a new pipeline
+//     if (pipe(pipes[curr_cmd]) < 0) {
+//         printf("pipe error\n\n");
+//         exit(0);
+//     }
+
+//     // create new process
+//     if ((pid = fork()) < 0) {
+//         printf("fork error\n\n");
+//         exit(0);
+//     }
+
+//     // parent Process
+//     else if (pid > 0) {
+//         dup2(pipes[curr_cmd][1], stdout);  // link standard output to 'write' of pipe
+//         const int num_args = argc[curr_cmd];
+//         char curr_args[num_args];
+//         for (int i = 0; i < num_args; i++) {
+//             // copy args for current command into new array
+//             curr_args[i] = args[curr_cmd][i+1];
+//         }
+//         execv(args[curr_cmd][0], &curr_args);  // execute next command
+//     }
+
+//     // child Process
+//     else {
+//         if (curr_cmd < num_cmds) {
+//             dup2(pipes[0][0], stdin);                               // link standard input to 'read' of pipe
+//             link_process(++curr_cmd, num_cmds, pipes, argc, args);  // recursively link next command
+//         } else {
+//             return;  // we've reached the end of our chain of commands, so simply exit
+//         }
+//     }
+// }
