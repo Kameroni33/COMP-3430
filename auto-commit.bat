@@ -1,7 +1,12 @@
 @echo off
 
-rem Message to be included with the auto-commit
-set message=COMP 3430
+if "%1"=="" (
+    rem If no message was provided use a generic one
+    set message=COMP 3430
+) else (
+    rem If a specific message was given use it
+    set message="%1"
+)
 
 :loop
     rem Check if any files have been updated
@@ -13,7 +18,7 @@ set message=COMP 3430
         git add -A
 
         rem Commit the changes with a timestamp
-        git commit -m "(auto-commit) %message% - %time%"
+        git commit -m "%message% (auto-commit at %time%)"
 
         rem Push the changes to the remote repository
         git push
