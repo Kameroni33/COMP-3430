@@ -40,8 +40,8 @@ int main(int argc, char *argv[]) {
     // Process 1 ==================================================================================
     else if (pid > 0) {
         dup2(pipes[0][1], STDOUT_FILENO);  // link standard output to pipeline(1) 'write'
-        close(pipes[0][0]);         // close pipeline(1) 'read' as we don't need it
-        execv("/bin/cat", args1);   // execute process(3)
+        close(pipes[0][0]);                // close pipeline(1) 'read' as we don't need it
+        execv("/bin/cat", args1);          // execute process(3)
     }
 
     else {
@@ -61,17 +61,17 @@ int main(int argc, char *argv[]) {
         // Process 2 ==============================================================================
         else if (pid > 0) {
             dup2(pipes[0][0], STDIN_FILENO);   // link standard input to pipeline(1) 'read'
-            close(pipes[0][1]);         // close pipeline(1) 'write' as we don't need it
+            close(pipes[0][1]);                // close pipeline(1) 'write' as we don't need it
             dup2(pipes[1][1], STDOUT_FILENO);  // link standard output to pipeline(2) 'write'
-            close(pipes[1][0]);         // close pipeline(2) 'read' as we don't need it
-            execv("/bin/tr", args2);    // execute process(2)
+            close(pipes[1][0]);                // close pipeline(2) 'read' as we don't need it
+            execv("/bin/tr", args2);           // execute process(2)
         }
 
         // Process 3 ==============================================================================
         else {
             dup2(pipes[1][0], STDIN_FILENO);   // link standard input to pipeline(2) 'read'
-            close(pipes[1][1]);         // close pipeline(2) 'write' as we don't need it
-            execv("/bin/head", args3);   // execute process(3)
+            close(pipes[1][1]);                // close pipeline(2) 'write' as we don't need it
+            execv("/bin/head", args3);         // execute process(3)
         }
     }
 
