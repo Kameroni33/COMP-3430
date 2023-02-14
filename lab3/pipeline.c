@@ -6,7 +6,7 @@
 
 
 
-void link_process(int *fd, char *args[]);
+void link_process(int curr_cmd, int num_cmds, int pipes[][2], int argc[], char *args[][MAXARGS]);
 
 
 int main(int argc, char *argv[]) {
@@ -20,51 +20,9 @@ int main(int argc, char *argv[]) {
 
     int commands = 3;
 
-    char *args1[] = {"/bin/cat", "hello-world.txt", NULL};
+    char *args1[][MAXARGS] = {{"/bin/cat", "hello-world.txt", NULL}, {"tr", "'a-z'", "'A-Z'"}, {"head", "-n", "5"}};
 
-    link_process(args1);
-
-    // // read in file name to process
-    // if (argc < 2) {
-    //     printf("Usage: ./pipeline <file-path>\n\n");
-    //     exit(0);
-    // } else {
-    //     f_name = argv[1];
-    // }
-
-    // // open file to read
-    // if ((f_ptr = fopen(f_name, "r") == NULL)) {
-    //     printf("file error\n\n");
-    //     exit(0);
-    // }
-
-    // create a new pipeline
-    if (pipe(pipes[0]) < 0) {
-        printf("pipe error\n\n");
-        exit(0);
-    }
-
-    // create new process
-    if ((pid = fork()) < 0) {
-        printf("fork error\n\n");
-        exit(0);
-    }
-
-    // parent Process
-    else if (pid > 0) {
-        
-        dup2(pipes[0][1], stdout);  // link 'write' to standard output
-    }
-
-    // child Process
-    else {
-
-        dup2(pipes[0][0], stdin);  // link 'read' to standard input
-
-        // execute 'child process'
-        char *args[] = {"/bin/cat", "fixed_pipeline.c", NULL};
-        execv("/bin/cat", args);
-    }
+    link_process(0, 3);
 
 }
 
