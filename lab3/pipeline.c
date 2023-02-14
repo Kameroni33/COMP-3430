@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define MAXLINE 100
-#define MAXARGS 10
+#define MAXNAME 100
 
 // void link_process(int curr_cmd, int num_cmds, int pipes[][2], int argc[], char *args[][MAXARGS]);
 
@@ -12,7 +11,16 @@ int main(int argc, char *argv[]) {
     int pipes[2][2];  // track file pointers ('read'/'write') for both pipelines
     int pid;          // track current process ID
 
-    char *args1[] = {"/bin/cat", "hello-world.txt", NULL};  // process(1) arguments
+    char* f_name[MAXNAME];
+
+    if (argc > 1) {
+        f_name = argv[1];
+    } else {
+        printf("Usage: './pipeline <file-name>'.\n Using default: 'README.md'\n");
+        f_name = "README.md";
+    }
+
+    char *args1[] = {"/bin/cat", f_name, NULL};  // process(1) arguments
     char *args2[] = {"/bin/tr", "'a-z'", "'A-Z'"};          // process(2) arguments
     char *args3[] = {"/bin/head", "-n", "5"};               // process(3) arguments
 
