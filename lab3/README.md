@@ -119,4 +119,3 @@ wait until the lock was available and then grab it.
 
 ## Part 2: Pipeline
 
-sdfasdf
