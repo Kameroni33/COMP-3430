@@ -23,9 +23,9 @@ int main(int argc, char *argv[]) {
 
     printf("File: '%s'.\n\n", f_name);
 
-    char *args1[] = {"/bin/cat", f_name, NULL};     // process(1) arguments
-    char *args2[] = {"/bin/tr", "'a-z'", "'A-Z'"};  // process(2) arguments
-    char *args3[] = {"/bin/head", "-n", "5"};       // process(3) arguments
+    char *args1[] = {"/bin/cat", f_name, NULL};           // process(1) arguments
+    char *args2[] = {"/bin/tr", "'a-z'", "'A-Z'", NULL};  // process(2) arguments
+    char *args3[] = {"/bin/head", "-n", "5", NULL};       // process(3) arguments
 
     // create a new pipeline
     if (pipe(pipes[0]) < 0) {
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
     else if (pid > 0) {
         dup2(pipes[0][1], STDOUT_FILENO);  // link standard output to pipeline(1) 'write'
         close(pipes[0][0]);                // close pipeline(1) 'read' as we don't need it
-        execv("/bin/cat", args1);          // execute process(3)
+        execv("/bin/cat", args1);          // execute process(1)
     }
 
     else {
