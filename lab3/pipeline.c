@@ -3,9 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 
-#define MAXNAME 100
-
-// void link_process(int curr_cmd, int num_cmds, int pipes[][2], int argc[], char *args[][MAXARGS]);
+#define MAXNAME 100   // provided file name should not exceed this length
 
 int main(int argc, char *argv[]) {
 
@@ -15,15 +13,19 @@ int main(int argc, char *argv[]) {
     char f_name[MAXNAME];
 
     if (argc > 1) {
+        // read file path from command line argument if provided
         strcpy(f_name, argv[1]);
     } else {
-        printf("Usage: './pipeline <file-name>'.\n Using default: 'README.md'\n");
+        // if no file path was provided, use the default "README.md"
+        printf("Usage: './pipeline <file-path>'.\n");
         strcpy(f_name, "README.md");
     }
 
-    char *args1[] = {"/bin/cat", f_name, NULL};  // process(1) arguments
-    char *args2[] = {"/bin/tr", "'a-z'", "'A-Z'"};          // process(2) arguments
-    char *args3[] = {"/bin/head", "-n", "5"};               // process(3) arguments
+    printf("File: '%s'.\n\n", f_name);
+
+    char *args1[] = {"/bin/cat", f_name, NULL};     // process(1) arguments
+    char *args2[] = {"/bin/tr", "'a-z'", "'A-Z'"};  // process(2) arguments
+    char *args3[] = {"/bin/head", "-n", "5"};       // process(3) arguments
 
     // create a new pipeline
     if (pipe(pipes[0]) < 0) {
@@ -76,44 +78,3 @@ int main(int argc, char *argv[]) {
     }
 
 }
-
-// FAILED ATTEMPT AT A SORTS OF RECURSIVE FUNCTION TO SPAWN PROCESSES =============================
-
-// void link_process(int curr_cmd, int num_cmds, int pipes[][2], int argc[], char *args[][MAXARGS]) {
-
-//     int pid;
-
-//     // create a new pipeline
-//     if (pipe(pipes[curr_cmd]) < 0) {
-//         printf("pipe error\n\n");
-//         exit(0);
-//     }
-
-//     // create new process
-//     if ((pid = fork()) < 0) {
-//         printf("fork error\n\n");
-//         exit(0);
-//     }
-
-//     // parent Process
-//     else if (pid > 0) {
-//         dup2(pipes[curr_cmd][1], stdout);  // link standard output to 'write' of pipe
-//         const int num_args = argc[curr_cmd];
-//         char curr_args[num_args];
-//         for (int i = 0; i < num_args; i++) {
-//             // copy args for current command into new array
-//             curr_args[i] = args[curr_cmd][i+1];
-//         }
-//         execv(args[curr_cmd][0], &curr_args);  // execute next command
-//     }
-
-//     // child Process
-//     else {
-//         if (curr_cmd < num_cmds) {
-//             dup2(pipes[0][0], stdin);                               // link standard input to 'read' of pipe
-//             link_process(++curr_cmd, num_cmds, pipes, argc, args);  // recursively link next command
-//         } else {
-//             return;  // we've reached the end of our chain of commands, so simply exit
-//         }
-//     }
-// }
