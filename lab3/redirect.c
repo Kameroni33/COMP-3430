@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
     } else {
         // if no file path was provided, use the default "README.md"
         printf("Usage: './pipeline <file-path>'.\n");
-        strcpy(f_name, "pipeline.c");
+        strcpy(f_name, "README.md");
     }
 
     printf("File: '%s'.\n\n", f_name);
