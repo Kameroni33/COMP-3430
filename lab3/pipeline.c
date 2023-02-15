@@ -77,6 +77,8 @@ int main(int argc, char *argv[]) {
 
 }
 
+// FAILED ATTEMPT AT A SORTS OF RECURSIVE FUNCTION TO SPAWN PROCESSES =============================
+
 // void link_process(int curr_cmd, int num_cmds, int pipes[][2], int argc[], char *args[][MAXARGS]) {
 
 //     int pid;
