@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     char *args2[] = {"/bin/tr", "'a-z'", "'A-Z'", NULL};  // process(2) arguments
     char *args3[] = {"/bin/head", "-n", "5", NULL};       // process(3) arguments
 
-    printf("%s\n", *args1[1]);
+    printf("%s\n", args1[1]);
 
     // create a new pipeline
     if (pipe(pipes[0]) < 0) {
