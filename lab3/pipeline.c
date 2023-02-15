@@ -27,8 +27,8 @@ int main(int argc, char *argv[]) {
     char *args2[] = {"/bin/tr", "'a-z'", "'A-Z'", NULL};  // process(2) arguments
     char *args3[] = {"/bin/head", "-n", "5", NULL};       // process(3) arguments
 
-    // create pipelines for interprocess communication
-    if (pipe(pipes[0]) < 0 && pipe(pipes[1]) < 0) {
+    // create pipeline
+    if (pipe(pipes[0]) < 0) {
         printf("pipe error\n\n");
         exit(0);
     }
@@ -47,6 +47,12 @@ int main(int argc, char *argv[]) {
     }
 
     else {
+
+        // create a new pipeline
+        if (pipe(pipes[1]) < 0) {
+            printf("pipe error\n\n");
+            exit(0);
+        }
 
         // create new process
         if ((pid = fork()) < 0) {
