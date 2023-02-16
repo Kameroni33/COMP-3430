@@ -3,8 +3,6 @@
 #include <unistd.h>
 #include <string.h>
 
-#define MAXNAME 100   // provided file name should not exceed this length
-
 int main() {
 
     int pipes[2][2];  // track file pointers ('read'/'write') for both pipelines

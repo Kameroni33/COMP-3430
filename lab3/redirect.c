@@ -3,31 +3,16 @@
 #include <unistd.h>
 #include <string.h>
 
-#define MAXNAME 100   // provided file name should not exceed this length
-
-int main(int argc, char *argv[]) {
+int main() {
 
     int pipes[2][2];  // track file pointers ('read'/'write') for both pipelines
     int pid;          // track current process ID
 
-    char f_name[MAXNAME];
+    char *args1[] = {"/bin/cat", "README.md", NULL};      // process(1) arguments
+    char *args2[] = {"/bin/tr", "'a-z'", "'A-Z'", NULL};  // process(2) arguments
+    char *args3[] = {"/bin/head", "-n", "5", NULL};       // process(3) arguments
 
-    if (argc > 1) {
-        // read file path from command line argument if provided
-        strcpy(f_name, argv[1]);
-    } else {
-        // if no file path was provided, use the default "README.md"
-        printf("Usage: './pipeline <file-path>'.\n");
-        strcpy(f_name, "README.md");
-    }
-
-    printf("File: '%s'.\n\n", f_name);
-
-    char *args1[] = {"/bin/cat", f_name, NULL};     // process(1) arguments
-    char *args2[] = {"/bin/tr", "'a-z'", "'A-Z'"};  // process(2) arguments
-    char *args3[] = {"/bin/head", "-n", "5"};       // process(3) arguments
-
-    // create a new pipeline
+    // create pipeline
     if (pipe(pipes[0]) < 0) {
         printf("pipe error\n\n");
         exit(0);
@@ -43,7 +28,7 @@ int main(int argc, char *argv[]) {
     else if (pid > 0) {
         dup2(pipes[0][1], STDOUT_FILENO);  // link standard output to pipeline(1) 'write'
         close(pipes[0][0]);                // close pipeline(1) 'read' as we don't need it
-        execv("/bin/cat", args1);          // execute process(3)
+        execv("/bin/cat", args1);          // execute process(1)
     }
 
     else {
