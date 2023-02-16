@@ -12,7 +12,7 @@ int main() {
 
     char f_name[MAXNAME];
 
-    char *args1[] = {"/bin/cat", "README.md", NULL};           // process(1) arguments
+    char *args1[] = {"/bin/cat", "README.md", NULL};      // process(1) arguments
     char *args2[] = {"/bin/tr", "'a-z'", "'A-Z'", NULL};  // process(2) arguments
     char *args3[] = {"/bin/head", "-n", "5", NULL};       // process(3) arguments
 
