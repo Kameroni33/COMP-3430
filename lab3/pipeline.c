@@ -20,9 +20,7 @@ int main() {
 
     // Parent Process =============================================================================
     else if (pid > 0) {
-        dup2(pipes[0][1], STDOUT_FILENO);  // link standard output to pipeline(1) 'write'
-        close(pipes[0][0]);                // close pipeline(1) 'read' as we don't need it
-        execv("/bin/cat", args1);          // execute process(1)
+        while(wait(NULL) > 0);  // wait for all child processes to terminate
     }
     
     else {
