@@ -10,8 +10,6 @@ int main() {
     int pipes[2][2];  // track file pointers ('read'/'write') for both pipelines
     int pid;          // track current process ID
 
-    char f_name[MAXNAME];
-
     char *args1[] = {"/bin/cat", "README.md", NULL};      // process(1) arguments
     char *args2[] = {"/bin/tr", "'a-z'", "'A-Z'", NULL};  // process(2) arguments
     char *args3[] = {"/bin/head", "-n", "5", NULL};       // process(3) arguments
