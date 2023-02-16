@@ -120,3 +120,12 @@ wait until the lock was available and then grab it.
 
 ## Part 2: Pipeline
 
+```shell
+./pipeline
+```
+
+The process reads the file README.md and performs the same operations as:
+
+```shell
+cat README.md | tr 'a-z' 'A-Z' | head -n 5
+```
