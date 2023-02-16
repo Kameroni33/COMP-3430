@@ -5,25 +5,14 @@
 
 #define MAXNAME 100   // provided file name should not exceed this length
 
-int main(int argc, char *argv[]) {
+int main() {
 
     int pipes[2][2];  // track file pointers ('read'/'write') for both pipelines
     int pid;          // track current process ID
 
     char f_name[MAXNAME];
 
-    if (argc > 1) {
-        // read file path from command line argument if provided
-        strcpy(f_name, argv[1]);
-    } else {
-        // if no file path was provided, use the default "README.md"
-        printf("Usage: './pipeline <file-path>'.\n");
-        strcpy(f_name, "README.md");
-    }
-
-    printf("File: '%s'.\n\n", f_name);
-
-    char *args1[] = {"/bin/cat", f_name, NULL};           // process(1) arguments
+    char *args1[] = {"/bin/cat", "README.md", NULL};           // process(1) arguments
     char *args2[] = {"/bin/tr", "'a-z'", "'A-Z'", NULL};  // process(2) arguments
     char *args3[] = {"/bin/head", "-n", "5", NULL};       // process(3) arguments
 
