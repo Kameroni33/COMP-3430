@@ -21,6 +21,7 @@ int main() {
 
     // Parent Process =============================================================================
     else if (pid > 0) {
+        sleep(1);
         while(wait(NULL) > 0);  // wait for all child processes to terminate
     }
     
