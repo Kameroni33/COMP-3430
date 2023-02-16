@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 
     printf("File: '%s'.\n\n", f_name);
 
-    char *args1[] = {"/bin/cat", "TEST.md", NULL};           // process(1) arguments
+    char *args1[] = {"/bin/cat", "./test.md", NULL};           // process(1) arguments
     char *args2[] = {"/bin/tr", "'a-z'", "'A-Z'", NULL};  // process(2) arguments
     char *args3[] = {"/bin/head", "-n", "5", NULL};       // process(3) arguments
 
