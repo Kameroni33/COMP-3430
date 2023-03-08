@@ -67,7 +67,8 @@ int main(int argc, char *argv[]) {
                 strcat(word, "\n");
                 printf("%s", word);
                 // fwrite(word, sizeof(word), 1, findOutputFile(outputFiles, word));
-                fwrite("hello", sizeof("hello"), 1, outputFiles[0]);
+                fwrite(word, sizeof(word), 1, outputFiles[0]);
+                fflush(outputFiles[0]);
                 // write(outputFiles[0], word, strlen(word));
             }
 
