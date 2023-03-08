@@ -1,25 +1,24 @@
 CC      = clang
 CFLAGS  = -Wall -Wpedantic -Wextra -Werror
-OBJECTS = a2q1.o a2q2.o a2q3.o a2Utils.o
-TARGETS = a2q1 a2q2 a2q3
+TARGETS = serial withLocks withFIFOs
+FOLDERS = output fifos
 
-all: $(OBJECTS) $(TARGETS)
+all: $(OBJECTS) $(TARGETS) folders
 
-# Object files compiled via Implicit Rules
-a2q1.o: a2q1.c
-a2q2.o: a2q2.c
-a2q3.o: a2q3.c
-a2Utils.o: a2Utils.c
+# Create folders for output .txt's and FIFO's
+folders:
+	mkdir -p $(FOLDERS)
 
-# Program files comipled from Object files ('linking' the utils library)
-a2q1: a2q1.o a2Utils.o
-	$(CC) $(FLAGS) -o a2q1 a2q1.o a2Utils.o
+# Compile targets with a2Utils.c library
+serial: serial.c a2Utils.c
+	$(CC) $(FLAGS) -o serial serial.c a2Utils.c
 
-a2q2: a2q2.o a2Utils.o
-	$(CC) $(FLAGS) -o a2q2 a2q2.o a2Utils.o
+withLocks: withLocks.c a2Utils.c
+	$(CC) $(FLAGS) -o withLocks withLocks.c a2Utils.c
 
-a2q3: a2q3.o a2Utils.o
-	$(CC) $(FLAGS) -o a2q3 a2q3.o a2Utils.o
+withFIFOs: withFIFOs.c a2Utils.c
+	$(CC) $(FLAGS) -o withFIFOs withFIFOs.c a2Utils.c
 
 clean:
-	rm -f *.o $(TARGETS)
+	rm $(TARGETS)
+	rm -rf $(FOLDERS)
