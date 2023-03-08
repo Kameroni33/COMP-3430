@@ -5,5 +5,4 @@
 
 void helloWorld();
 
-void openForAppend(FILE *file, char *path);
-void initializeOutputs(OutputFiles outputs);
+void initializeOutputs(FILE *outputFiles[NUM_OUTPUTS], char *outputPaths[NUM_OUTPUTS]);
