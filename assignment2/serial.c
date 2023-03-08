@@ -1,6 +1,5 @@
 #include <stdio.h>    // fopen, fclose, fwrite, printf, fscanf
 #include <stdlib.h>   // exit
-#include <unistd.h>   // write
 
 #include "a2Utils.h"  // initializeOutputs
 
@@ -64,10 +63,7 @@ int main(int argc, char *argv[]) {
             while (fscanf(inputFile, "%s", word) != EOF)
             {
                 printf("%s", word);
-                // fwrite(word, sizeof(word), 1, findOutputFile(outputFiles, word));
-                fprintf(word, sizeof(word), 1, outputFiles[0]);
-                fflush(outputFiles[0]);
-                // write(outputFiles[0], word, strlen(word));
+                fprintf(outputFiles[0], "%s\n", word);
             }
 
             // close current file
