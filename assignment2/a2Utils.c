@@ -62,3 +62,20 @@ long long timeInMilliseconds(void) {
     gettimeofday(&timeVal,NULL);
     return (( ( long long )timeVal.tv_sec) * 1000) + (timeVal.tv_usec / 1000);
 }
+
+void logInfo(long long start, long long end, int argc, char *argv[] )
+{
+    if ( (outputFiles[i] = fopen(outputPaths[i], "a")) == NULL )
+    {
+        printf("Error: unable to file for logging\n");
+        exit(1);
+    }
+
+
+
+    if ( fclose(outputFiles[i]) == EOF )
+    {
+        printf("Error: unable to close log file\n");
+        exit(1);
+    }
+}
