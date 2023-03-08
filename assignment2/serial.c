@@ -35,15 +35,18 @@ char *outputPaths[NUM_OUTPUTS] = {
     "output/other.txt"
 };
 
+FILE *outputFiles[NUM_OUTPUTS];
+
+long long startTime;
+long long endTime;
+
+// Main Method ========================================================================
+
 int main(int argc, char *argv[]) {
 
     // Local Variables
-    FILE *outputFiles[NUM_OUTPUTS];
     FILE *inputFile;
     char word[MAX_WORD];
-
-    long long startTime;
-    long long endTime;
 
     startTime = timeInMilliseconds();
 
