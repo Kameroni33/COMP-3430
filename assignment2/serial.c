@@ -52,20 +52,20 @@ int main(int argc, char *argv[]) {
         for (int i = 1; i < argc; i++)
         {
             // open file and check for errors
-            if ((file = fopen(argv[i], "r")) == NULL)
+            if ((inputFile = fopen(argv[i], "r")) == NULL)
             {
                 printf("Error: unable to open file '%s'.\n", argv[i]);
                 exit(1);
             }
 
             // scan through entire file
-            while (fscanf(file, "%s", word) != EOF)
+            while (fscanf(inputFile, "%s", word) != EOF)
             {
                 printf("%s\n", word);
             }
 
             // close current file
-            fclose(file);
+            fclose(inputFile);
         }
     }
 
