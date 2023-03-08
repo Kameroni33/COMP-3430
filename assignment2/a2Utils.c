@@ -80,11 +80,11 @@ void logInfo(long long start, long long end, int argc, char *argv[])
 
     // write to log file
     fprintf(logFile, "========================================\n");
-    fprintf(logFile, "Program:    %s\n", argv[0]+2);
-    fprintf(logFile, "Num. files: %d\n", argc);
-    fprintf(logFile, "Start Time: %lld ms\n", start);
-    fprintf(logFile, "End Time:   %lld ms\n", start);
-    fprintf(logFile, "Run Time:   %lld ms\n", end - start);
+    fprintf(logFile, "Program: %s\n", argv[0]+2);
+    fprintf(logFile, "Files:   %d\n", argc);
+    fprintf(logFile, "Start:   %lld ms\n", start);
+    fprintf(logFile, "End:     %lld ms\n", start);
+    fprintf(logFile, "Runtime: %lld ms\n", end - start);
     fprintf(logFile, "========================================\n\n\n");
 
     // close log file
