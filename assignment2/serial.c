@@ -42,6 +42,11 @@ int main(int argc, char *argv[]) {
     FILE *inputFile;
     char word[MAX_WORD];
 
+    long long startTime;
+    long long endTime;
+
+    startTime = timeInMilliseconds();
+
     // open all of our output files for 'append'
     initializeOutputs(outputFiles, outputPaths);
 
@@ -81,6 +86,10 @@ int main(int argc, char *argv[]) {
 
     // close all of our output files
     closeOutputs(outputFiles);
+
+    endTime = timeInMilliseconds();
+
+    logInfo();
 
     printf("End of Process.\n");
     return 0;
