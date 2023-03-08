@@ -63,7 +63,6 @@ int main(int argc, char *argv[]) {
             {
                 printf("%s\n", word);
                 fwrite(word, sizeof(word), 1, findOutputFile(outputFiles, word));
-                fwrite('\n', sizeof(char), 1, findOutputFile(outputFiles, word));
             }
 
             // close current file
