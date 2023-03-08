@@ -1,5 +1,7 @@
 #include <stdio.h>    // fopen, fclose, fwrite, printf, fscanf
 #include <stdlib.h>   // exit
+#include <string.h>   // strcat
+
 #include "a2Utils.h"  // initializeOutputs
 
 // Global Variables ===================================================================
@@ -62,6 +64,7 @@ int main(int argc, char *argv[]) {
             while (fscanf(inputFile, "%s", word) != EOF)
             {
                 printf("%s\n", word);
+                strcat(word, "\n");
                 fwrite(word, sizeof(word), 1, findOutputFile(outputFiles, word));
             }
 
