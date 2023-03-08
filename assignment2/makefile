@@ -1,17 +1,19 @@
-CC = clang
-CFLAGS = -Wall -Wpedantic -Wextra -Werror
+CC       = clang
+CFLAGS   = -Wall -Wpedantic -Wextra -Werror
 
-targets := question1 question2 question3
+OBJFILES = q1.o q2.o q3.o a2Utils.o
+TARGETS  = q1 q2 q3
 
-all: build
+all: $(TARGETS)
 
-build: wordgetter timeInMillis
+q1: q1.o a2Utils.o
+	$(CC) $(FLAGS) -o q1 q1.o a2Utils.o
 
-wordgetter: wordgetter.c
-	$(CC) $(FLAGS) wordgetter.c -o wordgetter
+q2: q2.o a2Utils.o
+	$(CC) $(FLAGS) -o q2 q2.o a2Utils.o
 
-timeInMillis: timeInMillis.c
-	clang -Wall -Wpedantic -Wextra -Werror timeInMillis.c -o timeInMillis
+q3: q3.o a2Utils.o
+	$(CC) $(FLAGS) -o q3 q3.o a2Utils.o
 
 clean:
 	rm -f timeInMillis
