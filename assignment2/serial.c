@@ -75,7 +75,8 @@ int main(int argc, char *argv[]) {
         printf("Usage: ./serial path/to/files/*\n\n");
     }
 
-
+    // close all of our output files
+    closeOutputs(outputFiles, outputPaths);
 
     printf("End of Process.\n");
     return 0;
