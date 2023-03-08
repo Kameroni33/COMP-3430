@@ -1,4 +1,4 @@
-#include <stdio.h>    // printf, fscanf
+#include <stdio.h>    // fopen, fclose, printf, fscanf
 #include <stdlib.h>   // exit
 #include "a2Utils.h"  // initializeOutputs
 
