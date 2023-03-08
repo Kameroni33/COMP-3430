@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
     }
 
     // close all of our output files
-    closeOutputs(outputFiles, outputPaths);
+    closeOutputs(outputFiles);
 
     printf("End of Process.\n");
     return 0;
