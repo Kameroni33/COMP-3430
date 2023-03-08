@@ -12,12 +12,7 @@ void helloWorld()
     printf("hello world\n");
 }
 
-void openForAppend(FILE *file, char *path)
-{
-    
-}
-
-void initializeOutputs(FILE *outputFiles[])
+void initializeOutputs(FILE *outputFiles[NUM_OUTPUTS], char *outputPaths[NUM_OUTPUTS])
 {
     for ( int i = 0; i < NUM_OUTPUTS; i++)
     {
