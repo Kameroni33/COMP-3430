@@ -1,13 +1,13 @@
 CC      = clang
 CFLAGS  = -Wall -Wpedantic -Wextra -Werror
 TARGETS = serial withLocks withFIFOs
-FOLDERS = output fifos logs
+FOLDERS = output fifos
 
 all: $(OBJECTS) $(TARGETS) folders
 
 # Create folders for output .txt's and FIFO's
 folders:
-	mkdir -p $(FOLDERS)
+	mkdir -p $(FOLDERS) logs
 
 # Compile targets with a2Utils.c library
 serial: serial.c a2Utils.c
