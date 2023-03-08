@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/time.h>
 
 // Global Constants ===================================================================
@@ -63,8 +64,10 @@ long long timeInMilliseconds(void) {
     return (( ( long long )timeVal.tv_sec) * 1000) + (timeVal.tv_usec / 1000);
 }
 
-void logInfo(long long start, long long end, int argc, char *argv[] )
+void logInfo(long long start, long long end, int argc, char *argv[])
 {
+    char logName[] = argv[0];
+    strcat()
     if ( (outputFiles[i] = fopen(outputPaths[i], "a")) == NULL )
     {
         printf("Error: unable to file for logging\n");
