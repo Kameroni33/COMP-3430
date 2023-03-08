@@ -14,4 +14,4 @@ q3: q3.o a2Utils.o
 	$(CC) $(FLAGS) -o q3 q3.o a2Utils.o
 
 clean:
-	rm -f *.o 
+	rm -f *.o $(TARGETS)
