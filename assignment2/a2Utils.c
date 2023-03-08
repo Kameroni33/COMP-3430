@@ -64,7 +64,7 @@ long long timeInMilliseconds(void) {
     return (( ( long long )timeVal.tv_sec) * 1000) + (timeVal.tv_usec / 1000);
 }
 
-void logInfo(long long start, long long end, int argc, char *argv[])
+void logInfo(long long start, long long end, int workers, int argc, char *argv[])
 {
     FILE *logFile;
     char logName[] = "logs.txt";
