@@ -16,7 +16,7 @@ void initializeOutputs(FILE *outputFiles[NUM_OUTPUTS], char *outputPaths[NUM_OUT
 {
     for ( int i = 0; i < NUM_OUTPUTS; i++)
     {
-        if ((outputFiles[i] = fopen(outputPaths[i], "a")) == NULL)
+        if ( (outputFiles[i] = fopen(outputPaths[i], "a")) == NULL )
         {
             printf("Error: unable to open file for append '%s'\n", outputPaths[i]);
             exit(1);
@@ -28,7 +28,7 @@ void closeOutputs(FILE *outputFiles[NUM_OUTPUTS])
 {
     for ( int i = 0; i < NUM_OUTPUTS; i++)
     {
-        if ( fclose(outputFiles[i]) != 0 )
+        if ( fclose(outputFiles[i]) == EOF )
         {
             printf("Error: unable to close file\n");
             exit(1);
