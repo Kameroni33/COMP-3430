@@ -24,3 +24,15 @@ void initializeOutputs(FILE *outputFiles[NUM_OUTPUTS], char *outputPaths[NUM_OUT
     }
 }
 
+void closeOutputs(FILE *outputFiles[NUM_OUTPUTS])
+{
+    for ( int i = 0; i < NUM_OUTPUTS; i++)
+    {
+        if ( close(outputFiles[i]) != 0 )
+        {
+            printf("Error: unable to close file '%d'\n", outputFiles[i]);
+            exit(1);
+        }
+    }
+}
+
