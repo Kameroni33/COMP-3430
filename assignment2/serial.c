@@ -1,6 +1,5 @@
 #include <stdio.h>    // fopen, fclose, fwrite, printf, fscanf
 #include <stdlib.h>   // exit
-#include <string.h>   // strcat
 #include <unistd.h>   // write
 
 #include "a2Utils.h"  // initializeOutputs
@@ -64,10 +63,9 @@ int main(int argc, char *argv[]) {
             // scan through entire file
             while (fscanf(inputFile, "%s", word) != EOF)
             {
-                strcat(word, "\n");
                 printf("%s", word);
                 // fwrite(word, sizeof(word), 1, findOutputFile(outputFiles, word));
-                fwrite(word, sizeof(word), 1, outputFiles[0]);
+                fprintf(word, sizeof(word), 1, outputFiles[0]);
                 fflush(outputFiles[0]);
                 // write(outputFiles[0], word, strlen(word));
             }
