@@ -34,9 +34,11 @@ void closeOutputs(FILE *outputFiles[NUM_OUTPUTS])
 
 FILE* determineOutputFile(FILE *outputFiles[NUM_OUTPUTS], char word[MAX_WORD])
 {
+    printf("adding '%s' to ", word);
     // uppercase ASCII letters range from 65 - 90
     if ( word[0] > 64 && word[0] < 91 )
     {
+        printf("'%c.txt'\n", word[0]+32);
         // return the correct output file descriptor by offsetting by 65
         return outputFiles[word[0]-65];
     }
@@ -44,12 +46,14 @@ FILE* determineOutputFile(FILE *outputFiles[NUM_OUTPUTS], char word[MAX_WORD])
     // lowercase ASCII letters range from 97 - 122
     else if ( word[0] > 96 && word[0] < 123 )
     {
+        printf("'%c.txt'\n", word[0]);
         // return the correct output file descriptor by offsetting by 97
         return outputFiles[word[0]-97];
     }
 
     else
     {
+        printf("'other.txt'\n");
         // all other characters go the same output file (last one in our list of files)
         return outputFiles[NUM_OUTPUTS-1];
     }
