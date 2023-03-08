@@ -42,11 +42,7 @@ long long endTime;
 
 // Thread Method ======================================================================
 
-void* worker_thread(void* value) {
-    
 
-    pthread_exit(NULL);
-}
 
 // Main Method ========================================================================
 
