@@ -66,21 +66,25 @@ long long timeInMilliseconds(void) {
 
 void logInfo(long long start, long long end, int argc, char *argv[])
 {
+    FILE *logFile;
+
+    // construct log file path name
     char logName[strlen(argv[0]) + 7];
     strcat(logName, "logs/");
     strcat(logName, argv[0]+2);
     strcat(logName, ".txt");
-    if ( (outputFiles[i] = fopen(outputPaths[i], "a")) == NULL )
+
+    if ( (logFile = fopen(logName, "a")) == NULL )
     {
-        printf("Error: unable to file for logging\n");
+        printf("Error: unable to open file '%s'\n", logName);
         exit(1);
     }
 
-
+    fprintf(determineOutputFile(outputFiles, word), "%s\n", word);
 
     if ( fclose(outputFiles[i]) == EOF )
     {
-        printf("Error: unable to close log file\n");
+        printf("Error: unable to close file '%s'\n", logName);
         exit(1);
     }
 }
