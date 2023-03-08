@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
             // scan through entire file
             while (fscanf(inputFile, "%s", word) != EOF)
             {
-                printf("%s", word);
+                printf("%s\n", word);
                 fprintf(outputFiles[0], "%s\n", word);
             }
 
