@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 
     else
     {
-        printf("Error: no input files provided.\n")
+        printf("Error: no input file(s) provided.\n");
         printf("Usage: ./serial path/to/files/*\n\n");
     }
 
