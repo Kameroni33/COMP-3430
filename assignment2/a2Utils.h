@@ -33,5 +33,5 @@ typedef struct
 
 void helloWorld();
 
-void openForAppend(FILE *file, char *path)
-void initializeOutputs(OutputFiles outputs)
+void openForAppend(FILE *file, char *path);
+void initializeOutputs(OutputFiles outputs);
