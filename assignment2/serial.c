@@ -1,5 +1,6 @@
-#include <stdio.h>
-#include "a2Utils.h"
+#include <stdio.h>    // printf, fscanf
+#include <stdlib.h>   // exit
+#include "a2Utils.h"  // 
 
 #define MAX_WORD 100
 
