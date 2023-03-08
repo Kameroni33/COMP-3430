@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
         for (int i = 1; i < argc; i++)
         {
             // open file and check for errors
-            if (file = fopen(argv[i], "r") == NULL)
+            if ((file = fopen(argv[i], "r")) == NULL)
             {
                 printf("Error: unable to open file '%s'\n", argv[i]);
                 exit(1);
