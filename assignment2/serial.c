@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
         // iterate through all the file names
         for (int i = 1; i < argc; i++)
         {
-            printf("reading file '%s'", argv[i]);
+            printf("reading file '%s'\n", argv[i]);
 
             // open input file and check for errors
             if ((inputFile = fopen(argv[i], "r")) == NULL)
