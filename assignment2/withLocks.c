@@ -40,6 +40,14 @@ FILE *outputFiles[NUM_OUTPUTS];
 long long startTime;
 long long endTime;
 
+// Thread Method ======================================================================
+
+void* worker_thread(void* value) {
+    
+
+    pthread_exit(NULL);
+}
+
 // Main Method ========================================================================
 
 int main(int argc, char *argv[]) {
@@ -55,7 +63,7 @@ int main(int argc, char *argv[]) {
 
     printf("process: %s\nfiles:   %d\n\n", argv[0]+2, argc-1);
     
-    if (argc > 1)
+    if (argc > 2)
     {
         // iterate through all the file names
         for (int i = 1; i < argc; i++)
@@ -83,8 +91,8 @@ int main(int argc, char *argv[]) {
 
     else
     {
-        printf("Error: no input file(s) provided.\n");
-        printf("Usage: ./serial path/to/files/*\n\n");
+        printf("Error: too few arguments provided.\n");
+        printf("Usage: ./serial num-workers path/to/files/*\n\n");
     }
 
     // close all of our output files
