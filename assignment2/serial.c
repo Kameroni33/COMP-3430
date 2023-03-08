@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
     FILE *file;
     char word[MAX_WORD];
 
-    printf("process: %s\nfiles:   %d\n\n", argv[0], argc-1);
+    printf("process: %s\nfiles:   %d\n\n", argv[0][0], argc-1);
     
     if (argc > 1)
     {
