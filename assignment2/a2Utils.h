@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 
+// global constants
 #define NUM_OUTPUTS 27
 #define MAX_WORD 100
 
