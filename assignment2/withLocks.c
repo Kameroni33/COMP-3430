@@ -53,6 +53,7 @@ void* worker_thread(void* value) {
 int main(int argc, char *argv[]) {
 
     // Local Variables
+    int workers = argv[1];
     FILE *inputFile;
     char word[MAX_WORD];
 
@@ -61,7 +62,7 @@ int main(int argc, char *argv[]) {
     // open all of our output files for 'append'
     initializeOutputs(outputFiles, outputPaths);
 
-    printf("process: %s\nfiles:   %d\n\n", argv[0]+2, argc-1);
+    printf("process: %s\nfiles:   %d\nworkers: %d\n", argv[0]+2, argc-1, workers);
     
     if (argc > 2)
     {
@@ -100,7 +101,7 @@ int main(int argc, char *argv[]) {
 
     endTime = timeInMilliseconds();
 
-    logInfo(startTime, endTime, 1, argc, argv);
+    logInfo(startTime, endTime, wokers, argc, argv);
 
     printf("End of Process.\n");
     return 0;
