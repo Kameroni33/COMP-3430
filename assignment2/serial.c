@@ -23,7 +23,14 @@ int main(int argc, char *argv[]) {
                 exit(1);
             }
 
-            
+            // scan through entire file
+            while (fscanf(file, "%s", word) != EOF)
+            {
+                printf("%s\n", word);
+            }
+
+            // close current file
+            fclose(file);
         }
     }
 
@@ -32,5 +39,8 @@ int main(int argc, char *argv[]) {
         printf("Usage: ./serial path/to/files/*\n\n");
     }
 
+
+
     printf("End of Process.\n");
+    return 0;
 }
