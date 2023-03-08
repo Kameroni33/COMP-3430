@@ -14,4 +14,4 @@ FILE*  determineOutputFile(FILE *outputFiles[NUM_OUTPUTS], char word[MAX_WORD]);
 
 // logging and timing methods
 long long timeInMilliseconds(void);
-void logInfo(long long start, long long end, int argc, char *argv[]);
+void logInfo(long long start, long long end, int workers, int argc, char *argv[]);
