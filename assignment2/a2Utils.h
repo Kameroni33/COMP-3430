@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-typedef struct
+struct OutputFiles
 {
     FILE *a;
     FILE *b;
@@ -29,9 +29,9 @@ typedef struct
     FILE *y;
     FILE *z;
     FILE *other;
-} OutputFiles;
+};
 
 void helloWorld();
 
 void openForAppend(FILE *file, char *path);
-void initializeOutputs(OutputFiles outputs);
+void initializeOutputs(struct OutputFiles outputs);
