@@ -30,7 +30,7 @@ void closeOutputs(FILE *outputFiles[NUM_OUTPUTS])
     {
         if ( close(outputFiles[i]) != 0 )
         {
-            printf("Error: unable to close file '%d'\n", outputFiles[i]);
+            printf("Error: unable to close file\n");
             exit(1);
         }
     }
