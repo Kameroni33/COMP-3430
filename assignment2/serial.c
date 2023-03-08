@@ -4,6 +4,9 @@
 
 #define MAX_WORD 100
 
+
+
+
 int main(int argc, char *argv[]) {
 
     // Variables
