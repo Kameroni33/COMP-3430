@@ -37,3 +37,22 @@ void closeOutputs(FILE *outputFiles[NUM_OUTPUTS])
     }
 }
 
+FILE* findOutputFile(FILE *outputFiles[NUM_OUTPUTS], char word[MAX_WORD])
+{
+    printf("first character: %c | ", word[0]);
+    
+    if ( word[0] > 64 && word[0] < 91 )
+    {
+        printf("UPPERCASE LETTER\n");
+    }
+
+    else if ( word[0] > 96 && word[0] < 123 )
+    {
+        printf("lowercase letter\n");
+    }
+
+    else
+    {
+        printf("NeItHeR...\n");
+    }
+}
