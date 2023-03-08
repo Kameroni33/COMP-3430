@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-struct OutputFiles
+typedef struct OutputFiles
 {
     FILE *a;
     FILE *b;
@@ -29,7 +29,7 @@ struct OutputFiles
     FILE *y;
     FILE *z;
     FILE *other;
-};
+} OutputFiles;
 
 void helloWorld();
 
