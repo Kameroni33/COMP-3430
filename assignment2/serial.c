@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
             while (fscanf(inputFile, "%s", word) != EOF)
             {
                 printf("%s\n", word);
-                findOutputFile
+                findOutputFile();
             }
 
             // close current file

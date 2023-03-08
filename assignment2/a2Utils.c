@@ -37,7 +37,7 @@ void closeOutputs(FILE *outputFiles[NUM_OUTPUTS])
     }
 }
 
-FILE* findOutputFile(FILE *outputFiles[NUM_OUTPUTS], char word[MAX_WORD])
+void findOutputFile(FILE *outputFiles[NUM_OUTPUTS], char word[MAX_WORD])
 {
     printf("first character: %c | ", word[0]);
     
