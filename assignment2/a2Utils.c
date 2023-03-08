@@ -67,9 +67,9 @@ long long timeInMilliseconds(void) {
 void logInfo(long long start, long long end, int argc, char *argv[])
 {
     FILE *logFile;
-
-    // construct log file path name
     char logName[strlen(argv[0]) + 7];
+    
+    // construct log file path name
     strcat(logName, "logs/");
     strcat(logName, argv[0]+2);
     strcat(logName, ".txt");
