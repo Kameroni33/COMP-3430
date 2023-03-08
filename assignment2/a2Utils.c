@@ -66,8 +66,10 @@ long long timeInMilliseconds(void) {
 
 void logInfo(long long start, long long end, int argc, char *argv[])
 {
-    char logName[] = argv[0];
-    strcat()
+    char logName[strlen(argv[0]) + 7];
+    strcat(logName, "logs/");
+    strcat(logName, argv[0]+2);
+    strcat(logName, ".txt");
     if ( (outputFiles[i] = fopen(outputPaths[i], "a")) == NULL )
     {
         printf("Error: unable to file for logging\n");
