@@ -74,7 +74,7 @@ void logInfo(long long start, long long end, int argc, char *argv[])
     strcat(logName, argv[0]+2);
     strcat(logName, ".txt");
 
-    printf("\nlogging info (location: '%s')\n");
+    printf("\nlogging info (location: '%s')\n", logName);
 
     // open log file
     if ( (logFile = fopen(logName, "a")) == NULL )
