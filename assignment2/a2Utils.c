@@ -74,18 +74,21 @@ void logInfo(long long start, long long end, int argc, char *argv[])
     strcat(logName, argv[0]+2);
     strcat(logName, ".txt");
 
+    // open log file
     if ( (logFile = fopen(logName, "a")) == NULL )
     {
         printf("Error: unable to open file '%s'\n", logName);
         exit(1);
     }
 
+    // write to log file
     fprintf(logFile, "========================================\n");
     fprintf(logFile, "Start Time: %lu\n", start);
     fprintf(logFile, "End Time:   %lu\n", start);
     fprintf(logFile, "Num. files: %d\n", argc);
     fprintf(logFile, "========================================\n\n\n");
 
+    // close log file
     if ( fclose(logFile) == EOF )
     {
         printf("Error: unable to close file '%s'\n", logName);
