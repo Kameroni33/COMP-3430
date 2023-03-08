@@ -49,7 +49,7 @@ long long endTime;
 int main(int argc, char *argv[]) {
 
     // Local Variables
-    int workers = argv[1];
+    int workers = (int)argv[1];
     FILE *inputFile;
     char word[MAX_WORD];
 
