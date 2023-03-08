@@ -69,7 +69,7 @@ void logInfo(long long start, long long end, int argc, char *argv[])
     FILE *logFile;
     char logName[] = "logs.txt";
 
-    printf("\nlogging info (location: '%s')\n", logName);
+    printf("\nlogging info to '%s'\n", logName);
 
     // open log file
     if ( (logFile = fopen(logName, "a")) == NULL )
@@ -80,6 +80,7 @@ void logInfo(long long start, long long end, int argc, char *argv[])
 
     // write to log file
     fprintf(logFile, "========================================\n");
+    fprintf(logFile, "Program:    %s\n", argv[0]+2);
     fprintf(logFile, "Start Time: %lld\n", start);
     fprintf(logFile, "End Time:   %lld\n", start);
     fprintf(logFile, "Num. files: %d\n", argc);
