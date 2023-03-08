@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
             // open file and check for errors
             if ((file = fopen(argv[i], "r")) == NULL)
             {
-                printf("Error: unable to open file '%s'\n", argv[i]);
+                printf("Error: unable to open file '%s'.\n", argv[i]);
                 exit(1);
             }
 
@@ -37,6 +37,7 @@ int main(int argc, char *argv[]) {
 
     else
     {
+        printf("Error: no input files provided.\n")
         printf("Usage: ./serial path/to/files/*\n\n");
     }
 
