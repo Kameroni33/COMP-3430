@@ -7,7 +7,7 @@ all: $(OBJECTS) $(TARGETS) folders
 
 # Create folders for output .txt's and FIFO's
 folders:
-	mkdir -p $(FOLDERS) logs
+	mkdir -p $(FOLDERS)
 
 # Compile targets with a2Utils.c library
 serial: serial.c a2Utils.c
