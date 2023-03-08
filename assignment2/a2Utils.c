@@ -84,7 +84,7 @@ void logInfo(long long start, long long end, int argc, char *argv[])
     fprintf(logFile, "Num. files: %d\n", argc);
     fprintf(logFile, "Start Time: %lld ms\n", start);
     fprintf(logFile, "End Time:   %lld ms\n", start);
-    fprintf(logFile, "Run Time:   %lld ms\n", end-start);
+    fprintf(logFile, "Run Time:   %lld ms\n", end - start);
     fprintf(logFile, "========================================\n\n\n");
 
     // close log file
