@@ -65,7 +65,8 @@ int main(int argc, char *argv[]) {
             {
                 strcat(word, "\n");
                 printf("%s", word);
-                fwrite(word, sizeof(word), 1, findOutputFile(outputFiles, word));
+                // fwrite(word, sizeof(word), 1, findOutputFile(outputFiles, word));
+                fwrite(word, sizeof(word), 1, outputFiles[0]);
             }
 
             // close current file
