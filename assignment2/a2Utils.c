@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
 // Global Constants ===================================================================
 
@@ -53,4 +54,12 @@ FILE* determineOutputFile(FILE *outputFiles[NUM_OUTPUTS], char word[MAX_WORD])
         // all other characters go the same output file (last one in our list of files)
         return outputFiles[NUM_OUTPUTS-1];
     }
+}
+
+// from good 'ol stack overflow (https://stackoverflow.com/a/44896326)
+long long timeInMilliseconds(void) {
+    struct timeval tv;
+
+    gettimeofday(&tv,NULL);
+    return (((long long)tv.tv_sec)*1000)+(tv.tv_usec/1000);
 }
