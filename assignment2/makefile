@@ -1,8 +1,6 @@
-CC       = clang
-CFLAGS   = -Wall -Wpedantic -Wextra -Werror
-
-OBJFILES = q1.o q2.o q3.o a2Utils.o
-TARGETS  = q1 q2 q3
+CC      = clang
+CFLAGS  = -Wall -Wpedantic -Wextra -Werror
+TARGETS = q1 q2 q3
 
 all: $(TARGETS)
 
@@ -16,4 +14,4 @@ q3: q3.o a2Utils.o
 	$(CC) $(FLAGS) -o q3 q3.o a2Utils.o
 
 clean:
-	rm -f timeInMillis
+	rm -f *.o 
