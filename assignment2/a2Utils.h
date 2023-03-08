@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define NUM_OUTPUTS 27
 #define MAX_WORD 100
