@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdio.h>  // fopen, fclose
 
 // Global Constants ===================================================================
 
@@ -29,7 +28,7 @@ void closeOutputs(FILE *outputFiles[NUM_OUTPUTS])
 {
     for ( int i = 0; i < NUM_OUTPUTS; i++)
     {
-        if ( close(outputFiles[i]) != 0 )
+        if ( fclose(outputFiles[i]) != 0 )
         {
             printf("Error: unable to close file\n");
             exit(1);
