@@ -34,4 +34,4 @@ typedef struct OutputFiles
 void helloWorld();
 
 void openForAppend(FILE *file, char *path);
-void initializeOutputs(struct OutputFiles outputs);
+void initializeOutputs(OutputFiles outputs);
