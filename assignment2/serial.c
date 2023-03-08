@@ -1,6 +1,7 @@
 #include <stdio.h>    // fopen, fclose, fwrite, printf, fscanf
 #include <stdlib.h>   // exit
 #include <string.h>   // strcat
+#include <unistd.h>   // write
 
 #include "a2Utils.h"  // initializeOutputs
 
