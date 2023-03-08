@@ -1,4 +1,4 @@
-#include <stdio.h>  // fopen, fclose
+#include <stdio.h>
 
 // Global Constants ===================================================================
 
