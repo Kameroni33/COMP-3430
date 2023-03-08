@@ -80,9 +80,13 @@ void logInfo(long long start, long long end, int argc, char *argv[])
         exit(1);
     }
 
-    fprintf(determineOutputFile(outputFiles, word), "%s\n", word);
+    fprintf(logFile, "========================================\n");
+    fprintf(logFile, "Start Time: %lu\n", start);
+    fprintf(logFile, "End Time:   %lu\n", start);
+    fprintf(logFile, "Num. files: %d\n", argc);
+    fprintf(logFile, "========================================\n\n\n");
 
-    if ( fclose(outputFiles[i]) == EOF )
+    if ( fclose(logFile) == EOF )
     {
         printf("Error: unable to close file '%s'\n", logName);
         exit(1);
