@@ -34,7 +34,7 @@ void closeOutputs(FILE *outputFiles[NUM_OUTPUTS])
 
 FILE* determineOutputFile(FILE *outputFiles[NUM_OUTPUTS], char word[MAX_WORD])
 {
-    printf("adding '%s' to ", word);
+    printf("'%s' => ", word);
     // uppercase ASCII letters range from 65 - 90
     if ( word[0] > 64 && word[0] < 91 )
     {
