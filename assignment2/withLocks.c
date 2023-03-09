@@ -51,7 +51,7 @@ void *worker(void *arg)
     char inputFile[MAX_NAME];  // input file currently in process (local copy)
 
     // run indefinitely until signaled to exit (ie. 'stopThreads' flag)
-    while (1)
+    while (!stopThreads)
     {
         pthread_mutex_lock(&bufferLock);  // aquire the lock for the jobBuffer
         while (numJobs == 0)
@@ -130,12 +130,6 @@ int main(int argc, char *argv[])
 
     stopThreads = 1;                  // set thread exit flag to 'true' (ie. 1)
     pthread_cond_broadcast(&newJob);  // there isn't actually a new job, but should wake all threads to check the stop condition
-
-    for (int i = 0; i < numWorkers; i++)
-    {
-        printf("signaling...");
-        pthread_cond_signal(&newJob);
-    }
 
     for (int i = 0; i < numWorkers; i++)
     {
