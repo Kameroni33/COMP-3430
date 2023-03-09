@@ -46,7 +46,7 @@ FILE *outputFiles[NUM_OUTPUTS];
 
 // Methods ============================================================================
 
-void initializeOutputs(FILE *outputFiles[NUM_OUTPUTS], char *outputPaths[NUM_OUTPUTS])
+void initializeOutputs()
 {
     for ( int i = 0; i < NUM_OUTPUTS; i++)
     {
@@ -58,7 +58,7 @@ void initializeOutputs(FILE *outputFiles[NUM_OUTPUTS], char *outputPaths[NUM_OUT
     }
 }
 
-void closeOutputs(FILE *outputFiles[NUM_OUTPUTS])
+void closeOutputs()
 {
     for ( int i = 0; i < NUM_OUTPUTS; i++)
     {
