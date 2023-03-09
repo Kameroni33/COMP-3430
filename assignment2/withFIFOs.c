@@ -29,8 +29,19 @@ int main(int argc, char *argv[])
 
     startTime = timeInMilliseconds();
 
+    useFifos = 1;  // use FIFOs
+
+    // create all FIFOs
+    makeFifos();
+
+    // fork writer processes
+    initalizeWriters();
+
+    // open fifos for writing
+    initializeFifos();
+
     // open all of our output files for 'append'
-    initializeOutputs(outputFiles, outputPaths);
+    initializeOutputs();
 
     for (int i = 0; i < numWorkers; i++)
     {
