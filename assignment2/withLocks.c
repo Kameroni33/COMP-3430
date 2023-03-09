@@ -74,31 +74,38 @@ void *worker(void *arg)
 
 int main(int argc, char *argv[])
 {
+    if (argc < 3)
+    {
+        printf("Error: too few arguments provided.\n");
+        printf("Usage: ./serial num-workers path/to/files/*\n\n");
+    }
+
+    int numWorkers = (int)argv[1];  // number of workers
+    pthread_t workers[numWorkers];  // array of worker threads
+
+    printf("process: %s\nfiles:   %d\nworkers: %d\n", argv[0]+2, argc-1, numWorkers);
+
     startTime = timeInMilliseconds();
 
     // open all of our output files for 'append'
     initializeOutputs(outputFiles, outputPaths);
 
-    printf("process: %s\nfiles:   %d\nworkers: %d\n", argv[0]+2, argc-1, workers);
-    
-    if (argc > 2)
+    for (int i = 0; i < numWorkers; i++)
     {
-        // number of workers
-        pthread_t workers[(int)argv[1]];
-
-        // iterate through all the file names
-        for (int i = 1; i < argc; i++)
-        {
-            printf("reading file '%s'\n", argv[i]);
-
-            
-        }
+        // start worker threads
+        pthread_create(&workers[i], NULL, &worker, NULL);
     }
 
-    else
+    // iterate through all the file names
+    for (int i = 2; i < argc; i++)
     {
-        printf("Error: too few arguments provided.\n");
-        printf("Usage: ./serial num-workers path/to/files/*\n\n");
+        printf("adding file '%s' to buffer\n", argv[i]);
+
+        pthread_mutex_lock(&bufferLock);
+        while (numJobs == MAX_BUFFER)
+        {
+
+        }
     }
 
     // close all of our output files
