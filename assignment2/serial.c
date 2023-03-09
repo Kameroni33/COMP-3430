@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
         for (int i = 1; i < argc; i++)
         {
             printf("reading file '%s'\n", argv[i]);
-            processFile(inputFile, argv[i], outputFiles);
+            processFile(inputFile, argv[i], outputFiles, 0);  // (not thread-safe option)
         }
     }
 
