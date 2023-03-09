@@ -56,6 +56,7 @@ void *worker(void *arg)
         {
             if (stopThreads)  // check for flag to exit
             {
+                printf("thread exiting...\n");
                 pthread_exit(NULL);
             }
             // wait until we get notified of a new job
