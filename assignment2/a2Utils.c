@@ -151,7 +151,7 @@ void initializeFifos()
 {
     for (int i = 0; i < NUM_OUTPUTS; i++)
     {
-        mkfifo(fifosPaths[i], );
+        mkfifo(fifosPaths[i], S_IRUSR | S_IWUSR);  // make fifo with read/write privilages for user
     }
 }
 
@@ -190,6 +190,15 @@ void *worker(void *arg)
 
     printf("thread exiting...\n");
     pthread_exit(NULL);
+}
+
+// Process Methods ====================================================================
+
+void makeProcess()
+{
+    int newPid = fork();
+
+    
 }
 
 // Logging and Timing Methods =========================================================
