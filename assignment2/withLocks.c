@@ -55,14 +55,14 @@ void *worker(void *arg)
             {
                 pthread_exit(NULL);
             }
-
             // wait until we get notified of a new job
             pthread_cond_wait(&newJob, &bufferLock);
         }
-
         char inputFile[MAX_NAME] = get();   // get the next file to process & store in temporary variable
         pthread_cond_signal(&aquiredJob);   // signal main thread that we now have our file
         pthread_mutex_unlock($bufferLock);  // release lock on the jobBuffer
+
+        printf("processing '%s' from buffer\n", inputFile);
 
         processFile(inputFile, 1);
     }
@@ -105,11 +105,13 @@ int main(int argc, char *argv[])
             // wait until a job is aquired (free space in buffer)
             pthread_cond_wait(aquiredJob, bufferLock);
         }
-
-        put(argv[i]);                      // get the next file to process & store in temporary variable
-        pthread_cond_signal(&newJob);      // signal main thread that we now have our file
+        put(argv[i]);                      // put the next file to process into the buffer
+        pthread_cond_signal(&newJob);      // signal worker threads that there are new jobs
         pthread_mutex_unlock(&bufferLock)  // release lock on the jobBuffer
     }
+
+    // signal threads to exit
+    // wait fro threads to exit
 
     // close all of our output files
     closeOutputs(outputFiles);
