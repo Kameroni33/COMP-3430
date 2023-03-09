@@ -7,7 +7,10 @@
 // Global Constants ===================================================================
 
 #define NUM_OUTPUTS 27  // number of output files (a-z + other)
+#define BUFFER_SIZE 10  // size of Job Buffer
+
 #define MAX_WORD 100    // max character count for words in input files
+#define MAX_NAME 50     // max character count for input file names (arbitary)
 
 // Global Variables ===================================================================
 
