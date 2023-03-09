@@ -3,13 +3,17 @@
 #include <string.h>
 #include <sys/time.h>
 
-// global constants
-#define NUM_OUTPUTS 27
-#define MAX_WORD 100
+// Global Constants ===================================================================
 
-// globally available variables =======================================================
+#define NUM_OUTPUTS 27  // number of output files (a-z + other)
+#define BUFFER_SIZE 10  // size of Job Buffer
 
-extern long long startTime, endTime;
+#define MAX_WORD 100    // max character count for words in input files
+#define MAX_NAME 50     // max character count for input file names
+
+// Externally Available Variables =====================================================
+
+extern long long startTime, endTime;    // should be initalized in 'main'
 
 extern char *outputPaths[NUM_OUTPUTS];  // initialized by a2Utils.c
 extern FILE *outputFiles[NUM_OUTPUTS];  // initialized via 'initializeOutputs' function
