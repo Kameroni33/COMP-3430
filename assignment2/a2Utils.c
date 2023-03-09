@@ -278,7 +278,7 @@ void initalizeWriters()
 
         else  // parent process
         {
-            writers[i] = newPid;
+            *writers[i] = newPid;
         }
     }
 }
