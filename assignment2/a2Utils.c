@@ -121,7 +121,6 @@ void processFile(char *inputPath, int threadSafe)
             pthread_mutex_lock(&outputLocks[outputIndex]);    // aquire lock for output file
             fprintf(outputFiles[outputIndex], "%s\n", word);  // append current word
             pthread_mutex_unlock(&outputLocks[outputIndex]);  // release lock on output file
-            
         }
 
         else  // thread-unsafe (ie. don't check for locks)
