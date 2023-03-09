@@ -1,7 +1,9 @@
-#include <stdio.h>MAX_BUFFERMAX_BUFFER
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/time.h>
 
 // Global Constants ===================================================================
@@ -141,6 +143,16 @@ void get(char *nextJob)
     strcpy(nextJob, jobBuffer[getNext]);    // get next file from the buffer
     getNext = (getNext + 1) % BUFFER_SIZE;  // increment & wrap if reached BUFFER_SIZE
     numJobs--;                              // update number of jobs in buffer
+}
+
+// Fifo Methods =======================================================================
+
+void initializeFifos()
+{
+    for (int i = 0; i < NUM_OUTPUTS; i++)
+    {
+        mkfifo(fifosPaths[i]);
+    }
 }
 
 // Thread Methods =====================================================================
