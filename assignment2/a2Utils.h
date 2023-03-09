@@ -7,6 +7,9 @@
 #define NUM_OUTPUTS 27
 #define MAX_WORD 100
 
+// global variables
+extern char *outputPaths[NUM_OUTPUTS];
+
 // output file methods
 void initializeOutputs(FILE *outputFiles[NUM_OUTPUTS], char *outputPaths[NUM_OUTPUTS]);
 void closeOutputs(FILE *outputFiles[NUM_OUTPUTS]);
