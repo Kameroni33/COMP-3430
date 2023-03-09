@@ -43,12 +43,8 @@ long long startTime, endTime;
 
 // Main Method ========================================================================
 
-int main(int argc, char *argv[]) {
-
-    // Local Variables
-    FILE *inputFile;
-    char word[MAX_WORD];
-
+int main(int argc, char *argv[])
+{
     startTime = timeInMilliseconds();
 
     // open all of our output files for 'append'
@@ -62,7 +58,7 @@ int main(int argc, char *argv[]) {
         for (int i = 1; i < argc; i++)
         {
             printf("reading file '%s'\n", argv[i]);
-            processFile(inputFile, argv[i], outputFiles, 0);  // (not thread-safe option)
+            processFile(argv[i], outputFiles, 0);  // (not thread-safe option)
         }
     }
 

@@ -57,9 +57,10 @@ FILE* determineOutputFile(FILE *outputFiles[NUM_OUTPUTS], char word[MAX_WORD])
     }
 }
 
-void processFile(FILE *inputFile, char *inputPath, FILE *outputFiles[], int threadSafe)
+void processFile(char *inputPath, FILE *outputFiles[], int threadSafe)
 {
-    char word[MAX_WORD];  // hold the current word in file
+    FILE *inputFile;      // file descriptor for input file
+    char word[MAX_WORD];  // current word in file
 
     // open input file
     if ((inputFile = fopen(inputPath, "r")) == NULL)
