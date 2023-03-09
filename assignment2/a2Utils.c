@@ -276,7 +276,8 @@ void writer(int index)
         fprintf(outputFiles[index], "%s\n", word);  // append current word
     }
 
-    // close files... (???)
+    // close all of our output files
+    closeOutputs();
 
     printf("writer exiting...");
     exit(0);

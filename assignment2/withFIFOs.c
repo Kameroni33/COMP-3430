@@ -34,14 +34,14 @@ int main(int argc, char *argv[])
     // create all FIFOs
     makeFifos();
 
+    // open all of our output files for 'append'
+    initializeOutputs();
+
     // fork writer processes
     initalizeWriters();
 
     // open fifos for writing
     initializeFifos();
-
-    // open all of our output files for 'append'
-    initializeOutputs();
 
     for (int i = 0; i < numWorkers; i++)
     {
@@ -76,8 +76,13 @@ int main(int argc, char *argv[])
         pthread_join(workers[i], NULL);  // wait for worker threads to exit
     }
 
+    // close all of our FIFOs
+    closeFifos();
+
+    // wait for writers to finish....
+
     // close all of our output files
-    closeOutputs(outputFiles);
+    closeOutputs();
 
     endTime = timeInMilliseconds();
 
