@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
     for (int i = 0; i < numWorkers; i++)
     {
         printf("waiting for writer process to exit (%d)\n", i+1);
-        waitpid(writers[i], NULL, 0);  // wait for writer process to exit
+        wait(writers[i], NULL, 0);  // wait for writer process to exit
     }
 
     // close all of our output files
