@@ -1,7 +1,7 @@
 CC      = clang
 CFLAGS  = -Wall -Wpedantic -Wextra -Werror -g
 TARGETS = serial withLocks withFIFOs
-FOLDERS = output fifos
+FOLDERS = /tmp/ronaldk1/output /tmp/ronaldk1/fifos
 
 all: $(TARGETS) folders
 
