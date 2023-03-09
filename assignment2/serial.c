@@ -3,6 +3,9 @@
 
 #include "a2Utils.h"  // initializeOutputs
 
+// global array of output file descriptors (ordered to match outputPaths)
+FILE *outputFiles[NUM_OUTPUTS];
+
 // timing variables for logging
 long long startTime, endTime;
 
