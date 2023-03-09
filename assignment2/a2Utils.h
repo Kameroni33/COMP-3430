@@ -20,8 +20,7 @@ extern char *outputPaths[NUM_OUTPUTS];  // initialized by a2Utils.c
 extern FILE *outputFiles[NUM_OUTPUTS];  // initialized via 'initializeOutputs' function
 
 extern int stopThreads;  // initalized to 0 by a2Utils.c and should be set to 1 in 'main'
-
-extern int numJobs;  // number of jobs in jobBuffer
+extern int numJobs;      // number of jobs in jobBuffer
 
 extern pthread_cond_t newJob, aquiredJob;  // condition variables for jobBuffer
 extern pthread_mutex_t bufferLock;         // mutex lock for jobBuffer
