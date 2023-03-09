@@ -19,12 +19,21 @@ long long startTime, endTime;
 
 // global array of output file descriptors (ordered a-z + other)
 char *outputPaths[NUM_OUTPUTS] = { "output/a.txt", "output/b.txt", "output/c.txt", "output/d.txt", "output/e.txt", "output/f.txt", "output/g.txt", "output/h.txt", "output/i.txt", "output/j.txt", "output/k.txt", "output/l.txt", "output/m.txt", "output/n.txt", "output/o.txt", "output/p.txt", "output/q.txt", "output/r.txt", "output/s.txt", "output/t.txt", "output/u.txt", "output/v.txt", "output/w.txt", "output/x.txt", "output/y.txt", "output/z.txt", "output/other.txt" };
-
 // global array of output file descriptors (ordered a-z + other)
 FILE *outputFiles[NUM_OUTPUTS];
-
 // global array of output file locks (ordered a-z + other)
 pthread_mutex_t outputLocks[NUM_OUTPUTS];
+
+// shared memory Job Buffer for holding available jobs
+char jobBuffer[BUFFER_SIZE][MAX_NAME];
+int putNext = 0;  // index to put next job into
+int getNext = 0;  // index to get next job from
+int numJobs = 0;  // number of jobs in buffer
+
+int stopThreads = 0;  // flag for threads to exit
+
+pthread_cond_t newJob, aquiredJob;  // condition variables for buffer
+pthread_mutex_t bufferLock;         // mutex lock for buffer
 
 // outputFiles Methods ================================================================
 
