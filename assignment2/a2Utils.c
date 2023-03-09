@@ -25,13 +25,14 @@ char *outputPaths[NUM_OUTPUTS] = { "output/a.txt", "output/b.txt", "output/c.txt
 FILE *outputFiles[NUM_OUTPUTS];
 // global array of output file locks (ordered a-z + other)
 pthread_mutex_t outputLocks[NUM_OUTPUTS];
-// global array of output file writer PIDs
-int *writers[NUM_OUTPUTS];
 
 // global array of FIFO file paths (ordered a-z + other)
 char *fifoPaths[NUM_OUTPUTS] = { "fifos/aFifo", "fifos/bFifo", "fifos/cFifo", "fifos/dFifo", "fifos/eFifo", "fifos/fFifo", "fifos/gFifo", "fifos/hFifo", "fifos/iFifo", "fifos/jFifo", "fifos/kFifo", "fifos/lFifo", "fifos/mFifo", "fifos/nFifo", "fifos/oFifo", "fifos/pFifo", "fifos/qFifo", "fifos/rFifo", "fifos/sFifo", "fifos/tFifo", "fifos/uFifo", "fifos/vFifo", "fifos/wFifo", "fifos/xFifo", "fifos/yFifo", "fifos/zFifo", "fifos/otherFifo" };
 // global array of FIFO file descriptors (ordered a-z + other)
 FILE *fifoFiles[NUM_OUTPUTS];
+
+// global array of output file writer PIDs
+int *writers[NUM_OUTPUTS];
 
 // shared memory Job Buffer for holding available jobs
 char jobBuffer[BUFFER_SIZE][MAX_NAME];
