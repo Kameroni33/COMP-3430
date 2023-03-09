@@ -45,7 +45,9 @@ void get(char *nextJob);  // remove next item from the buffer
 
 // Fifo Methods =======================================================================
 
-void initializeFifos();
+void makeFifos();        // create FIFOs at path given in fifoPaths
+void initializeFifos();  // open all FIFOs for write (file descriptors can be acessed via fifoFiles array)
+void closeFifos();       // close all FIFO file descriptors
 
 // Thread Methods =====================================================================
 
@@ -53,8 +55,8 @@ void *worker(void *arg);  // function for worker threads
 
 // Process Methods ====================================================================
 
-void initalizeWriters();
-void writer();
+void initalizeWriters();  // fork NUM_OUTPUTS processes with index values 0 through NUM_OUTPUTS-1
+void writer(int index);   // function for writer process
 
 // Logging and Timing Methods =========================================================
 
