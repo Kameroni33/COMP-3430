@@ -108,8 +108,8 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < numWorkers; i++)
     {
-        // start worker threads
-        pthread_create(&workers[i], NULL, &worker, NULL);
+        printf("starting worker thread (%d)\n", i+1);
+        pthread_create(&workers[i], NULL, &worker, NULL);  // start worker threads
     }
 
     // iterate through all the file names
@@ -135,9 +135,8 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < numWorkers; i++)
     {
-        printf("waiting for thread to exit...");
-        // wait for worker threads to exit
-        pthread_join(workers[i], NULL);
+        printf("waiting for worker thread to exit (%d)\n", i+1);
+        pthread_join(workers[i], NULL);  // wait for worker threads to exit
     }
 
     // close all of our output files
