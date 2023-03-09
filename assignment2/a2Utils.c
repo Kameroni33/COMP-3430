@@ -254,9 +254,9 @@ void writer(int index)
         exit(1);
     }
 
-    if ( (outputFiles[index] = fopen(outputNames[index], "a")) == NULL )  // open output file for writing
+    if ( (outputFiles[index] = fopen(getOutputFilePath(index), "a")) == NULL )  // open output file for writing
     {
-        printf("Error: unable to open file for append '%s'.\n", outputNames[index]);
+        printf("Error: unable to open file for append '%s'.\n", getOutputFilePath(index));
         exit(1);
     }
 
@@ -268,7 +268,7 @@ void writer(int index)
 
     if ( fclose(outputFiles[index]) == EOF )  // open output file
     {
-        printf("Error: unable to close file '%s'.\n", outputNames[index]);
+        printf("Error: unable to close file '%s'.\n", getOutputFilePath(index));
         exit(1);
     }
 
