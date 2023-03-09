@@ -10,44 +10,11 @@
 
 // Global Variables ===================================================================
 
-char *outputPaths[NUM_OUTPUTS] = {
-    "output/a.txt",
-    "output/b.txt",
-    "output/c.txt",
-    "output/d.txt",
-    "output/e.txt",
-    "output/f.txt",
-    "output/g.txt",
-    "output/h.txt",
-    "output/i.txt",
-    "output/j.txt",
-    "output/k.txt",
-    "output/l.txt",
-    "output/m.txt",
-    "output/n.txt",
-    "output/o.txt",
-    "output/p.txt",
-    "output/q.txt",
-    "output/r.txt",
-    "output/s.txt",
-    "output/t.txt",
-    "output/u.txt",
-    "output/v.txt",
-    "output/w.txt",
-    "output/x.txt",
-    "output/y.txt",
-    "output/z.txt",
-    "output/other.txt"
-};
-
-// global array of output file descriptors (ordered to match outputPaths)
-FILE *outputFiles[NUM_OUTPUTS];
-
 // timing variables for logging
 long long startTime, endTime;
 
 // shared memory Job Buffer for holding available jobs
-FILE *jobBuffer[MAX_BUFFER];
+char *jobBuffer[MAX_BUFFER];
 int putNext = 0;  // index to put next job into
 int getNext = 0;  // index to get next job from
 int numJobs = 0;  // number of jobs in buffer
@@ -66,9 +33,9 @@ void put(FILE *file)
     numJobs++;                             // update number of jobs in buffer
 }
 
-FILE* get()
+char* get()
 {
-    FILE *nextJob = buffer[getNext];       // get next file from the buffer
+    char *nextJob = buffer[getNext];       // get next file from the buffer
     getNext = (getNext + 1) % MAX_BUFFER;  // increment & wrap if reached MAX_BUFFER
     numJobs--;                             // update number of jobs in buffer
     return nextJob;
@@ -94,12 +61,12 @@ void *worker(void *arg)
             pthread_cond_wait(&newJob, &bufferLock);
         }
 
-        FILE* inputFile = get();  // get the next file to process & store in temporary variable
+        char inputFile[MAX_NAME] = get();  // get the next file to process & store in temporary variable
 
         pthread_cond_signal(&aquiredJob);  // signal main thread that we now have our file
         pthread_mutex_unlock()             // release lock on the jobBuffer
 
-        processFile(inputFile, );
+        processFile(inputFile, 1);
     }
 }
 
