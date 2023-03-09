@@ -3,6 +3,10 @@
 
 #include "a2Utils.h"  // initializeOutputs
 
+// Global Constants ===================================================================
+
+#define MAX_BUFFER 10
+
 // Global Variables ===================================================================
 
 char *outputPaths[NUM_OUTPUTS] = {
@@ -35,13 +39,37 @@ char *outputPaths[NUM_OUTPUTS] = {
     "output/other.txt"
 };
 
-FILE *jobBuffer[];
+// global array of output file descriptors (ordered to match outputPaths)
 FILE *outputFiles[NUM_OUTPUTS];
 
+// timing variables for logging
 long long startTime;
 long long endTime;
 
-// Thread Method ======================================================================
+// shared memory Job Buffer for holding available jobs
+FILE *jobBuffer[MAX_BUFFER];
+int putNext = 0;  // index to put next job into
+int getNext = 0;  // index to get next job from
+int numJobs = 0;  // number of jobs in buffer
+
+// Buffer Methods =====================================================================
+
+void put(FILE *file)
+{
+    jobBuffer[putNext] = file;             // add new file to the buffer
+    putNext = (putNext + 1) % MAX_BUFFER;  // increment & wrap if reached MAX_BUFFER
+    numJobs++;                             // update number of jobs in buffer
+}
+
+FILE* get()
+{
+    FILE *nextJob = buffer[getNext];
+    getNext = (getNext + 1) % MAX_BUFFER;
+    numJobs--;
+    return nextJob;
+}
+
+// Thread Methods =====================================================================
 
 void *worker(void *arg)
 {
