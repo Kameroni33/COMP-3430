@@ -5,8 +5,9 @@
 
 // Global Constants ===================================================================
 
-#define NUM_OUTPUTS 27
-#define MAX_WORD 100
+#define NUM_OUTPUTS 27  // number of output files (a-z + other)
+#define MAX_WORD 100    // max character count for words in input files
+#define MAX_NAME 25     // max characters for input file names
 
 // Methods ============================================================================
 
@@ -62,8 +63,7 @@ void processFile(char *inputPath, FILE *outputFiles[], int threadSafe)
     FILE *inputFile;      // file descriptor for input file
     char word[MAX_WORD];  // current word in file
 
-    // open input file
-    if ((inputFile = fopen(inputPath, "r")) == NULL)
+    if ((inputFile = fopen(inputPath, "r")) == NULL)  // open input file
     {
         printf("Error: unable to open file '%s'.\n", inputPath);
         exit(1);
@@ -91,8 +91,7 @@ void processFile(char *inputPath, FILE *outputFiles[], int threadSafe)
         
     }
 
-    // close current input file
-    if ( fclose(inputFile) == EOF )
+    if ( fclose(inputFile) == EOF )  // close current input file
     {
         printf("Error: unable to close file '%s'\n", inputPath);
         exit(1);
