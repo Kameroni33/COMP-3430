@@ -1,5 +1,6 @@
 #include <stdio.h>    // fopen, fclose, fwrite, printf, fscanf
 #include <stdlib.h>   // exit, atoi
+#include <string.h>   // strcpy
 #include <pthread.h>  // pthread stuff
 
 #include "a2Utils.h"  // initializeOutputs
@@ -29,7 +30,7 @@ pthread_mutex_t bufferLock;         // mutex lock for buffer
 
 void put(char *file)
 {
-    jobBuffer[putNext] = file;              // add new file to the buffer
+    strcpy(jobBuffer[putNext], file);       // add new file to the buffer
     putNext = (putNext + 1) % BUFFER_SIZE;  // increment & wrap if reached BUFFER_SIZE
     numJobs++;                              // update number of jobs in buffer
 }
