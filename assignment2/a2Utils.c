@@ -126,7 +126,7 @@ void processFile(char *inputPath, int option)
 
         else if (option == 2)  // question 3 (write to FIFO)
         {
-
+            fprintf(fifoFiles[outputIndex], "%s\n", word);  // append current word
         }
         
         else
