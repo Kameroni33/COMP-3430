@@ -18,6 +18,8 @@ extern long long startTime, endTime;    // should be initalized in 'main'
 extern char *outputPaths[NUM_OUTPUTS];  // initialized by a2Utils.c
 extern FILE *outputFiles[NUM_OUTPUTS];  // initialized via 'initializeOutputs' function
 
+extern int stopThreads;                 // 
+
 // outputFiles methods
 void initializeOutputs();  // open all output files for append (file descriptors can be acessed via outputFiles array)
 void closeOutputs();       // close all output file descriptors
