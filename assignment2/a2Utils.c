@@ -153,7 +153,7 @@ void initializeFifos()
 {
     for (int i = 0; i < NUM_OUTPUTS; i++)
     {
-        mkfifo(fifosPaths[i], S_IRUSR | S_IWUSR);  // make fifo with read/write privilages for user
+        mkfifo(fifoPaths[i], S_IRUSR | S_IWUSR);  // make fifo with read/write privilages for user
     }
 }
 
@@ -204,7 +204,7 @@ void initalizeWriters()
 
         if (newPid == 0)  // child process
         {
-            writer(i);  // ???
+            writer(i);
         }
 
         else  // parent process
@@ -216,13 +216,19 @@ void initalizeWriters()
 
 void writer(int index)
 {
-    FILE *fifo;  // fifo file descriptor
+    FILE *fifo;     // fifo file descriptor
+    char currChar;  // current char from fifo
 
-    if ((fifo = fopen(fifoPaths, "r")) == NULL)  // open fifo for reading
+    if ((fifo = fopen(fifoPaths[index], "r")) == NULL)  // open fifo for reading
     {
-        printf("Error: unable to open file '%s'.\n", inputPath);
+        printf("Error: unable to open fifo '%s' for read.\n", fifoPaths[index]);
         exit(1);
     }
+
+    while ((currChar = fgetc(fifo))))
+
+
+    // close files???
 }
 
 // Logging and Timing Methods =========================================================
