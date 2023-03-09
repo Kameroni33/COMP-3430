@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <pthread.h>
 #include <sys/time.h>
 
 // Global Constants ===================================================================
@@ -43,6 +44,8 @@ char *outputPaths[NUM_OUTPUTS] = {
 
 // global array of output file descriptors (ordered to match outputPaths)
 FILE *outputFiles[NUM_OUTPUTS];
+
+// 
 
 // outputFiles Methods ================================================================
 
