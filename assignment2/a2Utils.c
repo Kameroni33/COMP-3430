@@ -151,7 +151,7 @@ void initializeFifos()
 {
     for (int i = 0; i < NUM_OUTPUTS; i++)
     {
-        mkfifo(fifosPaths[i]);
+        mkfifo(fifosPaths[i], );
     }
 }
 
