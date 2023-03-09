@@ -136,6 +136,8 @@ int main(int argc, char *argv[])
     //     pthread_join(workers[i], NULL);
     // }
 
+    sleep(3);
+
     // close all of our output files
     closeOutputs(outputFiles);
 
