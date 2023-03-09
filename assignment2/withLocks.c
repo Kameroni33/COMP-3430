@@ -36,7 +36,7 @@ void put(char *file)
 
 void get(char *nextJob)
 {
-    char *nextJob = jobBuffer[getNext];     // get next file from the buffer
+    nextJob = jobBuffer[getNext];           // get next file from the buffer
     getNext = (getNext + 1) % BUFFER_SIZE;  // increment & wrap if reached BUFFER_SIZE
     numJobs--;                              // update number of jobs in buffer
 }
