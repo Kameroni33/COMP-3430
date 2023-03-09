@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     startTime = timeInMilliseconds();
 
     // open all of our output files for 'append'
-    initializeOutputs(outputFiles, outputPaths);
+    initializeOutputs();
 
     printf("process: %s\nfiles:   %d\n\n", argv[0]+2, argc-1);
     
@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
         for (int i = 1; i < argc; i++)
         {
             printf("reading file '%s'\n", argv[i]);
-            processFile(argv[i], 0);  // (not thread-safe option)
+            processFile(argv[i], 0);  // NOT thread-safe option
         }
     }
 
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     }
 
     // close all of our output files
-    closeOutputs(outputFiles);
+    closeOutputs();
 
     endTime = timeInMilliseconds();
 
