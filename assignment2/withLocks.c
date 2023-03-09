@@ -29,8 +29,6 @@ int main(int argc, char *argv[])
 
     startTime = timeInMilliseconds();
 
-    useFifos = 0;  // don't use FIFOs
-
     // open all of our output files for 'append'
     initializeOutputs();
 
