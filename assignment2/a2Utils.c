@@ -29,7 +29,7 @@ pthread_mutex_t outputLocks[NUM_OUTPUTS];
 int *writers[NUM_OUTPUTS];
 
 // global array of FIFOs
-char *fifosPaths[NUM_OUTPUTS] = { "fifos/aFifo", "fifos/bFifo", "fifos/cFifo", "fifos/dFifo", "fifos/eFifo", "fifos/fFifo", "fifos/gFifo", "fifos/hFifo", "fifos/iFifo", "fifos/jFifo", "fifos/kFifo", "fifos/lFifo", "fifos/mFifo", "fifos/nFifo", "fifos/oFifo", "fifos/pFifo", "fifos/qFifo", "fifos/rFifo", "fifos/sFifo", "fifos/tFifo", "fifos/uFifo", "fifos/vFifo", "fifos/wFifo", "fifos/xFifo", "fifos/yFifo", "fifos/zFifo", "fifos/otherFifo" };
+char *fifoPaths[NUM_OUTPUTS] = { "fifos/aFifo", "fifos/bFifo", "fifos/cFifo", "fifos/dFifo", "fifos/eFifo", "fifos/fFifo", "fifos/gFifo", "fifos/hFifo", "fifos/iFifo", "fifos/jFifo", "fifos/kFifo", "fifos/lFifo", "fifos/mFifo", "fifos/nFifo", "fifos/oFifo", "fifos/pFifo", "fifos/qFifo", "fifos/rFifo", "fifos/sFifo", "fifos/tFifo", "fifos/uFifo", "fifos/vFifo", "fifos/wFifo", "fifos/xFifo", "fifos/yFifo", "fifos/zFifo", "fifos/otherFifo" };
 
 // shared memory Job Buffer for holding available jobs
 char jobBuffer[BUFFER_SIZE][MAX_NAME];
@@ -204,7 +204,7 @@ void initalizeWriters()
 
         if (newPid == 0)  // child process
         {
-            writer();  // ???
+            writer(i);  // ???
         }
 
         else  // parent process
@@ -214,9 +214,15 @@ void initalizeWriters()
     }
 }
 
-void writer()
+void writer(int index)
 {
+    FILE *fifo;  // fifo file descriptor
 
+    if ((fifo = fopen(fifoPaths, "r")) == NULL)  // open fifo for reading
+    {
+        printf("Error: unable to open file '%s'.\n", inputPath);
+        exit(1);
+    }
 }
 
 // Logging and Timing Methods =========================================================
