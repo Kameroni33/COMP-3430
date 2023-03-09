@@ -115,6 +115,7 @@ int main(int argc, char *argv[])
     
     for (int i = 0; i < numWorkers; i++)
     {
+        printf("waiting for thread to exit...");
         // wait for worker threads to exit
         pthread_join(workers[i], NULL);
     }
