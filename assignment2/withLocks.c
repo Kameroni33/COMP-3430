@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     startTime = timeInMilliseconds();
 
     // open all of our output files for 'append'
-    initializeOutputs(outputFiles, outputPaths);
+    initializeOutputs();
 
     for (int i = 0; i < numWorkers; i++)
     {
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     }
 
     // close all of our output files
-    closeOutputs(outputFiles);
+    closeOutputs();
 
     endTime = timeInMilliseconds();
 
