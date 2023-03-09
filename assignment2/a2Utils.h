@@ -29,6 +29,11 @@ extern int numJobs;      // number of jobs in jobBuffer
 extern pthread_cond_t newJob, aquiredJob;  // condition variables for jobBuffer
 extern pthread_mutex_t bufferLock;         // mutex lock for jobBuffer
 
+// File Name Methods ==================================================================
+
+char* getOutputFilePath(int index);  // returns char* with full path to output file
+char* getFifoFilePath(int index);    // returns char* with full path to fifo file
+
 // Output File Methods ================================================================
 
 void initializeOutputs();  // open all output files for append (file descriptors can be acessed via outputFiles array)
@@ -62,11 +67,6 @@ void *worker(void *arg);  // function for worker threads
 
 void initalizeWriters();  // fork NUM_OUTPUTS processes with index values 0 through NUM_OUTPUTS-1
 void writer(int index);   // function for writer process
-
-// File Name Methods ==================================================================
-
-char* getOutputFilePath(int index);  // returns char* with full path to output file
-char* getFifoFilePath(int index);    // returns char* with full path to fifo file
 
 // Logging and Timing Methods =========================================================
 

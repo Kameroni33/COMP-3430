@@ -48,6 +48,27 @@ int useFifos = 0;     // for to indicate if we should use FIFOs (0 by default)
 pthread_cond_t newJob, aquiredJob;  // condition variables for buffer
 pthread_mutex_t bufferLock;         // mutex lock for buffer
 
+
+// File Name Methods ==================================================================
+
+char* getOutputFilePath(int index)
+{
+    // get size for the full path name (dir + name + ext)
+    int pathLen = strlen(outputDir) + strlen(fileNames[index]) + strlen(".txt");
+    char *filePath = malloc(sizeof(char) * pathLen);             // allocate space for file path
+    sprintf(filePath, "%s%s.txt", outputDir, fileNames[index]);  // format and set file path
+    return filePath;
+}
+
+char* getFifoFilePath(int index)
+{
+    // get size for the full path name (dir + name + 'Fifo')
+    int pathLen = strlen(fifoDir) + strlen(fileNames[index]) + strlen("Fifo");
+    char *filePath = malloc(sizeof(char) * pathLen);           // allocate space for file path
+    sprintf(filePath, "%s%sFifo", fifoDir, fileNames[index]);  // format and set file path
+    return filePath;
+}
+
 // outputFiles Methods ================================================================
 
 void initializeOutputs()
@@ -294,26 +315,6 @@ void initalizeWriters()
             writers[i] = newPid;
         }
     }
-}
-
-// File Name Methods ==================================================================
-
-char* getOutputFilePath(int index)
-{
-    // get size for the full path name (dir + name + ext)
-    int pathLen = strlen(outputDir) + strlen(fileNames[index]) + strlen(".txt");
-    char *filePath = malloc(sizeof(char) * pathLen);             // allocate space for file path
-    sprintf(filePath, "%s%s.txt", outputDir, fileNames[index]);  // format and set file path
-    return filePath;
-}
-
-char* getFifoFilePath(int index)
-{
-    // get size for the full path name (dir + name + 'Fifo')
-    int pathLen = strlen(fifoDir) + strlen(fileNames[index]) + strlen("Fifo");
-    char *filePath = malloc(sizeof(char) * pathLen);           // allocate space for file path
-    sprintf(filePath, "%s%sFifo", fifoDir, fileNames[index]);  // format and set file path
-    return filePath;
 }
 
 // Logging and Timing Methods =========================================================
