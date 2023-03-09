@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <pthread.h>
 #include <sys/time.h>
 
 // Global Constants ===================================================================
@@ -13,12 +14,15 @@
 
 // Externally Available Variables =====================================================
 
-extern long long startTime, endTime;    // should be initalized in 'main'
+extern long long startTime, endTime;  // should be initalized in 'main'
 
 extern char *outputPaths[NUM_OUTPUTS];  // initialized by a2Utils.c
 extern FILE *outputFiles[NUM_OUTPUTS];  // initialized via 'initializeOutputs' function
 
-extern int stopThreads;                 // initalized to 0 by a2Utils.c and should be set to 1 in 'main'
+extern int stopThreads;  // initalized to 0 by a2Utils.c and should be set to 1 in 'main'
+
+extern pthread_cond_t newJob, aquiredJob;  // condition variables for buffer
+extern pthread_mutex_t bufferLock;         // mutex lock for buffer
 
 // Output File Methods ================================================================
 
