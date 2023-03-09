@@ -9,6 +9,7 @@
 
 // global variables
 extern char *outputPaths[NUM_OUTPUTS];
+extern FILE *outputFiles[NUM_OUTPUTS];
 
 // output file methods
 void initializeOutputs(FILE *outputFiles[NUM_OUTPUTS], char *outputPaths[NUM_OUTPUTS]);
