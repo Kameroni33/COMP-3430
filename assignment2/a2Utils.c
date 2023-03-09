@@ -270,7 +270,7 @@ void initalizeWriters()
 {
     for (int i = 0; i <NUM_OUTPUTS; i++)
     {
-        int newPid = fork();  // fork new process
+        pid_t newPid = fork();  // fork new process
 
         if (newPid == 0)  // child process
         {
