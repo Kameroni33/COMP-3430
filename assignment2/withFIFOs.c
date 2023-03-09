@@ -86,8 +86,8 @@ int main(int argc, char *argv[])
         wait(NULL);  // wait for writer process to exit
     }
 
-    // close all of our output files
-    closeOutputs();
+    // // close all of our output files
+    // closeOutputs();
 
     endTime = timeInMilliseconds();
 
