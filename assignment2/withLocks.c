@@ -51,7 +51,7 @@ void *worker(void *arg)
     char inputFile[MAX_NAME];  // input file currently in process (local copy)
 
     // run indefinitely until signaled to exit (ie. 'stopThreads' flag)
-    while (!stopThreads)
+    while (1)
     {
         pthread_mutex_lock(&bufferLock);  // aquire the lock for the jobBuffer
         while (numJobs == 0)
@@ -75,9 +75,6 @@ void *worker(void *arg)
 
         processFile(inputFile, 1);
     }
-
-    printf("thread exiting...\n");
-    pthread_exit(NULL);
 }
 
 // Main Method ========================================================================
