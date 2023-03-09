@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < numWorkers; i++)
     {
-        printf("signal")
+        printf("signaling...");
         pthread_cond_signal(&newJob);
     }
 
