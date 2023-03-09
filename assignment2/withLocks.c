@@ -6,7 +6,8 @@
 
 // Global Constants ===================================================================
 
-#define MAX_BUFFER 10
+#define BUFFER_SIZE 10  // size of Job Buffer
+#define MAX_NAME 25     // max characters for input file names
 
 // Global Variables ===================================================================
 
@@ -14,7 +15,7 @@
 long long startTime, endTime;
 
 // shared memory Job Buffer for holding available jobs
-char *jobBuffer[MAX_BUFFER];
+char *jobBuffer[BUFFER_SIZE];
 int putNext = 0;  // index to put next job into
 int getNext = 0;  // index to get next job from
 int numJobs = 0;  // number of jobs in buffer
@@ -29,14 +30,14 @@ pthread_mutex_t bufferLock;         // mutex lock for buffer
 void put(char *file)
 {
     jobBuffer[putNext] = file;             // add new file to the buffer
-    putNext = (putNext + 1) % MAX_BUFFER;  // increment & wrap if reached MAX_BUFFER
+    putNext = (putNext + 1) % BUFFER_SIZE;  // increment & wrap if reached BUFFER_SIZE
     numJobs++;                             // update number of jobs in buffer
 }
 
 char* get()
 {
     char *nextJob = jobBuffer[getNext];    // get next file from the buffer
-    getNext = (getNext + 1) % MAX_BUFFER;  // increment & wrap if reached MAX_BUFFER
+    getNext = (getNext + 1) % BUFFER_SIZE;  // increment & wrap if reached BUFFER_SIZE
     numJobs--;                             // update number of jobs in buffer
     return nextJob;
 }
@@ -100,7 +101,7 @@ int main(int argc, char *argv[])
         printf("adding file '%s' to buffer\n", argv[i]);
 
         pthread_mutex_lock(&bufferLock);  // aquire the lock for the jobBuffer
-        while (numJobs == MAX_BUFFER)
+        while (numJobs == BUFFER_SIZE)
         {
             // wait until a job is aquired (free space in buffer)
             pthread_cond_wait(aquiredJob, bufferLock);
