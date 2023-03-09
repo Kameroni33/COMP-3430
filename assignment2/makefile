@@ -3,7 +3,7 @@ CFLAGS  = -Wall -Wpedantic -Wextra -Werror
 TARGETS = serial withLocks withFIFOs
 FOLDERS = output fifos
 
-all: $(OBJECTS) $(TARGETS) folders
+all: $(TARGETS) folders
 
 # Create folders for output .txt's and FIFO's
 folders:
