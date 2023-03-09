@@ -241,24 +241,6 @@ void *worker(void *arg)
 
 // Process Methods ====================================================================
 
-void initalizeWriters()
-{
-    for (int i = 0; i <NUM_OUTPUTS; i++)
-    {
-        int newPid = fork();  // fork new process
-
-        if (newPid == 0)  // child process
-        {
-            writer(i);
-        }
-
-        else  // parent process
-        {
-            writers[i] = newPid;
-        }
-    }
-}
-
 void writer(int index)
 {
     FILE *fifo;           // fifo file descriptor
@@ -281,6 +263,24 @@ void writer(int index)
 
     printf("writer exiting...");
     exit(0);
+}
+
+void initalizeWriters()
+{
+    for (int i = 0; i <NUM_OUTPUTS; i++)
+    {
+        int newPid = fork();  // fork new process
+
+        if (newPid == 0)  // child process
+        {
+            writer(i);
+        }
+
+        else  // parent process
+        {
+            writers[i] = newPid;
+        }
+    }
 }
 
 // Logging and Timing Methods =========================================================
