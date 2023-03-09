@@ -1,13 +1,8 @@
 #include <stdio.h>    // fopen, fclose, fwrite, printf, fscanf
 #include <stdlib.h>   // exit
 
-#include "a2Utils.h"  // initializeOutputs
+#include "a2Utils.h"  // variables, functions, etc... centeralized
 
-
-// timing variables for logging
-long long startTime, endTime;
-
-// Main Method ========================================================================
 
 int main(int argc, char *argv[])
 {
