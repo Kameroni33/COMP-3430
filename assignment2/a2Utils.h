@@ -30,7 +30,15 @@ void closeOutputs();       // close all output file descriptors
 FILE*  determineOutputFile(char word[MAX_WORD]);    // helper method for processFile
 void processFile(char *inputPath, int threadSafe);  // 0: no locks, 1: use mutex locks for thread safe
 
+// Buffer Methods =====================================================================
 
+void put(char *file);     // add item to the buffer
+void get(char *nextJob);  // remove next item from the buffer
+
+
+// Thread Methods =====================================================================
+
+void *worker(void *arg);  // function for worker threads
 
 // Logging and Timing Methods =========================================================
 
