@@ -63,6 +63,11 @@ void *worker(void *arg);  // function for worker threads
 void initalizeWriters();  // fork NUM_OUTPUTS processes with index values 0 through NUM_OUTPUTS-1
 void writer(int index);   // function for writer process
 
+// File Name Methods ==================================================================
+
+char* getOutputFilePath(int index);  // returns char* with full path to output file
+char* getFifoFilePath(int index);    // returns char* with full path to fifo file
+
 // Logging and Timing Methods =========================================================
 
 long long timeInMilliseconds(void);
