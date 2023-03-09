@@ -82,8 +82,8 @@ int main(int argc, char *argv[])
         printf("Usage: ./serial num-workers path/to/files/*\n\n");
     }
 
-    int numWorkers = (int)argv[1];  // number of workers
-    pthread_t workers[numWorkers];  // array of worker threads
+    int numWorkers = atoi(argv[1]);  // number of workers
+    pthread_t workers[numWorkers];   // array of worker threads
 
     printf("process: %s\nfiles:   %d\nworkers: %d\n", argv[0]+2, argc-1, numWorkers);
 
