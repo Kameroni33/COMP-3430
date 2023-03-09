@@ -34,8 +34,8 @@ int main(int argc, char *argv[])
     // create all FIFOs
     makeFifos();
 
-    // open all of our output files for 'append'
-    initializeOutputs();
+    // // open all of our output files for 'append'
+    // initializeOutputs();
 
     // fork writer processes
     initalizeWriters();
