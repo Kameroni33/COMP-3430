@@ -17,20 +17,21 @@
 
 // Global Variables ===================================================================
 
-const char 
+const char outputPath[] = "./output/";
+const char fifoPath[] = "./fifos/";
 
 // timing variables for logging
 long long startTime, endTime;
 
 // global array of output file paths (ordered a-z + other)
-char *outputPaths[NUM_OUTPUTS] = { "output/a.txt", "output/b.txt", "output/c.txt", "output/d.txt", "output/e.txt", "output/f.txt", "output/g.txt", "output/h.txt", "output/i.txt", "output/j.txt", "output/k.txt", "output/l.txt", "output/m.txt", "output/n.txt", "output/o.txt", "output/p.txt", "output/q.txt", "output/r.txt", "output/s.txt", "output/t.txt", "output/u.txt", "output/v.txt", "output/w.txt", "output/x.txt", "output/y.txt", "output/z.txt", "output/other.txt" };
+char *outputNames[NUM_OUTPUTS] = { "output/a.txt", "output/b.txt", "output/c.txt", "output/d.txt", "output/e.txt", "output/f.txt", "output/g.txt", "output/h.txt", "output/i.txt", "output/j.txt", "output/k.txt", "output/l.txt", "output/m.txt", "output/n.txt", "output/o.txt", "output/p.txt", "output/q.txt", "output/r.txt", "output/s.txt", "output/t.txt", "output/u.txt", "output/v.txt", "output/w.txt", "output/x.txt", "output/y.txt", "output/z.txt", "output/other.txt" };
 // global array of output file descriptors (ordered a-z + other)
 FILE *outputFiles[NUM_OUTPUTS];
 // global array of output file locks (ordered a-z + other)
 pthread_mutex_t outputLocks[NUM_OUTPUTS];
 
 // global array of FIFO file paths (ordered a-z + other)
-char *fifoPaths[NUM_OUTPUTS] = { "fifos/aFifo", "fifos/bFifo", "fifos/cFifo", "fifos/dFifo", "fifos/eFifo", "fifos/fFifo", "fifos/gFifo", "fifos/hFifo", "fifos/iFifo", "fifos/jFifo", "fifos/kFifo", "fifos/lFifo", "fifos/mFifo", "fifos/nFifo", "fifos/oFifo", "fifos/pFifo", "fifos/qFifo", "fifos/rFifo", "fifos/sFifo", "fifos/tFifo", "fifos/uFifo", "fifos/vFifo", "fifos/wFifo", "fifos/xFifo", "fifos/yFifo", "fifos/zFifo", "fifos/otherFifo" };
+char *fifoNames[NUM_OUTPUTS] = { "fifos/aFifo", "fifos/bFifo", "fifos/cFifo", "fifos/dFifo", "fifos/eFifo", "fifos/fFifo", "fifos/gFifo", "fifos/hFifo", "fifos/iFifo", "fifos/jFifo", "fifos/kFifo", "fifos/lFifo", "fifos/mFifo", "fifos/nFifo", "fifos/oFifo", "fifos/pFifo", "fifos/qFifo", "fifos/rFifo", "fifos/sFifo", "fifos/tFifo", "fifos/uFifo", "fifos/vFifo", "fifos/wFifo", "fifos/xFifo", "fifos/yFifo", "fifos/zFifo", "fifos/otherFifo" };
 // global array of FIFO file descriptors (ordered a-z + other)
 FILE *fifoFiles[NUM_OUTPUTS];
 
@@ -55,9 +56,9 @@ void initializeOutputs()
 {
     for ( int i = 0; i < NUM_OUTPUTS; i++)
     {
-        if ( (outputFiles[i] = fopen(outputPaths[i], "a")) == NULL )
+        if ( (outputFiles[i] = fopen(outputNames[i], "a")) == NULL )
         {
-            printf("Error: unable to open file for append '%s'.\n", outputPaths[i]);
+            printf("Error: unable to open file for append '%s'.\n", outputNames[i]);
             exit(1);
         }
     }
@@ -69,7 +70,7 @@ void closeOutputs()
     {
         if ( fclose(outputFiles[i]) == EOF )
         {
-            printf("Error: unable to close file '%s'.\n", outputPaths[i]);
+            printf("Error: unable to close file '%s'.\n", outputNames[i]);
             exit(1);
         }
     }
@@ -169,7 +170,7 @@ void makeFifos()
 {
     for (int i = 0; i < NUM_OUTPUTS; i++)
     {
-        mkfifo(fifoPaths[i], S_IRUSR | S_IWUSR);  // make fifo with read/write privilages for user
+        mkfifo(fifoNames[i], S_IRUSR | S_IWUSR);  // make fifo with read/write privilages for user
     }
 }
 
@@ -177,9 +178,9 @@ void initializeFifos()
 {
     for ( int i = 0; i < NUM_OUTPUTS; i++)
     {
-        if ( (fifoFiles[i] = fopen(fifoPaths[i], "w")) == NULL )
+        if ( (fifoFiles[i] = fopen(fifoNames[i], "w")) == NULL )
         {
-            printf("Error: unable to open fifo '%s'.\n", fifoPaths[i]);
+            printf("Error: unable to open fifo '%s'.\n", fifoNames[i]);
             exit(1);
         }
     }
@@ -191,7 +192,7 @@ void closeFifos()
     {
         if ( fclose(fifoFiles[i]) == EOF )
         {
-            printf("Error: unable to close fifo '%s'.\n", fifoPaths[i]);
+            printf("Error: unable to close fifo '%s'.\n", fifoNames[i]);
             exit(1);
         }
     }
@@ -249,15 +250,15 @@ void writer(int index)
     FILE *fifo;           // fifo file descriptor
     char word[MAX_WORD];  // current char from fifo
 
-    if ((fifo = fopen(fifoPaths[index], "r")) == NULL)  // open fifo for reading
+    if ((fifo = fopen(fifoNames[index], "r")) == NULL)  // open fifo for reading
     {
-        printf("Error: unable to open fifo '%s' for read.\n", fifoPaths[index]);
+        printf("Error: unable to open fifo '%s' for read.\n", fifoNames[index]);
         exit(1);
     }
 
-    if ( (outputFiles[index] = fopen(outputPaths[index], "a")) == NULL )  // open output file for writing
+    if ( (outputFiles[index] = fopen(outputNames[index], "a")) == NULL )  // open output file for writing
     {
-        printf("Error: unable to open file for append '%s'.\n", outputPaths[index]);
+        printf("Error: unable to open file for append '%s'.\n", outputNames[index]);
         exit(1);
     }
 
@@ -269,7 +270,7 @@ void writer(int index)
 
     if ( fclose(outputFiles[index]) == EOF )  // open output file
     {
-        printf("Error: unable to close file '%s'.\n", outputPaths[index]);
+        printf("Error: unable to close file '%s'.\n", outputNames[index]);
         exit(1);
     }
 
@@ -296,6 +297,10 @@ void initalizeWriters()
         }
     }
 }
+
+// File Name Methods ==================================================================
+
+
 
 // Logging and Timing Methods =========================================================
 
