@@ -94,10 +94,12 @@ void *worker(void *arg)
             pthread_cond_wait(&newJob, &bufferLock);
         }
 
-        // get the next file to process & store in temporary variable on this thread
-        FILE* tmpFile = get();
-        pthread_cond_signal(&aquiredJob);
-        pthread_mutex_unlock()
+        FILE* inputFile = get();  // get the next file to process & store in temporary variable
+
+        pthread_cond_signal(&aquiredJob);  // signal main thread that we now have our file
+        pthread_mutex_unlock()             // release lock on the jobBuffer
+
+        processFile(inputFile, );
     }
 }
 
