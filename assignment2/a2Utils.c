@@ -10,7 +10,7 @@
 #define BUFFER_SIZE 10  // size of Job Buffer
 
 #define MAX_WORD 100    // max character count for words in input files
-#define MAX_NAME 50     // max character count for input file names (arbitary)
+#define MAX_NAME 50     // max character count for input file names
 
 // Global Variables ===================================================================
 
