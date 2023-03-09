@@ -11,13 +11,13 @@ folders:
 
 # Compile targets with a2Utils.c library
 serial: serial.c a2Utils.c
-	$(CC) $(FLAGS) -o serial serial.c a2Utils.c
+	$(CC) $(CFLAGS) -o serial serial.c a2Utils.c
 
 withLocks: withLocks.c a2Utils.c
-	$(CC) $(FLAGS) -o withLocks withLocks.c a2Utils.c
+	$(CC) $(CFLAGS) -o withLocks withLocks.c a2Utils.c
 
 withFIFOs: withFIFOs.c a2Utils.c
-	$(CC) $(FLAGS) -o withFIFOs withFIFOs.c a2Utils.c
+	$(CC) $(CFLAGS) -o withFIFOs withFIFOs.c a2Utils.c
 
 clean:
 	rm $(TARGETS)
