@@ -15,7 +15,7 @@
 long long startTime, endTime;
 
 // shared memory Job Buffer for holding available jobs
-char *jobBuffer[BUFFER_SIZE];
+char jobBuffer[BUFFER_SIZE][MAX_NAME];
 int putNext = 0;  // index to put next job into
 int getNext = 0;  // index to get next job from
 int numJobs = 0;  // number of jobs in buffer
