@@ -11,7 +11,7 @@
 void initializeOutputs(FILE *outputFiles[NUM_OUTPUTS], char *outputPaths[NUM_OUTPUTS]);
 void closeOutputs(FILE *outputFiles[NUM_OUTPUTS]);
 FILE*  determineOutputFile(FILE *outputFiles[NUM_OUTPUTS], char word[MAX_WORD]);
-void processFile(FILE *inputFile, char *inputPath, FILE *outputFiles[]);
+void processFile(char *inputPath, FILE *outputFiles[], int threadSafe);
 
 // logging and timing methods
 long long timeInMilliseconds(void);
