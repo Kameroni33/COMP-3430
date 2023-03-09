@@ -253,14 +253,23 @@ void writer(int index)
         exit(1);
     }
 
+    if ( (outputFiles[i] = fopen(outputPaths[i], "a")) == NULL )  // open output file for writing
+    {
+        printf("Error: unable to open file for append '%s'.\n", outputPaths[i]);
+        exit(1);
+    }
+
     // read from FIFO -> write to output file (unitl FIFO is closed)
     while (fscanf(fifo, "%s", word) != EOF)
     {
         fprintf(outputFiles[index], "%s\n", word);  // append current word
     }
 
-    // close all of our output files
-    closeOutputs();
+    if ( fclose(outputFiles[i]) == EOF )  // open output file
+    {
+        printf("Error: unable to close file '%s'.\n", outputPaths[i]);
+        exit(1);
+    }
 
     printf("writer exiting...");
     exit(0);
