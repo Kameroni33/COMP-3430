@@ -11,41 +11,13 @@
 
 // Global Variables ===================================================================
 
-// just a list of file path names
-char *outputPaths[NUM_OUTPUTS] = {
-    "output/a.txt",
-    "output/b.txt",
-    "output/c.txt",
-    "output/d.txt",
-    "output/e.txt",
-    "output/f.txt",
-    "output/g.txt",
-    "output/h.txt",
-    "output/i.txt",
-    "output/j.txt",
-    "output/k.txt",
-    "output/l.txt",
-    "output/m.txt",
-    "output/n.txt",
-    "output/o.txt",
-    "output/p.txt",
-    "output/q.txt",
-    "output/r.txt",
-    "output/s.txt",
-    "output/t.txt",
-    "output/u.txt",
-    "output/v.txt",
-    "output/w.txt",
-    "output/x.txt",
-    "output/y.txt",
-    "output/z.txt",
-    "output/other.txt"
-};
+// global array of output file descriptors (ordered a-z + other)
+char *outputPaths[NUM_OUTPUTS] = { "output/a.txt", "output/b.txt", "output/c.txt", "output/d.txt", "output/e.txt", "output/f.txt", "output/g.txt", "output/h.txt", "output/i.txt", "output/j.txt", "output/k.txt", "output/l.txt", "output/m.txt", "output/n.txt", "output/o.txt", "output/p.txt", "output/q.txt", "output/r.txt", "output/s.txt", "output/t.txt", "output/u.txt", "output/v.txt", "output/w.txt", "output/x.txt", "output/y.txt", "output/z.txt", "output/other.txt" };
 
-// global array of output file descriptors (ordered to match outputPaths)
+// global array of output file descriptors (ordered a-z + other)
 FILE *outputFiles[NUM_OUTPUTS];
 
-// global array of output file locks (ordered to match outputPaths)
+// global array of output file locks (ordered a-z + other)
 pthread_mutex_t outputLocks[NUM_OUTPUTS];
 
 // outputFiles Methods ================================================================
