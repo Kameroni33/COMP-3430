@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
 
     endTime = timeInMilliseconds();
 
-    logInfo(startTime, endTime, workers, argc, argv);
+    logInfo(startTime, endTime, numWorkers, argc, argv);
 
     printf("End of Process.\n");
     return 0;
