@@ -35,9 +35,6 @@ char *outputPaths[NUM_OUTPUTS] = {
     "output/other.txt"
 };
 
-// global array of output file descriptors (ordered to match outputPaths)
-FILE *outputFiles[NUM_OUTPUTS];
-
 // Global Constants ===================================================================
 
 #define NUM_OUTPUTS 27  // number of output files (a-z + other)
