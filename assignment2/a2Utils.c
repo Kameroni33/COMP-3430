@@ -17,8 +17,8 @@
 
 // Global Variables ===================================================================
 
-const char outputPath[] = "./output/";
-const char fifoPath[] = "./fifos/";
+const char outputDir[] = "./output/";
+const char fifoDir[] = "./fifos/";
 
 // timing variables for logging
 long long startTime, endTime;
@@ -300,7 +300,14 @@ void initalizeWriters()
 
 // File Name Methods ==================================================================
 
-
+char *getOutputFilePath(int index)
+{
+    // get sixe for the full 
+    int pathLen = strlen(outputDir) + strlen(outputNames[index]) + strlen(".txt");
+    char *filePath = malloc(sizeof(char) * pathLen);
+    sprintf(filePath, "%s%s.txt", outputDir, outputNames[index]);
+    return filePath
+}
 
 // Logging and Timing Methods =========================================================
 
