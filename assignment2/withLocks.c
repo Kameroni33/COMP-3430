@@ -21,8 +21,8 @@ int numJobs = 0;  // number of jobs in buffer
 
 int stopThreads = 0;  // flag for threads to exit
 
-cond_t newJob, aquiredJob;  // condition variables for buffer
-mutex_t bufferLock;         // mutex lock for buffer
+pthread_cond_t newJob, aquiredJob;  // condition variables for buffer
+pthread_cond_t bufferLock;          // mutex lock for buffer
 
 // Buffer Methods =====================================================================
 
