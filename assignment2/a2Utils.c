@@ -124,6 +124,59 @@ void processFile(char *inputPath, int threadSafe)
     }
 }
 
+// Buffer Methods =====================================================================
+
+void put(char *file)
+{
+    strcpy(jobBuffer[putNext], file);       // add new file to the buffer
+    putNext = (putNext + 1) % BUFFER_SIZE;  // increment & wrap if reached BUFFER_SIZE
+    numJobs++;                              // update number of jobs in buffer
+}
+
+void get(char *nextJob)
+{
+    strcpy(nextJob, jobBuffer[getNext]);    // get next file from the buffer
+    getNext = (getNext + 1) % BUFFER_SIZE;  // increment & wrap if reached BUFFER_SIZE
+    numJobs--;                              // update number of jobs in buffer
+}
+
+// Thread Methods =====================================================================
+
+void *worker(void *arg)
+{
+    char inputFile[MAX_NAME];  // input file currently in process (local copy)
+
+    // run indefinitely until signaled to exit (ie. 'stopThreads' flag)
+    while (!stopThreads)
+    {
+        pthread_mutex_lock(&bufferLock);  // aquire the lock for the jobBuffer
+        while (numJobs == 0)
+        {
+            // wait until we get notified of a new job
+            pthread_cond_wait(&newJob, &bufferLock);
+
+            if (stopThreads)  // check for flag to exit
+            {
+                // necessary in case we were sleeping when process finished
+                printf("thread exiting...\n");
+                pthread_exit(NULL);
+            }
+        }
+
+        get(inputFile);  // get the next file to process & store in temporary variable
+
+        pthread_cond_signal(&aquiredJob);   // signal main thread that we now have our file
+        pthread_mutex_unlock(&bufferLock);  // release lock on the jobBuffer
+
+        printf("processing '%s' from buffer\n", inputFile);
+
+        processFile(inputFile, 1);
+    }
+
+    printf("thread exiting...\n");
+    pthread_exit(NULL);
+}
+
 // Logging and Timing Methods =========================================================
 
 // from good 'ol stack overflow (https://stackoverflow.com/a/44896326)
