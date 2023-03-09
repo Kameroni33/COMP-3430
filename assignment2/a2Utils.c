@@ -42,7 +42,7 @@ int getNext = 0;  // index to get next job from
 int numJobs = 0;  // number of jobs in buffer
 
 int stopThreads = 0;  // flag for threads to exit
-int useFifos;         // for to indicate if we should use FIFOs
+int useFifos = 0;     // for to indicate if we should use FIFOs (0 by default)
 
 pthread_cond_t newJob, aquiredJob;  // condition variables for buffer
 pthread_mutex_t bufferLock;         // mutex lock for buffer
