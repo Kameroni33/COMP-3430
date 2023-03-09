@@ -167,7 +167,6 @@ void makeFifos()
 {
     for (int i = 0; i < NUM_OUTPUTS; i++)
     {
-        printf("making fifo\n");
         mkfifo(fifoPaths[i], S_IRUSR | S_IWUSR);  // make fifo with read/write privilages for user
     }
 }
@@ -275,11 +274,13 @@ void initalizeWriters()
 
         if (newPid == 0)  // child process
         {
+            printf("Writer created!\n");
             writer(i);
         }
 
         else  // parent process
         {
+            printf("adding writer PID\n");
             *writers[i] = newPid;
         }
     }
