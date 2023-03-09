@@ -27,7 +27,7 @@ Additionally, for questions 1 & 2, the main process uses a JobBuffer to supply t
 #define BUFFER_SIZE 10  // size of Job Buffer
 
 #define MAX_WORD 100    // max character count for words in input files
-#define MAX_NAME 50     // max character count for input file names
+#define MAX_NAME 100    // max character count for input file names
 ```
 
 ## a2Utils.c
