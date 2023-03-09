@@ -1,5 +1,5 @@
 CC      = clang
-CFLAGS  = -Wall -Wpedantic -Wextra -Werror
+CFLAGS  = -Wall -Wpedantic -Wextra -Werror -g
 TARGETS = serial withLocks withFIFOs
 FOLDERS = output fifos
 
