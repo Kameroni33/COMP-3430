@@ -76,7 +76,7 @@ void *worker(void *arg)
 
 int main(int argc, char *argv[])
 {
-    if (argc < 3)
+    if (argc < 2)
     {
         printf("Error: too few arguments provided.\n");
         printf("Usage: ./serial num-workers path/to/files/*\n\n");
