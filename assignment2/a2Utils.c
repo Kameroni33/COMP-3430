@@ -24,14 +24,12 @@ const char fifoDir[] = "./fifos/";
 long long startTime, endTime;
 
 // global array of output file paths (ordered a-z + other)
-char *outputNames[NUM_OUTPUTS] = { "output/a.txt", "output/b.txt", "output/c.txt", "output/d.txt", "output/e.txt", "output/f.txt", "output/g.txt", "output/h.txt", "output/i.txt", "output/j.txt", "output/k.txt", "output/l.txt", "output/m.txt", "output/n.txt", "output/o.txt", "output/p.txt", "output/q.txt", "output/r.txt", "output/s.txt", "output/t.txt", "output/u.txt", "output/v.txt", "output/w.txt", "output/x.txt", "output/y.txt", "output/z.txt", "output/other.txt" };
+char *fileNames[NUM_OUTPUTS] = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "other" };
 // global array of output file descriptors (ordered a-z + other)
 FILE *outputFiles[NUM_OUTPUTS];
 // global array of output file locks (ordered a-z + other)
 pthread_mutex_t outputLocks[NUM_OUTPUTS];
 
-// global array of FIFO file paths (ordered a-z + other)
-char *fifoNames[NUM_OUTPUTS] = { "fifos/aFifo", "fifos/bFifo", "fifos/cFifo", "fifos/dFifo", "fifos/eFifo", "fifos/fFifo", "fifos/gFifo", "fifos/hFifo", "fifos/iFifo", "fifos/jFifo", "fifos/kFifo", "fifos/lFifo", "fifos/mFifo", "fifos/nFifo", "fifos/oFifo", "fifos/pFifo", "fifos/qFifo", "fifos/rFifo", "fifos/sFifo", "fifos/tFifo", "fifos/uFifo", "fifos/vFifo", "fifos/wFifo", "fifos/xFifo", "fifos/yFifo", "fifos/zFifo", "fifos/otherFifo" };
 // global array of FIFO file descriptors (ordered a-z + other)
 FILE *fifoFiles[NUM_OUTPUTS];
 
@@ -303,9 +301,18 @@ void initalizeWriters()
 char* getOutputFilePath(int index)
 {
     // get size for the full path name (dir + name + ext)
-    int pathLen = strlen(outputDir) + strlen(outputNames[index]) + strlen(".txt");
-    char *filePath = malloc(sizeof(char) * pathLen);               // allocate space for file path
-    sprintf(filePath, "%s%s.txt", outputDir, outputNames[index]);  // format and set file path
+    int pathLen = strlen(outputDir) + strlen(fileNames[index]) + strlen(".txt");
+    char *filePath = malloc(sizeof(char) * pathLen);             // allocate space for file path
+    sprintf(filePath, "%s%s.txt", outputDir, fileNames[index]);  // format and set file path
+    return filePath;
+}
+
+char* getFifoFilePath(int index)
+{
+    // get size for the full path name (dir + name + 'Fifo')
+    int pathLen = strlen(fifoDir) + strlen(fileNames[index]) + strlen("Fifo");
+    char *filePath = malloc(sizeof(char) * pathLen);           // allocate space for file path
+    sprintf(filePath, "%s%sFifo", fifoDir, fileNames[index]);  // format and set file path
     return filePath;
 }
 
