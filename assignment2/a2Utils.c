@@ -300,7 +300,7 @@ void initalizeWriters()
 
 // File Name Methods ==================================================================
 
-char *getOutputFilePath(int index)
+char* getOutputFilePath(int index)
 {
     // get sixe for the full 
     int pathLen = strlen(outputDir) + strlen(outputNames[index]) + strlen(".txt");
