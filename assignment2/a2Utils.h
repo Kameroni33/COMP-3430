@@ -18,6 +18,8 @@ extern long long startTime, endTime;  // should be initalized in 'main'
 
 extern char *outputPaths[NUM_OUTPUTS];  // initialized by a2Utils.c
 extern FILE *outputFiles[NUM_OUTPUTS];  // initialized via 'initializeOutputs' function
+extern char *fifosPaths[NUM_OUTPUTS]    // initialized via 'initializeFifos' function
+extern int  *writers[NUM_OUTPUTS];      // initialized via 'initializeWriters' function
 
 extern int stopThreads;  // initalized to 0 by a2Utils.c and should be set to 1 in 'main'
 extern int numJobs;      // number of jobs in jobBuffer
@@ -40,10 +42,18 @@ void processFile(char *inputPath, int threadSafe);  // 0: no locks, 1: use mutex
 void put(char *file);     // add item to the buffer
 void get(char *nextJob);  // remove next item from the buffer
 
+// Fifo Methods =======================================================================
+
+void initializeFifos();
 
 // Thread Methods =====================================================================
 
 void *worker(void *arg);  // function for worker threads
+
+// Process Methods ====================================================================
+
+void initalizeWriters();
+void writer();
 
 // Logging and Timing Methods =========================================================
 
