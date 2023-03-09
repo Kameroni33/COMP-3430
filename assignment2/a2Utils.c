@@ -293,7 +293,7 @@ void writer(int index)
         exit(1);
     }
 
-    printf("writer exiting...");
+    printf("writer exiting...\n");
     exit(0);
 }
 
