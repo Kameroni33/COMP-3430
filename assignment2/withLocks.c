@@ -29,17 +29,16 @@ pthread_mutex_t bufferLock;         // mutex lock for buffer
 
 void put(char *file)
 {
-    jobBuffer[putNext] = file;             // add new file to the buffer
+    jobBuffer[putNext] = file;              // add new file to the buffer
     putNext = (putNext + 1) % BUFFER_SIZE;  // increment & wrap if reached BUFFER_SIZE
-    numJobs++;                             // update number of jobs in buffer
+    numJobs++;                              // update number of jobs in buffer
 }
 
-char* get()
+void get(char *nextJob)
 {
-    char *nextJob = jobBuffer[getNext];    // get next file from the buffer
+    char *nextJob = jobBuffer[getNext];     // get next file from the buffer
     getNext = (getNext + 1) % BUFFER_SIZE;  // increment & wrap if reached BUFFER_SIZE
-    numJobs--;                             // update number of jobs in buffer
-    return nextJob;
+    numJobs--;                              // update number of jobs in buffer
 }
 
 // Thread Methods =====================================================================
