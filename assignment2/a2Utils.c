@@ -345,7 +345,7 @@ void logInfo(long long start, long long end, int workers, int argc, char *argv[]
     fprintf(logFile, "Files:   %d\n", argc);
     fprintf(logFile, "Workers: %d\n", workers);
     fprintf(logFile, "Start:   %lld ms\n", start);
-    fprintf(logFile, "End:     %lld ms\n", start);
+    fprintf(logFile, "End:     %lld ms\n", end);
     fprintf(logFile, "Runtime: %lld ms\n\n", end - start);
 
     // close log file
