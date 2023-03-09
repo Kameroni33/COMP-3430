@@ -162,14 +162,12 @@ void logInfo(long long start, long long end, int workers, int argc, char *argv[]
     }
 
     // write to log file
-    fprintf(logFile, "========================================\n");
     fprintf(logFile, "Program: %s\n", argv[0]+2);
     fprintf(logFile, "Files:   %d\n", argc);
     fprintf(logFile, "Workers: %d\n", workers);
     fprintf(logFile, "Start:   %lld ms\n", start);
     fprintf(logFile, "End:     %lld ms\n", start);
-    fprintf(logFile, "Runtime: %lld ms\n", end - start);
-    fprintf(logFile, "========================================\n\n");
+    fprintf(logFile, "Runtime: %lld ms\n\n", end - start);
 
     // close log file
     if ( fclose(logFile) == EOF )
