@@ -45,7 +45,8 @@ char *outputPaths[NUM_OUTPUTS] = {
 // global array of output file descriptors (ordered to match outputPaths)
 FILE *outputFiles[NUM_OUTPUTS];
 
-// 
+// global array of output file locks (ordered to match outputPaths)
+pthread_mutex_t outputLocks[NUM_OUTPUTS];
 
 // outputFiles Methods ================================================================
 
@@ -75,32 +76,33 @@ void closeOutputs()
 
 // inputFile Methods ==================================================================
 
-FILE* determineOutputFile(char word[MAX_WORD])
+int determineOutputFile(char word[MAX_WORD])
 {
     // uppercase ASCII letters range from 65 - 90
     if ( word[0] > 64 && word[0] < 91 )
     {
-        // return the correct output file descriptor by offsetting by 65
-        return outputFiles[word[0]-65];
+        // return the correct output file index by offsetting by 65
+        return word[0]-65;
     }
 
     // lowercase ASCII letters range from 97 - 122
     else if ( word[0] > 96 && word[0] < 123 )
     {
-        // return the correct output file descriptor by offsetting by 97
-        return outputFiles[word[0]-97];
+        // return the correct output file index by offsetting by 97
+        return word[0]-97;
     }
 
     else
     {
-        // all other characters go the same output file (last one in our list of files)
-        return outputFiles[NUM_OUTPUTS-1];
+        // all other characters go the same output file (last index in our list of files)
+        return NUM_OUTPUTS-1;
     }
 }
 
 void processFile(char *inputPath, int threadSafe)
 {
     FILE *inputFile;      // file descriptor for input file
+    int outputIndex;      // index of output file in outputFiles
     char word[MAX_WORD];  // current word in file
 
     if ((inputFile = fopen(inputPath, "r")) == NULL)  // open input file
@@ -112,21 +114,19 @@ void processFile(char *inputPath, int threadSafe)
     // scan through entire input file
     while (fscanf(inputFile, "%s", word) != EOF)
     {
-        if (threadSafe)
+        outputIndex = determineOutputFile(word);  // determine output file index
+
+        if (threadSafe)  // thread-safe (ie. check for locks)
         {
-            // determine output file
-
-            // aquire lock for the file we want
-
-            // append current word
-
-            // release lock on output file
+            pthread_mutex_lock(&outputLocks[outputIndex]);    // aquire lock for output file
+            fprintf(outputFiles[outputIndex], "%s\n", word);  // append current word
+            pthread_mutex_unlock(&outputLocks[outputIndex]);  // release lock on output file
+            
         }
 
-        else
+        else  // thread-unsafe (ie. don't check for locks)
         {
-            // determine output file and append current word directly (thread-unsafe)
-            fprintf(determineOutputFile(word), "%s\n", word);
+            fprintf(outputFiles[outputIndex], "%s\n", word);  // append current word
         }
         
     }
