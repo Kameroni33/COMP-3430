@@ -57,6 +57,32 @@ FILE* determineOutputFile(FILE *outputFiles[NUM_OUTPUTS], char word[MAX_WORD])
     }
 }
 
+void processFile(FILE *inputFile, char *inputPath, FILE *outputFiles[])
+{
+    char word[MAX_WORD];  // hold the current word in file
+
+    // open input file
+    if ((inputFile = fopen(inputPath, "r")) == NULL)
+    {
+        printf("Error: unable to open file '%s'.\n", inputPath);
+        exit(1);
+    }
+
+    // scan through entire input file
+    while (fscanf(inputFile, "%s", word) != EOF)
+    {
+        // call our util function to determine which output file to write to and append the current word to it
+        fprintf(determineOutputFile(outputFiles, word), "%s\n", word);
+    }
+
+    // close current input file
+    if ( fclose(inputFile) == EOF )
+    {
+        printf("Error: unable to close file '%s'\n", inputPath);
+        exit(1);
+    }
+}
+
 // from good 'ol stack overflow (https://stackoverflow.com/a/44896326)
 long long timeInMilliseconds(void) {
     struct timeval timeVal;
