@@ -35,6 +35,7 @@ char *outputPaths[NUM_OUTPUTS] = {
     "output/other.txt"
 };
 
+FILE *jobBuffer[];
 FILE *outputFiles[NUM_OUTPUTS];
 
 long long startTime;
@@ -42,7 +43,10 @@ long long endTime;
 
 // Thread Method ======================================================================
 
-
+void *worker(void *arg)
+{
+    int
+}
 
 // Main Method ========================================================================
 
