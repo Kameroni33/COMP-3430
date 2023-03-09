@@ -3,8 +3,6 @@
 #include <string.h>   // strcpy
 #include <pthread.h>  // pthread stuff
 
-#include<unistd.h>    // sleep
-
 #include "a2Utils.h"  // initializeOutputs
 
 // Global Constants ===================================================================
