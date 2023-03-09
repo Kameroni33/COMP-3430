@@ -124,7 +124,7 @@ void processFile(char *inputPath, int threadSafe)
         else
         {
             // determine output file and append current word directly (thread-unsafe)
-            fprintf(determineOutputFile(outputFiles, word), "%s\n", word);
+            fprintf(determineOutputFile(word), "%s\n", word);
         }
         
     }
