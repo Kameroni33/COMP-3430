@@ -17,6 +17,8 @@
 
 // Global Variables ===================================================================
 
+const char 
+
 // timing variables for logging
 long long startTime, endTime;
 
