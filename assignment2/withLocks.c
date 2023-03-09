@@ -110,8 +110,14 @@ int main(int argc, char *argv[])
         pthread_mutex_unlock(&bufferLock)  // release lock on the jobBuffer
     }
 
-    // signal threads to exit
-    // wait fro threads to exit
+    stopThreads = 1;                  // set thread exit flag to 'true' (ie. 1)
+    pthread_cond_broadcast(&newJob);  // there isn't actually a new job, but should wake all threads to check the stop condition
+    
+    for (int i = 0; i < numWorkers; i++)
+    {
+        // wait for worker threads to exit
+        pthread_join(workers[i], NULL);
+    }
 
     // close all of our output files
     closeOutputs(outputFiles);
