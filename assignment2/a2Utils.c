@@ -54,9 +54,9 @@ void initializeOutputs()
 {
     for ( int i = 0; i < NUM_OUTPUTS; i++)
     {
-        if ( (outputFiles[i] = fopen(outputNames[i], "a")) == NULL )
+        if ( (outputFiles[i] = fopen(getOutputFilePath(i), "a")) == NULL )
         {
-            printf("Error: unable to open file for append '%s'.\n", outputNames[i]);
+            printf("Error: unable to open file for append '%s'.\n", getOutputFilePath(i));
             exit(1);
         }
     }
@@ -68,7 +68,7 @@ void closeOutputs()
     {
         if ( fclose(outputFiles[i]) == EOF )
         {
-            printf("Error: unable to close file '%s'.\n", outputNames[i]);
+            printf("Error: unable to close file '%s'.\n", getOutputFilePath(i));
             exit(1);
         }
     }
