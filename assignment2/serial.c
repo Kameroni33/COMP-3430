@@ -39,8 +39,7 @@ char *outputPaths[NUM_OUTPUTS] = {
 FILE *outputFiles[NUM_OUTPUTS];
 
 // timing variables for logging
-long long startTime;
-long long endTime;
+long long startTime, endTime;
 
 // Main Method ========================================================================
 
