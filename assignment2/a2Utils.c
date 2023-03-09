@@ -33,7 +33,7 @@ char *fifoPaths[NUM_OUTPUTS] = { "fifos/aFifo", "fifos/bFifo", "fifos/cFifo", "f
 FILE *fifoFiles[NUM_OUTPUTS];
 
 // global array of output file writer PIDs
-pid_t *writers[NUM_OUTPUTS];
+int *writers[NUM_OUTPUTS];
 
 // shared memory Job Buffer for holding available jobs
 char jobBuffer[BUFFER_SIZE][MAX_NAME];
@@ -270,7 +270,7 @@ void initalizeWriters()
 {
     for (int i = 0; i <NUM_OUTPUTS; i++)
     {
-        pid_t newPid = fork();  // fork new process
+        int newPid = fork();  // fork new process
 
         if (newPid == 0)  // child process
         {
