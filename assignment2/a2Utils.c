@@ -33,7 +33,7 @@ char *fifoPaths[NUM_OUTPUTS] = { "fifos/aFifo", "fifos/bFifo", "fifos/cFifo", "f
 FILE *fifoFiles[NUM_OUTPUTS];
 
 // global array of output file writer PIDs
-int *writers[NUM_OUTPUTS];
+int writers[NUM_OUTPUTS];
 
 // shared memory Job Buffer for holding available jobs
 char jobBuffer[BUFFER_SIZE][MAX_NAME];
