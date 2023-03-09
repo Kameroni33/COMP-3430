@@ -35,8 +35,12 @@ void closeOutputs();       // close all output file descriptors
 
 // Input File Methods =================================================================
 
-FILE*  determineOutputFile(char word[MAX_WORD]);    // helper method for processFile
-void processFile(char *inputPath, int threadSafe);  // 0: no locks, 1: use mutex locks for thread safe
+FILE*  determineOutputFile(char word[MAX_WORD]);  // helper method for processFile
+void processFile(char *inputPath, int option);    // read file and write to write to appropriate source
+
+// 0: question 1 (no locks, write to file)
+// 1: question 2 (thread-safe, write to file)
+// 2: question 3 (write to FIFO)
 
 // Buffer Methods =====================================================================
 
