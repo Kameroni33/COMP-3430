@@ -302,11 +302,11 @@ void initalizeWriters()
 
 char* getOutputFilePath(int index)
 {
-    // get sixe for the full 
+    // get size for the full path name (dir + name + ext)
     int pathLen = strlen(outputDir) + strlen(outputNames[index]) + strlen(".txt");
-    char *filePath = malloc(sizeof(char) * pathLen);
-    sprintf(filePath, "%s%s.txt", outputDir, outputNames[index]);
-    return filePath
+    char *filePath = malloc(sizeof(char) * pathLen);               // allocate space for file path
+    sprintf(filePath, "%s%s.txt", outputDir, outputNames[index]);  // format and set file path
+    return filePath;
 }
 
 // Logging and Timing Methods =========================================================
