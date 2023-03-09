@@ -26,7 +26,7 @@ mutex_t bufferLock;         // mutex lock for buffer
 
 // Buffer Methods =====================================================================
 
-void put(FILE *file)
+void put(char *file)
 {
     jobBuffer[putNext] = file;             // add new file to the buffer
     putNext = (putNext + 1) % MAX_BUFFER;  // increment & wrap if reached MAX_BUFFER
@@ -48,8 +48,7 @@ void *worker(void *arg)
     // run indefinitely until signaled to exit (ie. 'stopThreads' flag)
     while (1)
     {
-        // aquire the lock for the jobBuffer
-        pthread_mutex_lock(&bufferLock);
+        pthread_mutex_lock(&bufferLock);  // aquire the lock for the jobBuffer
         while (numJobs == 0)
         {
             if (stopThreads)  // check for flag to exit
@@ -61,10 +60,9 @@ void *worker(void *arg)
             pthread_cond_wait(&newJob, &bufferLock);
         }
 
-        char inputFile[MAX_NAME] = get();  // get the next file to process & store in temporary variable
-
-        pthread_cond_signal(&aquiredJob);  // signal main thread that we now have our file
-        pthread_mutex_unlock()             // release lock on the jobBuffer
+        char inputFile[MAX_NAME] = get();   // get the next file to process & store in temporary variable
+        pthread_cond_signal(&aquiredJob);   // signal main thread that we now have our file
+        pthread_mutex_unlock($bufferLock);  // release lock on the jobBuffer
 
         processFile(inputFile, 1);
     }
@@ -101,11 +99,16 @@ int main(int argc, char *argv[])
     {
         printf("adding file '%s' to buffer\n", argv[i]);
 
-        pthread_mutex_lock(&bufferLock);
+        pthread_mutex_lock(&bufferLock);  // aquire the lock for the jobBuffer
         while (numJobs == MAX_BUFFER)
         {
-
+            // wait until a job is aquired (free space in buffer)
+            pthread_cond_wait(aquiredJob, bufferLock);
         }
+
+        put(argv[i]);                      // get the next file to process & store in temporary variable
+        pthread_cond_signal(&newJob);      // signal main thread that we now have our file
+        pthread_mutex_unlock(&bufferLock)  // release lock on the jobBuffer
     }
 
     // close all of our output files
