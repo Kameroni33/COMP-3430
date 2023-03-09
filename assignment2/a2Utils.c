@@ -11,6 +11,7 @@
 
 // Global Variables ===================================================================
 
+// just a list of file path names
 char *outputPaths[NUM_OUTPUTS] = {
     "output/a.txt",
     "output/b.txt",
@@ -44,7 +45,7 @@ char *outputPaths[NUM_OUTPUTS] = {
 // global array of output file descriptors (ordered to match outputPaths)
 FILE *outputFiles[NUM_OUTPUTS];
 
-// Methods ============================================================================
+// outputFiles Methods ================================================================
 
 void initializeOutputs()
 {
@@ -70,7 +71,9 @@ void closeOutputs()
     }
 }
 
-FILE* determineOutputFile(FILE *outputFiles[NUM_OUTPUTS], char word[MAX_WORD])
+// inputFile Methods ==================================================================
+
+FILE* determineOutputFile(char word[MAX_WORD])
 {
     // uppercase ASCII letters range from 65 - 90
     if ( word[0] > 64 && word[0] < 91 )
@@ -132,6 +135,8 @@ void processFile(char *inputPath, int threadSafe)
         exit(1);
     }
 }
+
+// Logging and Timing Methods =========================================================
 
 // from good 'ol stack overflow (https://stackoverflow.com/a/44896326)
 long long timeInMilliseconds(void) {
