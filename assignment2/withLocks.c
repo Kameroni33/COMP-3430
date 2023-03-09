@@ -56,11 +56,11 @@ void *worker(void *arg)
         pthread_mutex_lock(&bufferLock);  // aquire the lock for the jobBuffer
         while (numJobs == 0)
         {
-            if (stopThreads)  // check for flag to exit
-            {
-                printf("thread exiting...\n");
-                pthread_exit(NULL);
-            }
+            // if (stopThreads)  // check for flag to exit
+            // {
+            //     printf("thread exiting...\n");
+            //     pthread_exit(NULL);
+            // }
             // wait until we get notified of a new job
             pthread_cond_wait(&newJob, &bufferLock);
         }
