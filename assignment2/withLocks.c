@@ -22,7 +22,7 @@ int numJobs = 0;  // number of jobs in buffer
 int stopThreads = 0;  // flag for threads to exit
 
 pthread_cond_t newJob, aquiredJob;  // condition variables for buffer
-pthread_cond_t bufferLock;          // mutex lock for buffer
+pthread_mutex_t bufferLock;         // mutex lock for buffer
 
 // Buffer Methods =====================================================================
 
@@ -35,7 +35,7 @@ void put(char *file)
 
 char* get()
 {
-    char *nextJob = buffer[getNext];       // get next file from the buffer
+    char *nextJob = jobBuffer[getNext];    // get next file from the buffer
     getNext = (getNext + 1) % MAX_BUFFER;  // increment & wrap if reached MAX_BUFFER
     numJobs--;                             // update number of jobs in buffer
     return nextJob;
