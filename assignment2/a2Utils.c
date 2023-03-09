@@ -224,7 +224,15 @@ void *worker(void *arg)
 
         printf("processing '%s' from buffer\n", inputFile);
 
-        processFile(inputFile, 1);
+        if (useFifos)  // write to FIFO (option = 2)
+        {
+            processFile(inputFile, 2);
+        }
+
+        else  // write to file thread-safe (option = 1)
+        {
+            processFile(inputFile, 1);
+        }
     }
 
     printf("thread exiting...\n");
