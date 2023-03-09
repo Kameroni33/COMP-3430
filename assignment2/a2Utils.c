@@ -167,6 +167,7 @@ void makeFifos()
 {
     for (int i = 0; i < NUM_OUTPUTS; i++)
     {
+        printf("making fifo\n");
         mkfifo(fifoPaths[i], S_IRUSR | S_IWUSR);  // make fifo with read/write privilages for user
     }
 }
