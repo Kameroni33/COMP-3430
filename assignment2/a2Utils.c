@@ -3,6 +3,12 @@
 #include <string.h>
 #include <sys/time.h>
 
+// Global Constants ===================================================================
+
+#define NUM_OUTPUTS 27  // number of output files (a-z + other)
+#define MAX_WORD 100    // max character count for words in input files
+#define MAX_NAME 25     // max characters for input file names
+
 // Global Variables ===================================================================
 
 char *outputPaths[NUM_OUTPUTS] = {
@@ -35,11 +41,8 @@ char *outputPaths[NUM_OUTPUTS] = {
     "output/other.txt"
 };
 
-// Global Constants ===================================================================
-
-#define NUM_OUTPUTS 27  // number of output files (a-z + other)
-#define MAX_WORD 100    // max character count for words in input files
-#define MAX_NAME 25     // max characters for input file names
+// global array of output file descriptors (ordered to match outputPaths)
+FILE *outputFiles[NUM_OUTPUTS];
 
 // Methods ============================================================================
 
