@@ -7,15 +7,17 @@
 #define NUM_OUTPUTS 27
 #define MAX_WORD 100
 
-// global variables
-extern char *outputPaths[NUM_OUTPUTS];
-extern FILE *outputFiles[NUM_OUTPUTS];
+// globally available variables
+extern char *outputPaths[NUM_OUTPUTS];  // initialized by a2Utils.c
+extern FILE *outputFiles[NUM_OUTPUTS];  // initialized via 'initializeOutputs' function
 
-// output file methods
-void initializeOutputs(FILE *outputFiles[NUM_OUTPUTS], char *outputPaths[NUM_OUTPUTS]);
-void closeOutputs(FILE *outputFiles[NUM_OUTPUTS]);
-FILE*  determineOutputFile(FILE *outputFiles[NUM_OUTPUTS], char word[MAX_WORD]);
-void processFile(char *inputPath, int threadSafe);
+// outputFiles methods
+void initializeOutputs();
+void closeOutputs();
+
+// inputFile methods
+FILE*  determineOutputFile(char word[MAX_WORD]);    // helper method for processFile
+void processFile(char *inputPath, int threadSafe);  // 0: no locks, 1: use mutex locks for thread safe
 
 // logging and timing methods
 long long timeInMilliseconds(void);
