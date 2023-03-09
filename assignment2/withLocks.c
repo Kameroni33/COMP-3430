@@ -129,16 +129,19 @@ int main(int argc, char *argv[])
     }
 
     stopThreads = 1;                  // set thread exit flag to 'true' (ie. 1)
-    pthread_cond_broadcast(&newJob);  // there isn't actually a new job, but should wake all threads to check the stop condition
+    pthread_cond_signal(&newJob);  // there isn't actually a new job, but should wake all threads to check the stop condition
 
-    // for (int i = 0; i < numWorkers; i++)
-    // {
-    //     printf("waiting for thread to exit...");
-    //     // wait for worker threads to exit
-    //     pthread_join(workers[i], NULL);
-    // }
+    for (int i = 0; i < numWorkers; i++)
+    {
+        pthread_cond_signal(&newJob);
+    }
 
-    sleep(3);
+    for (int i = 0; i < numWorkers; i++)
+    {
+        printf("waiting for thread to exit...");
+        // wait for worker threads to exit
+        pthread_join(workers[i], NULL);
+    }
 
     // close all of our output files
     closeOutputs(outputFiles);
