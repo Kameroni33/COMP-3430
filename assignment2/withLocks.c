@@ -74,6 +74,8 @@ void *worker(void *arg)
 
         processFile(inputFile, 1);
     }
+
+    pthread_exit(NULL);
 }
 
 // Main Method ========================================================================
