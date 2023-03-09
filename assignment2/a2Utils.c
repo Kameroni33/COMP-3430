@@ -290,7 +290,7 @@ void initalizeWriters()
         else  // parent process
         {
             printf("adding writer PID\n");
-            writers[i] = *newPid;
+            writers[i] = newPid;
         }
     }
 }
