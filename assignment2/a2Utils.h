@@ -12,8 +12,8 @@ extern char *outputPaths[NUM_OUTPUTS];  // initialized by a2Utils.c
 extern FILE *outputFiles[NUM_OUTPUTS];  // initialized via 'initializeOutputs' function
 
 // outputFiles methods
-void initializeOutputs();
-void closeOutputs();
+void initializeOutputs();  // open all output files for append (file descriptors can be acessed via outputFiles array)
+void closeOutputs();       // close all output file descriptors
 
 // inputFile methods
 FILE*  determineOutputFile(char word[MAX_WORD]);    // helper method for processFile
