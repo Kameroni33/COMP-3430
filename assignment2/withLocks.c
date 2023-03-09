@@ -56,13 +56,14 @@ void *worker(void *arg)
         pthread_mutex_lock(&bufferLock);  // aquire the lock for the jobBuffer
         while (numJobs == 0)
         {
-            // if (stopThreads)  // check for flag to exit
-            // {
-            //     printf("thread exiting...\n");
-            //     pthread_exit(NULL);
-            // }
             // wait until we get notified of a new job
             pthread_cond_wait(&newJob, &bufferLock);
+
+            if (stopThreads)  // check for flag to exit
+            {
+                printf("thread exiting...\n");
+                pthread_exit(NULL);
+            }
         }
 
         get(inputFile);  // get the next file to process & store in temporary variable
@@ -75,6 +76,7 @@ void *worker(void *arg)
         processFile(inputFile, 1);
     }
 
+    printf("thread exiting...\n");
     pthread_exit(NULL);
 }
 
