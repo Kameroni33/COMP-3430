@@ -46,6 +46,8 @@ char* get()
 
 void *worker(void *arg)
 {
+    char inputFile[MAX_NAME];  // input file currently in process (local copy)
+
     // run indefinitely until signaled to exit (ie. 'stopThreads' flag)
     while (1)
     {
@@ -59,9 +61,11 @@ void *worker(void *arg)
             // wait until we get notified of a new job
             pthread_cond_wait(&newJob, &bufferLock);
         }
-        char inputFile[MAX_NAME] = get();   // get the next file to process & store in temporary variable
+
+        inputFile = get();  // get the next file to process & store in temporary variable
+
         pthread_cond_signal(&aquiredJob);   // signal main thread that we now have our file
-        pthread_mutex_unlock($bufferLock);  // release lock on the jobBuffer
+        pthread_mutex_unlock(&bufferLock);  // release lock on the jobBuffer
 
         printf("processing '%s' from buffer\n", inputFile);
 
@@ -106,9 +110,11 @@ int main(int argc, char *argv[])
             // wait until a job is aquired (free space in buffer)
             pthread_cond_wait(aquiredJob, bufferLock);
         }
-        put(argv[i]);                      // put the next file to process into the buffer
-        pthread_cond_signal(&newJob);      // signal worker threads that there are new jobs
-        pthread_mutex_unlock(&bufferLock)  // release lock on the jobBuffer
+
+        put(argv[i]);  // put the next file to process into the buffer
+
+        pthread_cond_signal(&newJob);       // signal worker threads that there are new jobs
+        pthread_mutex_unlock(&bufferLock);  // release lock on the jobBuffer
     }
 
     stopThreads = 1;                  // set thread exit flag to 'true' (ie. 1)
