@@ -5,7 +5,6 @@
 
 #include "a2Utils.h"  // variables, functions, etc... centeralized
 
-// Main Method ========================================================================
 
 int main(int argc, char *argv[])
 {
