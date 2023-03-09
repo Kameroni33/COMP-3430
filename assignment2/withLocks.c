@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
         while (numJobs == BUFFER_SIZE)
         {
             // wait until a job is aquired (free space in buffer)
-            pthread_cond_wait(aquiredJob, bufferLock);
+            pthread_cond_wait(&aquiredJob, &bufferLock);
         }
 
         put(argv[i]);  // put the next file to process into the buffer
