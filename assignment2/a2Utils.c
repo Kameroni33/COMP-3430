@@ -197,7 +197,7 @@ void closeFifos()
 
 // Thread Methods =====================================================================
 
-void *worker(void *arg)
+void *worker()
 {
     char inputFile[MAX_NAME];  // input file currently in process (local copy)
 
