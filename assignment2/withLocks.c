@@ -1,6 +1,6 @@
 #include <stdio.h>    // fopen, fclose, fwrite, printf, fscanf
 #include <stdlib.h>   // exit
-#include <pthread.h>  // 
+#include <pthread.h>  // pthread stuff
 
 #include "a2Utils.h"  // initializeOutputs
 
