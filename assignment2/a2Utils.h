@@ -20,11 +20,13 @@ extern FILE *outputFiles[NUM_OUTPUTS];  // initialized via 'initializeOutputs' f
 
 extern int stopThreads;                 // initalized to 0 by a2Utils.c and should be set to 1 in 'main'
 
-// outputFiles methods
+// Output File Methods ================================================================
+
 void initializeOutputs();  // open all output files for append (file descriptors can be acessed via outputFiles array)
 void closeOutputs();       // close all output file descriptors
 
-// inputFile methods
+// Input File Methods =================================================================
+
 FILE*  determineOutputFile(char word[MAX_WORD]);    // helper method for processFile
 void processFile(char *inputPath, int threadSafe);  // 0: no locks, 1: use mutex locks for thread safe
 
