@@ -80,10 +80,18 @@ int main(int argc, char *argv[])
     {
         printf("Error: too few arguments provided.\n");
         printf("Usage: ./serial num-workers path/to/files/*\n\n");
+        exit(1);
     }
 
     int numWorkers = atoi(argv[1]);  // number of workers
     pthread_t workers[numWorkers];   // array of worker threads
+
+    if (numWorkers < 1)
+    {
+        printf("Error: invalid number of workers.\n");
+        printf("Usage: ./serial num-workers path/to/files/*\n\n");
+        exit(1);
+    }
 
     printf("process: %s\nfiles:   %d\nworkers: %d\n", argv[0]+2, argc-1, numWorkers);
 
