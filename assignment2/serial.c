@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
         // iterate through all the file names
         for (int i = 1; i < argc; i++)
         {
-            printf("reading file '%s'\n", argv[i]);
+            printf("processing '%s'\n", argv[i]);
             processFile(argv[i], 0);  // NOT thread-safe option
         }
     }
