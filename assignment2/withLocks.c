@@ -70,17 +70,10 @@ void *worker(void *arg)
     }
 }
 
-
-
 // Main Method ========================================================================
 
-int main(int argc, char *argv[]) {
-
-    // Local Variables
-    int workers = (int)argv[1];
-    FILE *inputFile;
-    char word[MAX_WORD];
-
+int main(int argc, char *argv[])
+{
     startTime = timeInMilliseconds();
 
     // open all of our output files for 'append'
@@ -90,6 +83,9 @@ int main(int argc, char *argv[]) {
     
     if (argc > 2)
     {
+        // number of workers
+        pthread_t workers[(int)argv[1]];
+
         // iterate through all the file names
         for (int i = 1; i < argc; i++)
         {
