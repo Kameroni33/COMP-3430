@@ -23,7 +23,7 @@ extern FILE *fifoFiles[NUM_OUTPUTS];    // initialized via 'initializeFifos' fun
 extern int  *writers[NUM_OUTPUTS];      // initialized via 'initializeWriters' function
 
 extern int stopThreads;  // initalized to 0 by a2Utils.c and should be set to 1 in 'main'
-int useFifos;            // initalized to 0 by a2Utils.c can be set to 1 in 'main' if FIFOs are desired
+extern int useFifos;     // initalized to 0 by a2Utils.c can be set to 1 in 'main' if FIFOs are desired
 extern int numJobs;      // number of jobs in jobBuffer
 
 extern pthread_cond_t newJob, aquiredJob;  // condition variables for jobBuffer
