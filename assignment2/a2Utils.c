@@ -57,7 +57,7 @@ FILE* determineOutputFile(FILE *outputFiles[NUM_OUTPUTS], char word[MAX_WORD])
     }
 }
 
-void processFile(FILE *inputFile, char *inputPath, FILE *outputFiles[])
+void processFile(FILE *inputFile, char *inputPath, FILE *outputFiles[], int threadSafe)
 {
     char word[MAX_WORD];  // hold the current word in file
 
@@ -71,8 +71,23 @@ void processFile(FILE *inputFile, char *inputPath, FILE *outputFiles[])
     // scan through entire input file
     while (fscanf(inputFile, "%s", word) != EOF)
     {
-        // call our util function to determine which output file to write to and append the current word to it
-        fprintf(determineOutputFile(outputFiles, word), "%s\n", word);
+        if (threadSafe)
+        {
+            // determine output file
+
+            // aquire lock for the file we want
+
+            // append current word
+
+            // release lock on output file
+        }
+
+        else
+        {
+            // determine output file and append current word directly (thread-unsafe)
+            fprintf(determineOutputFile(outputFiles, word), "%s\n", word);
+        }
+        
     }
 
     // close current input file
