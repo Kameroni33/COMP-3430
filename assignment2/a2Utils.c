@@ -7,7 +7,6 @@
 
 #define NUM_OUTPUTS 27  // number of output files (a-z + other)
 #define MAX_WORD 100    // max character count for words in input files
-#define MAX_NAME 25     // max characters for input file names
 
 // Global Variables ===================================================================
 
