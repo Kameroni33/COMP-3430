@@ -56,7 +56,7 @@ void initializeOutputs()
     {
         if ( (outputFiles[i] = fopen(getOutputFilePath(i), "a")) == NULL )
         {
-            printf("Error: unable to open file for append '%s'.\n", getOutputFilePath(i));
+            printf("Error: unable to open file for append.\n");
             exit(1);
         }
     }
@@ -68,7 +68,7 @@ void closeOutputs()
     {
         if ( fclose(outputFiles[i]) == EOF )
         {
-            printf("Error: unable to close file '%s'.\n", getOutputFilePath(i));
+            printf("Error: unable to close file.\n");
             exit(1);
         }
     }
@@ -168,7 +168,7 @@ void makeFifos()
 {
     for (int i = 0; i < NUM_OUTPUTS; i++)
     {
-        mkfifo(fifoNames[i], S_IRUSR | S_IWUSR);  // make fifo with read/write privilages for user
+        mkfifo(getFifoFilePath(i), S_IRUSR | S_IWUSR);  // make fifo with read/write privilages for user
     }
 }
 
@@ -176,9 +176,9 @@ void initializeFifos()
 {
     for ( int i = 0; i < NUM_OUTPUTS; i++)
     {
-        if ( (fifoFiles[i] = fopen(fifoNames[i], "w")) == NULL )
+        if ( (fifoFiles[i] = fopen((getFifoFilePath(i)), "w")) == NULL )
         {
-            printf("Error: unable to open fifo '%s'.\n", fifoNames[i]);
+            printf("Error: unable to open fifo.\n");
             exit(1);
         }
     }
@@ -190,7 +190,7 @@ void closeFifos()
     {
         if ( fclose(fifoFiles[i]) == EOF )
         {
-            printf("Error: unable to close fifo '%s'.\n", fifoNames[i]);
+            printf("Error: unable to close fifo.\n");
             exit(1);
         }
     }
@@ -248,15 +248,15 @@ void writer(int index)
     FILE *fifo;           // fifo file descriptor
     char word[MAX_WORD];  // current char from fifo
 
-    if ((fifo = fopen(fifoNames[index], "r")) == NULL)  // open fifo for reading
+    if ((fifo = fopen(getFifoFilePath(index), "r")) == NULL)  // open fifo for reading
     {
-        printf("Error: unable to open fifo '%s' for read.\n", fifoNames[index]);
+        printf("Error: unable to open fifo for read.\n");
         exit(1);
     }
 
     if ( (outputFiles[index] = fopen(getOutputFilePath(index), "a")) == NULL )  // open output file for writing
     {
-        printf("Error: unable to open file for append '%s'.\n", getOutputFilePath(index));
+        printf("Error: unable to open file for append.\n");
         exit(1);
     }
 
@@ -268,7 +268,7 @@ void writer(int index)
 
     if ( fclose(outputFiles[index]) == EOF )  // open output file
     {
-        printf("Error: unable to close file '%s'.\n", getOutputFilePath(index));
+        printf("Error: unable to close file.\n");
         exit(1);
     }
 
