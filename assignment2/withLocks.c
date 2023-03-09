@@ -7,7 +7,7 @@
 
 // Global Constants ===================================================================
 
-#define BUFFER_SIZE 1  // size of Job Buffer
+#define BUFFER_SIZE 10  // size of Job Buffer
 #define MAX_NAME 25     // max characters for input file names
 
 // Global Variables ===================================================================
