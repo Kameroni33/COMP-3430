@@ -30,6 +30,9 @@ void closeOutputs();       // close all output file descriptors
 FILE*  determineOutputFile(char word[MAX_WORD]);    // helper method for processFile
 void processFile(char *inputPath, int threadSafe);  // 0: no locks, 1: use mutex locks for thread safe
 
-// logging and timing methods
+
+
+// Logging and Timing Methods =========================================================
+
 long long timeInMilliseconds(void);
 void logInfo(long long start, long long end, int workers, int argc, char *argv[]);
