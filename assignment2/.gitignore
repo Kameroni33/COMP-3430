@@ -1,2 +1,2 @@
 # exclude input directory (and all the files in it)
-input/*
+/input/*
