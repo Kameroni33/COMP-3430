@@ -7,7 +7,10 @@
 #define NUM_OUTPUTS 27
 #define MAX_WORD 100
 
-// globally available variables
+// globally available variables =======================================================
+
+extern long long startTime, endTime;
+
 extern char *outputPaths[NUM_OUTPUTS];  // initialized by a2Utils.c
 extern FILE *outputFiles[NUM_OUTPUTS];  // initialized via 'initializeOutputs' function
 
