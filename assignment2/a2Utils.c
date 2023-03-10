@@ -197,7 +197,7 @@ void makeFifos()
     for (int i = 0; i < NUM_OUTPUTS; i++)
     {
         mkfifo((fifoFilePath = getFifoFilePath(i)), S_IRUSR | S_IWUSR);  // make fifo with read/write privilages for user
-        // free(fifoFilePath);  // free filename pointer
+        free(fifoFilePath);  // free filename pointer
     }
 }
 
@@ -213,7 +213,7 @@ void initializeFifos()
             exit(1);
         }
 
-        free(fifoFilePath);  // free filename pointer
+        // free(fifoFilePath);  // free filename pointer
     }
 }
 
