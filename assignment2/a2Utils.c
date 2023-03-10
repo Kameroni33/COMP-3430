@@ -283,7 +283,7 @@ void writer(int index)
     char *outputFilePath;  // output file name
     char word[MAX_WORD];   // current char from fifo
 
-    if ((fifo = fopen(fifoFilePath = getFifoFilePath(index), "r")) == NULL)  // open fifo for reading
+    if ((fifo = fopen((fifoFilePath = getFifoFilePath(index)), "r")) == NULL)  // open fifo for reading
     {
         printf("Error: unable to open fifo for read.\n");
         exit(1);
