@@ -9,21 +9,15 @@ withLocks = [[10, 2304], [10, 2276], [10, 2306], [10, 2281], [10, 2287], [10, 22
 withFIFOs = [[10, 1589], [10, 1666], [10, 1709], [10, 1672], [10, 1627], [10, 1665], [10, 1718], [10, 1717], [10, 1750], [10, 1704], [10, 1715], [10, 1727], [10, 1707], [10, 1716], [10, 1737], [10, 1739], [10, 1724], [10, 1761], [10, 1699], [10, 1724], [10, 1729], [10, 1732], [10, 1726], [10, 1725], [10, 1707], [10, 1736], [10, 1760], [10, 1749], [10, 1711], [10, 1763], [10, 1749], [10, 1736], [10, 1707], [10, 1744], [10, 1705], [10, 1763], [10, 1736], [10, 1748], [10, 1739], [10, 1719], [10, 1733], [10, 1690], [10, 1700], [10, 1734], [10, 1741], [10, 1680], [10, 1718], [10, 1742], [10, 2068], [10, 1717], [10, 1725], [10, 1728], [10, 1717], [10, 1737], [10, 1692], [10, 1752], [10, 1707], [10, 1738], [10, 1727], [10, 1739], [10, 1733], [10, 1761], [10, 1721], [10, 1691], [10, 1710], [10, 1725], [10, 1732], [10, 1716], [10, 1708], [10, 1721], [10, 1864], [10, 1742], [10, 1739], [10, 1729], [10, 1741], [10, 1824], [10, 1714], [10, 1684], [10, 1728], [10, 1735], [10, 1741], [10, 1744], [10, 1713], [10, 1702], [10, 1728], [10, 1782], [10, 1689], [10, 1730], [10, 1734], [10, 1708], [10, 1707], [10, 1742], [10, 1748], [10, 1959], [10, 1734], [10, 1695], [10, 1746], [10, 1741], [10, 1729], [10, 1717]]
 allIimings = [[t[1] for t in serial], [t[1] for t in withLocks], [t[1] for t in withFIFOs]]
 
-# plot withLocksOptimize
+# line graph for optimization
 plt.plot([x[0] for x in withLocksOptimize], [y[1] for y in withLocksOptimize])
-plt.title("Processing Time vs. Number of Threads")
-plt.xlabel("Number of Threads")
-plt.ylabel("Time (ms)")
-plt.show()
-
-# plot withFIFOsOptimize
 plt.plot([x[0] for x in withFIFOsOptimize], [y[1] for y in withFIFOsOptimize])
 plt.title("Processing Time vs. Number of Threads")
 plt.xlabel("Number of Threads")
 plt.ylabel("Time (ms)")
 plt.show()
 
-# plot a boxplot of averages
+# boxplot of timings
 fig, ax = plt.subplots()
 ax.boxplot(allIimings)
 ax.set_title('TImes for all 3 processes')
