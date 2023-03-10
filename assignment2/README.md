@@ -58,6 +58,10 @@ const char logDir[] = "/tmp/ronaldk1/log/";
 
 ## Report
 
+The results of running *withLocks.c* (blue) and *withFIFOs.c* (orange) with 1-100 workers can be seen in the line graph below. The general trend is that as the number of workers increases, the total time decreases. Initially it drops quite quickly, after which it levels out. As more and more workers are added the average time becomes much more stable. This makes sense, as when more workers are added initially they can handle more workload. Eventually the producer (main thread) become the bottle neck and added more workers doesn't increase the productivity, this happens around **10** workers (I think this likely correlates to the size of job buffer and cores on the CPU). However, as more and more workers are continued to be added, they are better able to handle the invariance and randomness introduced by the OS scheduler, thus the average time to completion stablizes, this happens around **80** or so workers. Thus, I think the optimal number of workers is **10** in order to increase productivity while minimizing resource usage.
 
 ![worker optimization line graph](./graphs/optimization-linegraph.png)
+
+The timing results of running all 3 programs as be seen in the boxplots below. 
+
 ![process timings boxplot](./graphs/timings-boxplot.png)
