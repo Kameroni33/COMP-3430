@@ -30,9 +30,13 @@ Additionally, for questions 1 & 2, the main process uses a Job buffer/queue to s
 #define MAX_NAME 100    // max character count for input file names
 ```
 
-## a2Utils.c
+## Other files
 
 The file *a2Utils.c* contains central code for all 3 questions (plus a bit extra). There is also a header file *a2Utils.h* so that it can be included as a library in each of the questions 'main' functions.
+
+The shell script *test.sh* 
+
+The python scripts *graph.py* 
 
 ## Temp Folders
 
