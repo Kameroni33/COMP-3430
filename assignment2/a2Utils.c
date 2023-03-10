@@ -212,9 +212,9 @@ void initializeFifos()
             printf("Error: unable to open fifo.\n");
             exit(1);
         }
-
-        // free(fifoFilePath);  // free filename pointer
     }
+
+    free(fifoFilePath);  // free filename pointer
 }
 
 void closeFifos()
