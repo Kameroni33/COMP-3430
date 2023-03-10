@@ -26,7 +26,7 @@ plt.show()
 # boxplot of timings
 fig, ax = plt.subplots()
 ax.boxplot(allIimings)
-ax.set_title('TImes for all 3 processes')
+ax.set_title('Times for all 3 processes')
 ax.set_xticklabels(['serial', 'withLocks', 'withFIFOs'])
 ax.set_ylabel('Time (ms)')
 plt.show()
