@@ -34,9 +34,7 @@ Additionally, for questions 1 & 2, the main process uses a Job buffer/queue to s
 
 The file *a2Utils.c* contains central code for all 3 questions (plus a bit extra). There is also a header file *a2Utils.h* so that it can be included as a library in each of the questions 'main' functions.
 
-The shell script *test.sh* 
-
-The python scripts *graph.py* 
+The shell script *test.sh* and python scripts *graph.py* were used to gather the data and plot graphs. The graphs have been included in this *README.md* but can also be found in the **./graphs** folder.
 
 ## Temp Folders
 
@@ -59,6 +57,7 @@ const char logDir[] = "/tmp/ronaldk1/log/";
 ```
 
 ## Report
+
 
 ![worker optimization line graph](./graphs/optimization-linegraph.png)
 ![process timings boxplot](./graphs/timings-boxplot.png)
