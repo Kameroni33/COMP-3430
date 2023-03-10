@@ -66,6 +66,6 @@ The timing results of running all 3 programs as be seen in the boxplots below. *
 
 Thus, Hypothesis 2 is true:
 
-> Using FIFOs and to handle concurrency is the fastest (using your optimal number of worker threads)
+> "Using FIFOs and to handle concurrency is the fastest (using your optimal number of worker threads)"
 
 ![process timings boxplot](./graphs/timings-boxplot.png)
