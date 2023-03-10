@@ -59,3 +59,6 @@ const char logDir[] = "/tmp/ronaldk1/log/";
 ```
 
 ## Report
+
+![worker optimization line graph](./graphs/optimization-linegraph.png)
+![process timings boxplot](./graphs/timings-boxplot.png)
