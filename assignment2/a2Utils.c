@@ -344,16 +344,16 @@ long long timeInMilliseconds(void) {
     return (( ( long long )timeVal.tv_sec) * 1000) + (timeVal.tv_usec / 1000);
 }
 
-void logInfo(long long start, long long end, int workers, char *argv[])
+void logInfo(long long runtime, int workers, char *process)
 {
     FILE *logFile;
 
     long long runtime = end - start;
 
     // get size for the full path name
-    int pathLen = strlen(logDir) + strlen(argv[0]) + strlen(".log");
+    int pathLen = strlen(logDir) + strlen(process) + strlen(".log");
     char *logFilePath = malloc(sizeof(char) * pathLen);  // allocate space for file path
-    sprintf(logFilePath, "%s%s.log", logDir, argv[0]);   // format and set file path
+    sprintf(logFilePath, "%s%s.log", logDir, process);   // format and set file path
 
     printf("\nlogging info to '%s'\n\n", logFilePath);
 
