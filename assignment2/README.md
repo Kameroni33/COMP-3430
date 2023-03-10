@@ -11,9 +11,9 @@ make clean  # remove compiled executables & remove folders
 # Question 1
 ./serial ~comp3430/shared/a2_files/*.txt
 # Question 2
-./withLocks numWorkers input/*.txt
+./withLocks numWorkers ~comp3430/shared/a2_files/*.txt
 # Question 3
-./withFIFOs numWorkers input/*.txt
+./withFIFOs numWorkers ~comp3430/shared/a2_files/*.txt
 ```
 
 **numWorkers** must be a numeric value indicating the number of worker threads to generate.
