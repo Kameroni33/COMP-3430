@@ -270,7 +270,7 @@ void *worker()
         }
     }
 
-    printf("thread exiting...\n");
+    // printf("thread exiting...\n");
     pthread_exit(NULL);
 }
 
@@ -311,7 +311,7 @@ void writer(int index)
         exit(1);
     }
 
-    printf("writer exiting...\n");
+    // printf("writer exiting...\n");
     exit(0);
 }
 
@@ -323,13 +323,11 @@ void initalizeWriters()
 
         if (newPid == 0)  // child process
         {
-            printf("Writer created!\n");
             writer(i);
         }
 
         else  // parent process
         {
-            printf("adding writer PID\n");
             writers[i] = newPid;
         }
     }
