@@ -3,7 +3,7 @@
 # clean up any old tests...
 rm -f /tmp/ronaldk1/output/* /tmp/ronaldk1/fifo/* /tmp/ronaldk1/log/*
 
-# Find optimal number of workers
+# Test with various number of workers
 for i in {1..100}
 do
     ./withLocks $i ~comp3430/shared/a2_files/*.txt
@@ -12,7 +12,7 @@ do
     rm -f /tmp/ronaldk1/output/*
 done
 
-# Find average/mean for each program
+# Test each program 100 times
 for i in {1..100}
 do
     ./serial ~comp3430/shared/a2_files/*.txt
