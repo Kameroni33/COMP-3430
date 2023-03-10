@@ -74,6 +74,8 @@ char* getFifoFilePath(int index)
 
 void initializeOutputs()
 {
+    char *outputFilePath;  // output file name
+
     for ( int i = 0; i < NUM_OUTPUTS; i++)
     {
         if ( (outputFiles[i] = fopen(getOutputFilePath(i), "a")) == NULL )
@@ -81,6 +83,8 @@ void initializeOutputs()
             printf("Error: unable to open file for append.\n");
             exit(1);
         }
+
+        free(outputFilePath);  // free filename pointer
     }
 }
 
@@ -188,21 +192,28 @@ void get(char *nextJob)
 
 void makeFifos()
 {
+    char *fifoFilePath;    // fifo file name
+
     for (int i = 0; i < NUM_OUTPUTS; i++)
     {
-        mkfifo(getFifoFilePath(i), S_IRUSR | S_IWUSR);  // make fifo with read/write privilages for user
+        mkfifo((fifoFilePath = getFifoFilePath(i)), S_IRUSR | S_IWUSR);  // make fifo with read/write privilages for user
+        free(fifoFilePath);  // free filename pointer
     }
 }
 
 void initializeFifos()
 {
+    char *fifoFilePath;    // fifo file name
+
     for ( int i = 0; i < NUM_OUTPUTS; i++)
     {
-        if ( (fifoFiles[i] = fopen((getFifoFilePath(i)), "w")) == NULL )
+        if ( (fifoFiles[i] = fopen((fifoFilePath = getFifoFilePath(i)), "w")) == NULL )
         {
             printf("Error: unable to open fifo.\n");
             exit(1);
         }
+
+        free(fifoFilePath);  // free filename pointer
     }
 }
 
@@ -267,20 +278,26 @@ void *worker()
 
 void writer(int index)
 {
-    FILE *fifo;           // fifo file descriptor
-    char word[MAX_WORD];  // current char from fifo
+    FILE *fifo;            // fifo file descriptor
+    char *fifoFilePath;    // fifo file name
+    char *outputFilePath;  // output file name
+    char word[MAX_WORD];   // current char from fifo
 
-    if ((fifo = fopen(getFifoFilePath(index), "r")) == NULL)  // open fifo for reading
+    if ((fifo = fopen(fifoFilePath = getFifoFilePath(index), "r")) == NULL)  // open fifo for reading
     {
         printf("Error: unable to open fifo for read.\n");
         exit(1);
     }
 
-    if ( (outputFiles[index] = fopen(getOutputFilePath(index), "a")) == NULL )  // open output file for writing
+    free(fifoFilePath);  // free filename pointer
+
+    if ( (outputFiles[index] = fopen((outputFilePath = getOutputFilePath(index)), "a")) == NULL )  // open output file for writing
     {
         printf("Error: unable to open file for append.\n");
         exit(1);
     }
+
+    free(outputFilePath);  // free filename pointer
 
     // read from FIFO -> write to output file (unitl FIFO is closed)
     while (fscanf(fifo, "%s", word) != EOF)
@@ -331,6 +348,8 @@ void logInfo(long long start, long long end, int workers, int argc, char *argv[]
 {
     FILE *logFile;
     char logName[] = "logs.txt";
+
+    long long runtime = end - start;
 
     printf("\nlogging info to '%s'\n\n", logName);
 
