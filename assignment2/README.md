@@ -62,7 +62,7 @@ The results of running *withLocks.c* (blue) and *withFIFOs.c* (orange) with 1-10
 
 ![worker optimization line graph](./graphs/optimization-linegraph.png)
 
-The timing results of running all 3 programs as be seen in the boxplots below. *serial.c* ran with a mean time of **3.2**s, *withLocks.c* with a mean time of **2.3**s, and *withFIFOs.c* with a mean time of **1.7**s. Naturally, adding concurrency should speed things up, so it makes sense that *withLocks.c* was faster than *serial.c*. Additionally, by using FIFOs we elimate the extra steps of aquiring locks and are able to make atomic writes so that no worker is ever blocked waiting to write. So it makes sense that *withFIFOs.c* would be even faster than *withLocks.c*.
+The timing results of running all 3 programs as be seen in the boxplots below. *serial.c* ran with a mean time of **3.2**s, *withLocks.c* with a mean time of **2.3**s, and *withFIFOs.c* with a mean time of **1.7**s. Naturally, adding concurrency should speed things up, so it makes sense that *withLocks.c* was faster than *serial.c*. Additionally, by using FIFOs we elimate the extra steps of aquiring locks and are able to make atomic writes so that no worker is ever blocked waiting to write. So it makes sense that *withFIFOs.c* would be even faster than *withLocks.c*. As shown by the boxplot, there was a significant time difference between mehtods. For smaller inputs it probably wouldn't matter, but when processing on the order of 600 inputs, using a faster methods can save you a second or two.
 
 Thus, Hypothesis 2 is true:
 
