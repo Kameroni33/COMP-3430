@@ -71,4 +71,4 @@ void writer(int index);   // function for writer process
 // Logging and Timing Methods =========================================================
 
 long long timeInMilliseconds(void);
-void logInfo(long long start, long long end, int workers, int argc, char *argv[]);
+void logInfo(long long runtime, int workers, char *process);
