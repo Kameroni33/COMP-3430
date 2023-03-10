@@ -18,7 +18,7 @@
 // Global Variables ===================================================================
 
 const char outputDir[] = "/tmp/ronaldk1/output/";
-const char fifoDir[] = "/tmp/ronaldk1/fifos/";
+const char fifoDir[] = "/tmp/ronaldk1/fifo/";
 
 // timing variables for logging
 long long startTime, endTime;
