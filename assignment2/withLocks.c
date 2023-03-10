@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 
     endTime = timeInMilliseconds();
 
-    logInfo(startTime, endTime, numWorkers, argv[0]);
+    logInfo(endTime - startTime, numWorkers, argv[0]);
 
     printf("End of Process.\n");
     return 0;
