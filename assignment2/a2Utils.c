@@ -358,7 +358,7 @@ void logInfo(long long start, long long end, int workers, int argc, char *argv[]
 
     printf("\nlogging info to '%s'\n\n", logFilePath);
 
-    // open log file
+    // open log file    
     if ( (logFile = fopen(logFilePath, "a")) == NULL )
     {
         printf("Error: unable to open log file.\n");
