@@ -347,19 +347,19 @@ long long timeInMilliseconds(void) {
 void logInfo(long long start, long long end, int workers, int argc, char *argv[])
 {
     FILE *logFile;
-    char logPath[];
+    char logFilePath[];
 
     long long runtime = end - start;
 
     // get size for the full path name
     int pathLen = strlen(logDir) + strlen(argv[0]) + strlen(".log");
-    char *logPath = malloc(sizeof(char) * pathLen);  // allocate space for file path
-    sprintf(logPath, "%s%s.log", logDir, argv[0]);   // format and set file path
+    char *logFilePath = malloc(sizeof(char) * pathLen);  // allocate space for file path
+    sprintf(logFilePath, "%s%s.log", logDir, argv[0]);   // format and set file path
 
-    printf("\nlogging info to '%s'\n\n", logPath);
+    printf("\nlogging info to '%s'\n\n", logFilePath);
 
     // open log file
-    if ( (logFile = fopen(logPath, "a")) == NULL )
+    if ( (logFile = fopen(logFilePath, "a")) == NULL )
     {
         printf("Error: unable to open log file.\n");
         exit(1);
