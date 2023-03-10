@@ -19,6 +19,7 @@
 
 const char outputDir[] = "/tmp/ronaldk1/output/";
 const char fifoDir[] = "/tmp/ronaldk1/fifo/";
+const char logDir[] = "/tmp/ronaldk1/log/";
 
 // timing variables for logging
 long long startTime, endTime;
