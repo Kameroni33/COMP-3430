@@ -347,7 +347,6 @@ long long timeInMilliseconds(void) {
 void logInfo(long long start, long long end, int workers, int argc, char *argv[])
 {
     FILE *logFile;
-    char logFilePath[];
 
     long long runtime = end - start;
 
@@ -375,5 +374,5 @@ void logInfo(long long start, long long end, int workers, int argc, char *argv[]
         exit(1);
     }
 
-    free(logPath);
+    free(logFilePath);
 }
