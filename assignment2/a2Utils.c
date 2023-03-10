@@ -348,8 +348,6 @@ void logInfo(long long runtime, int workers, char *process)
 {
     FILE *logFile;
 
-    long long runtime = end - start;
-
     // get size for the full path name
     int pathLen = strlen(logDir) + strlen(process) + strlen(".log");
     char *logFilePath = malloc(sizeof(char) * pathLen);  // allocate space for file path
