@@ -356,12 +356,12 @@ void logInfo(long long start, long long end, int workers, int argc, char *argv[]
     char *logPath = malloc(sizeof(char) * pathLen);  // allocate space for file path
     sprintf(logPath, "%s%s.log", logDir, argv[0]);   // format and set file path
 
-    printf("\nlogging info to '%s'\n\n", logName);
+    printf("\nlogging info to '%s'\n\n", logPath);
 
     // open log file
     if ( (logFile = fopen(logPath, "a")) == NULL )
     {
-        printf("Error: unable to open file '%s'\n", logName);
+        printf("Error: unable to open log file.\n");
         exit(1);
     }
 
@@ -371,7 +371,7 @@ void logInfo(long long start, long long end, int workers, int argc, char *argv[]
     // close log file
     if ( fclose(logFile) == EOF )
     {
-        printf("Error: unable to close file '%s'\n", logName);
+        printf("Error: unable to close log file.\n");
         exit(1);
     }
 
