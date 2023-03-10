@@ -347,26 +347,26 @@ long long timeInMilliseconds(void) {
 void logInfo(long long start, long long end, int workers, int argc, char *argv[])
 {
     FILE *logFile;
-    char logName[] = "logs.txt";
+    char logPath[];
 
     long long runtime = end - start;
+
+    // get size for the full path name
+    int pathLen = strlen(logDir) + strlen(argv[0]) + strlen(".log");
+    char *logPath = malloc(sizeof(char) * pathLen);  // allocate space for file path
+    sprintf(logPath, "%s%s.log", logDir, argv[0]);   // format and set file path
 
     printf("\nlogging info to '%s'\n\n", logName);
 
     // open log file
-    if ( (logFile = fopen(logName, "a")) == NULL )
+    if ( (logFile = fopen(logPath, "a")) == NULL )
     {
         printf("Error: unable to open file '%s'\n", logName);
         exit(1);
     }
 
     // write to log file
-    fprintf(logFile, "Program: %s\n", argv[0]+2);
-    fprintf(logFile, "Files:   %d\n", argc);
-    fprintf(logFile, "Workers: %d\n", workers);
-    fprintf(logFile, "Start:   %lld ms\n", start);
-    fprintf(logFile, "End:     %lld ms\n", end);
-    fprintf(logFile, "Runtime: %lld ms\n\n", end - start);
+    fprintf(logFile, "[%d, %lld],\n", workers, runtime);
 
     // close log file
     if ( fclose(logFile) == EOF )
@@ -374,4 +374,6 @@ void logInfo(long long start, long long end, int workers, int argc, char *argv[]
         printf("Error: unable to close file '%s'\n", logName);
         exit(1);
     }
+
+    free(logPath);
 }
