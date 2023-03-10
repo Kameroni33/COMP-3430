@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # clean up any old tests...
-rm -p /tmp/ronaldk1/output/* /tmp/ronaldk1/fifo/* /tmp/ronaldk1/log/*
+rm -f /tmp/ronaldk1/output/* /tmp/ronaldk1/fifo/* /tmp/ronaldk1/log/*
 
 # Find optimal number of workers
 for i in {1..100}
