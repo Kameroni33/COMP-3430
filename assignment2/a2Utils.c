@@ -78,7 +78,7 @@ void initializeOutputs()
 
     for ( int i = 0; i < NUM_OUTPUTS; i++)
     {
-        if ( (outputFiles[i] = fopen(getOutputFilePath(i), "a")) == NULL )
+        if ( (outputFiles[i] = fopen((outputFilePath = getOutputFilePath(i)), "a")) == NULL )
         {
             printf("Error: unable to open file for append.\n");
             exit(1);
