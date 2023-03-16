@@ -1,7 +1,10 @@
 CFLAGS = -Wall -Wextra -Wpedantic -Werror -g
 CC     = clang
 
-all: fsck-mbr
+all: fsckMBR
 
-fsck-mbr: fsck-mbr.c
-	$(CC) %(CFLAGS) fsck-mbr.c fsck-mbr
+fsckMBR: fsckMBR.c
+	$(CC) %(CFLAGS) fsckMBR.c -o fsckMBR
+
+fsckFAT: fsckFAT.c
+	$(CC) %(CFLAGS) fsckFAT.c -o fsckFAT
