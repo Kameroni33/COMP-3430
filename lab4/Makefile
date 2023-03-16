@@ -1,13 +1,10 @@
 CFLAGS = -Wall -Wextra -Wpedantic -Werror -g
-CC     = clang
+CC = clang
 
-all: fsckMBR
+all: fsck-fat
 
-fsckMBR: fsckMBR.c
-	$(CC) $(CFLAGS) fsckMBR.c -o fsckMBR
-
-fsckFAT: fsckFAT.c
-	$(CC) $(CFLAGS) fsckFAT.c -o fsckFAT
+fsck-fat: fsck-fat.c
+	$(CC) $(CFLAGS) fsck-fat.c fat32.h -o fsck-fat
 
 clean:
-	rm -f fsckMBR fsckFAT
+	rm -f fsck-fat
