@@ -8,3 +8,6 @@ fsckMBR: fsckMBR.c
 
 fsckFAT: fsckFAT.c
 	$(CC) %(CFLAGS) fsckFAT.c -o fsckFAT
+
+clean:
+	rm -f fsckMBR fsckFAT
