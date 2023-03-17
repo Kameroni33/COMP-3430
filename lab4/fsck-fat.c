@@ -107,6 +107,12 @@ int main(int argc, char* argv[])
             printf("Inconsistent file system: FAT[1] should be %08X, but is 0x%08X\n", EOC, (FAT[1] & EOC));
         }
 
+        // count free clusters
+
+
+        // print free space info
+        printf("FSI says %d free clusters, FAT count is %d", fsInfoSector.FSI_Free_Count, );
+
     }
 
     printf("\n\nEnd of Process.\n");
