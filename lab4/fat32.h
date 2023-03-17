@@ -50,7 +50,7 @@ typedef struct fat32BS_struct fat32BS;
 
 #pragma pack(push)
 #pragma pack(1)
-struct FSInfo{
+struct FSInfo_struct{
     uint32_t lead_sig;
     uint8_t reserved1[480];
     uint32_t signature;
@@ -59,6 +59,8 @@ struct FSInfo{
     uint8_t reserved2[12];
     uint32_t trail_signature;
 };
+
+typedef struct FSInfo_struct FSInfo;
 
 struct DirInfo {
     char dir_name[11];
