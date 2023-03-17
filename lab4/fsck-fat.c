@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
 
         // count free clusters
         freeSectors = 0;
-        for (int i = 2; i < 10; i++)
+        for (int i = 2; i < (int)(bootSector.BPB_FATSz32 * bootSector.BPB_BytesPerSec); i++)
         {
             fread(&nextFAT, sizeof(nextFAT), 1, volume);
             if (nextFAT == 0)
