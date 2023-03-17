@@ -70,5 +70,6 @@ int main(int argc, char* argv[])
         printf("MBR appears to be consistent.\n");
     }
 
+    printf("\n\nEnd of Process.\n");
     return 0;
 }
