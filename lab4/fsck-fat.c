@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
         FSInfo fsInfoSector;
 
         char *nextFAT;
-        char *first2FAT[2];
+        char first2FAT[2];
         int freeSectors;
 
         int validBootSector = 1;
