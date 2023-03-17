@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 
         fread(&mbr, sizeof(fat32BS), 1, volume);
 
-        printf("BS_jmpBoot:   %x\n", mbr.BS_jmpBoot[0]);
+        printf("BS_jmpBoot:   0x%X 0x%X 0x%X\n", mbr.BS_jmpBoot[0], mbr.BS_jmpBoot[1], mbr.BS_jmpBoot[2]);
         printf("BPB_FATSz32:  %d\n", mbr.BPB_FATSz32);
         printf("BPB_RootClus: %d\n", mbr.BPB_RootClus);
         printf("BPB_TotSec32: %d\n", mbr.BPB_TotSec32);
