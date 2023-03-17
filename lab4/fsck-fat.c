@@ -111,7 +111,7 @@ int main(int argc, char* argv[])
 
 
         // print free space info
-        printf("FSI says %d free clusters, FAT count is %d", fsInfoSector.FSI_Free_Count, fsInfoSector.FSI_Free_Count);
+        printf("FSI says %d free clusters, FAT count is %d", fsInfoSector.free_count, fsInfoSector.free_count);
 
     }
 
