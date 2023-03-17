@@ -7,7 +7,8 @@ roanldk1@myumanitoba.ca
 ## Compile & Run
 
 ```shell
-make        #
-make clean  #
+make clean
+make
 
+./fsck-fat <volume-file(s)>
 ```
