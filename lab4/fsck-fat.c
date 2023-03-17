@@ -81,13 +81,21 @@ int main(int argc, char* argv[])
             printf("MBR appears to be consistent.\n");
         }
 
-        // printf("BPB_BytesPerSec: %d\n", bootSector.BPB_BytesPerSec);
-        // printf("BPB_FSInfo:      %d\n", bootSector.BPB_FSInfo);
-        // printf("BPB_RsvdSecCnt:  %d\n", bootSector.BPB_RsvdSecCnt);
-
         // read File System Info Sector
         fseek(volume, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
         fread(&fsInfoSector, sizeof(FSInfo), 1, volume);
+
+        // validate FSI_LeadSig
+        if (fsInfoSector.lead_sig == FSI_LEAD_SIG)
+        {
+            printf("\nFSI Sector Error: FSI lead signature should be 0x%X, but is 0x%X", FSI_LEAD_SIG, fsInfoSector.lead_sig);
+        }
+
+        // validate FSI_StrucSig
+        if (fsInfoSector.signature == FSI_STRUC_SIG)
+        {
+            printf("\nFSI Sector Error: FSI struct signature should be 0x%X, but is 0x%X", FSI_STRUC_SIG, fsInfoSector.lead_sig);
+        }
 
         // read File Allocation Table
         fseek(volume, (bootSector.BPB_RsvdSecCnt * bootSector.BPB_BytesPerSec), SEEK_SET);

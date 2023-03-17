@@ -96,7 +96,7 @@ struct Fsinfo {
 #define BPB_MEDIA 0x0FFFFFF8
 
 #define FSI_LEAD_SIG 0x41615252
-#define FSI_STRUCT_SIG 0x61417272
+#define FSI_STRUC_SIG 0x61417272
 
 #define ATTR_READ_ONLY 0x01
 #define ATTR_HIDDEN 0x02
