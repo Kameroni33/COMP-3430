@@ -96,9 +96,9 @@ int main(int argc, char* argv[])
         printf("FAT[1]: 0x%X\n\n", FAT[1]);
 
         // validate FAT[0]
-        if ((FAT[0] & EOC) != bootSector.BPB_Media)
+        if ((FAT[0] & EOC) != BPB_MEDIA)
         {
-            printf("Inconsistent file system: FAT[0] should be 0x%08X, but is 0x%08X\n", bootSector.BPB_Media, (FAT[0] & EOC));
+            printf("Inconsistent file system: FAT[0] should be 0x%08X, but is 0x%08X\n", BPB_MEDIA, (FAT[0] & EOC));
         }
 
         // validate FAT[1]
