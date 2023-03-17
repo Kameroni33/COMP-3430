@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
         fseek(volume, (bootSector.BPB_RsvdSecCnt * bootSector.BPB_BytesPerSec), SEEK_SET);
         fread(&FAT, sizeof(char) * 2, 1, volume);
 
-        printf("BPB_BytesPerSec: 0x%X\n", fsInfoSector.signature);
+        printf("fsInfoSector.signature: 0x%X\n", fsInfoSector.signature);
 
         // print FAT info
         printf("\n");
