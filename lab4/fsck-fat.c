@@ -110,6 +110,8 @@ int main(int argc, char* argv[])
             printf("Inconsistent file system: FAT[1] should be %08X, but is 0x%08X\n", EOC, (first2FAT[1] & EOC));
         }
 
+        printf("num of bytes in FAT: %d\n", (bootSector.BPB_FATSz32 * bootSector.BPB_BytesPerSec));
+
         // count free clusters
         freeSectors = 0;
         for (int i = 2; i < (bootSector.BPB_FATSz32 * bootSector.BPB_BytesPerSec); i++)
