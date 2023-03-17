@@ -113,15 +113,15 @@ int main(int argc, char* argv[])
         printf("num of bytes in FAT: %d\n", (bootSector.BPB_FATSz32 * bootSector.BPB_BytesPerSec));
 
         // count free clusters
-        // freeSectors = 0;
-        // for (int i = 2; i < (bootSector.BPB_FATSz32 * bootSector.BPB_BytesPerSec); i++)
-        // {
-        //     fread(&nextFAT, sizeof(nextFAT), 1, volume);
-        //     if (nextFAT == 0)
-        //     {
-        //         freeSectors++;
-        //     }
-        // }
+        freeSectors = 0;
+        for (int i = 2; i < (bootSector.BPB_FATSz32 * bootSector.BPB_BytesPerSec); i++)
+        {
+            fread(&nextFAT, sizeof(nextFAT), 1, volume);
+            if (nextFAT == 0)
+            {
+                freeSectors++;
+            }
+        }
 
         // print free space info
         printf("FSI says %d free clusters, FAT count is %d\n", fsInfoSector.free_count, freeSectors);
