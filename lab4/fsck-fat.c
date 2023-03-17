@@ -81,6 +81,8 @@ int main(int argc, char* argv[])
             printf("MBR appears to be consistent.\n");
         }
 
+        printf("\n");
+
         // read File System Info Sector
         fseek(volume, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
         fread(&fsInfoSector, sizeof(FSInfo), 1, volume);
@@ -88,13 +90,13 @@ int main(int argc, char* argv[])
         // validate FSI_LeadSig
         if (fsInfoSector.lead_sig == FSI_LEAD_SIG)
         {
-            printf("\nFSI Sector Error: FSI lead signature should be 0x%X, but is 0x%X", FSI_LEAD_SIG, fsInfoSector.lead_sig);
+            printf("\nFSI Sector Error: FSI lead signature should be 0x%X, but is 0x%X\n\n", FSI_LEAD_SIG, fsInfoSector.lead_sig);
         }
 
         // validate FSI_StrucSig
         if (fsInfoSector.signature == FSI_STRUC_SIG)
         {
-            printf("\nFSI Sector Error: FSI struct signature should be 0x%X, but is 0x%X", FSI_STRUC_SIG, fsInfoSector.lead_sig);
+            printf("\nFSI Sector Error: FSI struc signature should be 0x%X, but is 0x%X\n\n", FSI_STRUC_SIG, fsInfoSector.lead_sig);
         }
 
         // read File Allocation Table
@@ -102,7 +104,6 @@ int main(int argc, char* argv[])
         fread(&first2FAT, sizeof(first2FAT), 1, volume);
 
         // print FAT info
-        printf("\n");
         printf("FAT[0]: 0x%X\n", first2FAT[0]);
         printf("FAT[1]: 0x%X\n\n", first2FAT[1]);
 
