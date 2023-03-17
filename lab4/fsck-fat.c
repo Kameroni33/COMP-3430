@@ -92,8 +92,8 @@ int main(int argc, char* argv[])
 
         // print FAT info
         printf("\n");
-        printf("FAT[0]: 0x%X\n", bootSector.BS_jmpBoot[0]);
-        printf("FAT[1]: 0x%X\n\n", bootSector.BS_jmpBoot[1]);
+        printf("FAT[0]: 0x%X\n", FAT[0]);
+        printf("FAT[1]: 0x%X\n\n", FAT[1]);
 
         // validate FAT[0]
         if ((int)FAT[0] != 0x0FFFFFF8)
