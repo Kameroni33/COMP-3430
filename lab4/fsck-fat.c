@@ -96,7 +96,7 @@ int main(int argc, char* argv[])
         printf("FAT[1]: 0x%X\n\n", bootSector.BS_jmpBoot[1]);
 
         // validate FAT[0]
-        if (FAT[0] != 0x0FFFFFF8)
+        if ((int)FAT[0] != 0x0FFFFFF8)
         {
             printf("Inconsistent file system: FAT[0] should be 0x0FFFFFF8, but is 0x%X\n", FAT[0]);
         }
