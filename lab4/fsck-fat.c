@@ -33,37 +33,37 @@ int main(int argc, char* argv[])
         printf("BPB_reserved: %X %X %X %X %X %X %X %X %X %X %X %X\n\n", mbr.BPB_reserved[0], mbr.BPB_reserved[1], mbr.BPB_reserved[2], mbr.BPB_reserved[3], mbr.BPB_reserved[4], mbr.BPB_reserved[5], mbr.BPB_reserved[6], mbr.BPB_reserved[7], mbr.BPB_reserved[8], mbr.BPB_reserved[9], mbr.BPB_reserved[10], mbr.BPB_reserved[11]);
 
         //validate BS_jmpBoot
-        if (0)
+        if (mbr.BS_jmpBoot[0] != 0xEB && mbr.BS_jmpBoot[0] != 0xE9)
         {
-            printf("Inconsistent file system: ...\n");
+            printf("Inconsistent file system: BS_jmpBoot[0] must be 0xEB or 0xE9, but is 0x%X.\n", mbr.BS_jmpBoot[0]);
             break;
         }
 
         //validate BPB_FATSz32
-        if (0)
+        if (mbr.BPB_FATSz32 == 0)
         {
-            printf("Inconsistent file system: ...\n");
+            printf("Inconsistent file system: BPB_FATSz32 should be non-zero, but is%d.\n", mbr.BPB_FATSz32);
             break;
         }
 
         //validate BPB_RootClus
-        if (0)
+        if (mbr.BPB_RootClus < 2)
         {
-            printf("Inconsistent file system: ...\n");
+            printf("Inconsistent file system: BPB_RootClus should greater than 2, but is %d.\n", mbr.BPB_RootClus);
             break;
         }
 
         //validate BPB_TotSec32
-        if (0)
+        if (mbr.BPB_TotSec32 < 65525)
         {
-            printf("Inconsistent file system: ...\n");
+            printf("Inconsistent file system: BPB_TotSec32 should be greater than 65525, but is %d.\n", mbr.BPB_TotSec32);
             break;
         }
 
         //validate BPB_reserved
-        if (0)
+        if (mbr.BPB_reserved[0] != 0 || mbr.BPB_reserved[1] != 0 || mbr.BPB_reserved[2] != 0 || mbr.BPB_reserved[3] != 0 || mbr.BPB_reserved[4] != 0 || mbr.BPB_reserved[5] != 0 || mbr.BPB_reserved[6] != 0 || mbr.BPB_reserved[7] != 0 || mbr.BPB_reserved[8] != 0 || mbr.BPB_reserved[9] != 0 || mbr.BPB_reserved[10] != 0 || mbr.BPB_reserved[11] != 0)
         {
-            printf("Inconsistent file system: ...\n");
+            printf("Inconsistent file system: BPB_reserved should all be 0, but is %X %X %X %X %X %X %X %X %X %X %X %X\n", mbr.BPB_reserved[0], mbr.BPB_reserved[1], mbr.BPB_reserved[2], mbr.BPB_reserved[3], mbr.BPB_reserved[4], mbr.BPB_reserved[5], mbr.BPB_reserved[6], mbr.BPB_reserved[7], mbr.BPB_reserved[8], mbr.BPB_reserved[9], mbr.BPB_reserved[10], mbr.BPB_reserved[11]);
             break;
         }
 
