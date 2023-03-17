@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
         printf("BPB_reserved: %X %X %X %X %X %X %X %X %X %X %X %X\n\n", mbr.BPB_reserved[0], mbr.BPB_reserved[1], mbr.BPB_reserved[2], mbr.BPB_reserved[3], mbr.BPB_reserved[4], mbr.BPB_reserved[5], mbr.BPB_reserved[6], mbr.BPB_reserved[7], mbr.BPB_reserved[8], mbr.BPB_reserved[9], mbr.BPB_reserved[10], mbr.BPB_reserved[11]);
 
         //validate BS_jmpBoot
-        if (mbr.BS_jmpBoot[0] != 0xEB && mbr.BS_jmpBoot[0] != 0xE9)
+        if ((int)mbr.BS_jmpBoot[0] != 0xEB && (int)mbr.BS_jmpBoot[0] != 0xE9)
         {
             printf("Inconsistent file system: BS_jmpBoot[0] must be 0xEB or 0xE9, but is 0x%X.\n", mbr.BS_jmpBoot[0]);
             validMBR = 0;
