@@ -92,13 +92,18 @@ int main(int argc, char* argv[])
         if (fsInfoSector.lead_sig == FSI_LEAD_SIG)
         {
             printf("FSI Sector Error: FSI lead signature should be 0x%X, but is 0x%X\n", FSI_LEAD_SIG, fsInfoSector.lead_sig);
+            fsiError = 1;
         }
 
         // validate FSI_StrucSig
         if (fsInfoSector.signature == FSI_STRUC_SIG)
         {
             printf("FSI Sector Error: FSI struc signature should be 0x%X, but is 0x%X\n", FSI_STRUC_SIG, fsInfoSector.lead_sig);
+            fsiError = 1;
         }
+
+        if (fsiError)
+            printf("\n");
 
         // read File Allocation Table
         fseek(volume, (bootSector.BPB_RsvdSecCnt * bootSector.BPB_BytesPerSec), SEEK_SET);
@@ -112,18 +117,13 @@ int main(int argc, char* argv[])
         if ((first2FAT[0] & EOC) != BPB_MEDIA)
         {
             printf("Inconsistent file system: FAT[0] should be 0x%08X, but is 0x%08X\n", BPB_MEDIA, (first2FAT[0] & EOC));
-            fsiError = 1;
         }
 
         // validate FAT[1]
         if ((first2FAT[1] & EOC) != EOC)
         {
             printf("Inconsistent file system: FAT[1] should be %08X, but is 0x%08X\n", EOC, (first2FAT[1] & EOC));
-            fsiError = 1;
         }
-
-        if (fsiError)
-            printf("\n");
 
         // printf("num of bytes in FAT: %d\n", (bootSector.BPB_FATSz32 * bootSector.BPB_BytesPerSec));
 
