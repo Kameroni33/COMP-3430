@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
         FSInfo fsInfoSector;
 
         char *nextFAT;
-        char *first2FAT;
+        char *first2FAT[2];
         int freeSectors;
 
         int validBootSector = 1;
@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
         // validate BPB_FATSz32
         if (bootSector.BPB_FATSz32 == 0)
         {
-            printf("Inconsistent file system: BPB_FATSz32 should be non-zero, but is%d.\n", bootSector.BPB_FATSz32);
+            printf("Inconsistent file system: BPB_FATSz32 should be non-zero, but is %d.\n", bootSector.BPB_FATSz32);
             validBootSector = 0;
         }
 
