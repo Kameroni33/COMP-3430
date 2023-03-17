@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
 
         // print FAT info
         printf("\n");
-        printf("FAT[0]: 0x%X\n", first2FAT);
+        printf("FAT[0]: 0x%X\n", first2FAT[0]);
         printf("FAT[1]: 0x%X\n\n", first2FAT[1]);
 
         // validate FAT[0]
