@@ -92,7 +92,12 @@ struct Fsinfo {
 
 #define EOC 0x0FFFFFFF  // page 18
 #define BAD_CLUSTER 0x0FFFFFF7
+
 #define BPB_MEDIA 0x0FFFFFF8
+
+#define FSI_LEAD_SIG 0x41615252
+#define FSI_STRUCT_SIG 0x61417272
+
 
 #define ATTR_READ_ONLY 0x01
 #define ATTR_HIDDEN 0x02
