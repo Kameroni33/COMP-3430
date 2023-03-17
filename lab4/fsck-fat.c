@@ -15,8 +15,11 @@ int main(int argc, char* argv[])
 
         FILE* volume;
         fat32BS bootSector;
-        FSInfo fsInfoSector; 
-        char FAT[2];
+        FSInfo fsInfoSector;
+
+        char *nextFAT;
+        char *first2FAT;
+        int freeSectors;
 
         int validBootSector = 1;
 
@@ -88,30 +91,38 @@ int main(int argc, char* argv[])
 
         // read File Allocation Table
         fseek(volume, (bootSector.BPB_RsvdSecCnt * bootSector.BPB_BytesPerSec), SEEK_SET);
-        fread(&FAT, sizeof(FAT), 1, volume);
+        fread(&first2FAT, sizeof(first2FAT), 1, volume);
 
         // print FAT info
         printf("\n");
-        printf("FAT[0]: 0x%X\n", FAT[0]);
-        printf("FAT[1]: 0x%X\n\n", FAT[1]);
+        printf("FAT[0]: 0x%X\n", first2FAT);
+        printf("FAT[1]: 0x%X\n\n", first2FAT[1]);
 
         // validate FAT[0]
-        if ((FAT[0] & EOC) != BPB_MEDIA)
+        if ((first2FAT[0] & EOC) != BPB_MEDIA)
         {
-            printf("Inconsistent file system: FAT[0] should be 0x%08X, but is 0x%08X\n", BPB_MEDIA, (FAT[0] & EOC));
+            printf("Inconsistent file system: FAT[0] should be 0x%08X, but is 0x%08X\n", BPB_MEDIA, (first2FAT[0] & EOC));
         }
 
         // validate FAT[1]
-        if ((FAT[1] & EOC) != EOC)
+        if ((first2FAT[1] & EOC) != EOC)
         {
-            printf("Inconsistent file system: FAT[1] should be %08X, but is 0x%08X\n", EOC, (FAT[1] & EOC));
+            printf("Inconsistent file system: FAT[1] should be %08X, but is 0x%08X\n", EOC, (first2FAT[1] & EOC));
         }
 
         // count free clusters
-
+        freeSectors = 0;
+        for (int i = 2; i < (bootSector.BPB_FATSz32 * bootSector.BPB_BytesPerSec); i++)
+        {
+            fread(&nextFAT, sizeof(nextFAT), 1, volume);
+            if (nextFAT == 0)
+            {
+                freeSectors++;
+            }
+        }
 
         // print free space info
-        printf("FSI says %d free clusters, FAT count is %d\n", fsInfoSector.free_count, 0);
+        printf("FSI says %d free clusters, FAT count is %d\n", fsInfoSector.free_count, freeSectors);
 
     }
 
