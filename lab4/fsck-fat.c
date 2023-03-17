@@ -102,9 +102,9 @@ int main(int argc, char* argv[])
         }
 
         // validate FAT[1]
-        if ((FAT[1] & 0x0FFFFFFF) == 0x0FFFFFFF)
+        if ((int)(FAT[1] & EOC) == EOC)
         {
-            printf("Inconsistent file system: FAT[1] should be 0x0FFFFFFF, but is 0x%X\n", FAT[1]);
+            printf("Inconsistent file system: FAT[1] should be 0x0FFFFFFF, but is 0x%X\n", (FAT[1] & EOC));
         }
 
     }
