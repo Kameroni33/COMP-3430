@@ -83,9 +83,9 @@ int main(int argc, char* argv[])
         // read first 
         fread(&FAT, sizeof(char) * 2, 1, volume);
 
+        // print FAT info
         printf("FAT[0]: 0x%X\n", mbr.BS_jmpBoot[0]);
         printf("FAT[0]: 0x%X\n", mbr.BS_jmpBoot[1]);
-
 
     }
 
