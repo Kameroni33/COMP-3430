@@ -22,6 +22,7 @@ int main(int argc, char* argv[])
         int freeSectors;
 
         int validBootSector = 1;
+        int fsiError = 0;
 
         // open .img file
         if ((volume = fopen(argv[i], "r")) == NULL)
@@ -90,13 +91,13 @@ int main(int argc, char* argv[])
         // validate FSI_LeadSig
         if (fsInfoSector.lead_sig == FSI_LEAD_SIG)
         {
-            printf("\nFSI Sector Error: FSI lead signature should be 0x%X, but is 0x%X\n\n", FSI_LEAD_SIG, fsInfoSector.lead_sig);
+            printf("FSI Sector Error: FSI lead signature should be 0x%X, but is 0x%X\n", FSI_LEAD_SIG, fsInfoSector.lead_sig);
         }
 
         // validate FSI_StrucSig
         if (fsInfoSector.signature == FSI_STRUC_SIG)
         {
-            printf("\nFSI Sector Error: FSI struc signature should be 0x%X, but is 0x%X\n\n", FSI_STRUC_SIG, fsInfoSector.lead_sig);
+            printf("FSI Sector Error: FSI struc signature should be 0x%X, but is 0x%X\n", FSI_STRUC_SIG, fsInfoSector.lead_sig);
         }
 
         // read File Allocation Table
@@ -111,13 +112,18 @@ int main(int argc, char* argv[])
         if ((first2FAT[0] & EOC) != BPB_MEDIA)
         {
             printf("Inconsistent file system: FAT[0] should be 0x%08X, but is 0x%08X\n", BPB_MEDIA, (first2FAT[0] & EOC));
+            fsiError = 1;
         }
 
         // validate FAT[1]
         if ((first2FAT[1] & EOC) != EOC)
         {
             printf("Inconsistent file system: FAT[1] should be %08X, but is 0x%08X\n", EOC, (first2FAT[1] & EOC));
+            fsiError = 1;
         }
+
+        if (fsiError)
+            printf("\n");
 
         printf("num of bytes in FAT: %d\n", (bootSector.BPB_FATSz32 * bootSector.BPB_BytesPerSec));
 
