@@ -89,16 +89,16 @@ int main(int argc, char* argv[])
         fread(&fsInfoSector, sizeof(FSInfo), 1, volume);
 
         // validate FSI_LeadSig
-        if (fsInfoSector.lead_sig == FSI_LEAD_SIG)
+        if (fsInfoSector.lead_sig != FSI_LEAD_SIG)
         {
             printf("FSI Sector Error: FSI lead signature should be 0x%X, but is 0x%X\n", FSI_LEAD_SIG, fsInfoSector.lead_sig);
             fsiError = 1;
         }
 
         // validate FSI_StrucSig
-        if (fsInfoSector.signature == FSI_STRUC_SIG)
+        if (fsInfoSector.signature != FSI_STRUC_SIG)
         {
-            printf("FSI Sector Error: FSI struc signature should be 0x%X, but is 0x%X\n", FSI_STRUC_SIG, fsInfoSector.lead_sig);
+            printf("FSI Sector Error: FSI struc signature should be 0x%X, but is 0x%X\n", FSI_STRUC_SIG, fsInfoSector.signature);
             fsiError = 1;
         }
 
