@@ -96,15 +96,15 @@ int main(int argc, char* argv[])
         printf("FAT[1]: 0x%X\n\n", FAT[1]);
 
         // validate FAT[0]
-        if ((int)FAT[0] != 0x0FFFFFF8)
+        if ((FAT[0] & EOC) != bootSector.BPB_Media)
         {
-            printf("Inconsistent file system: FAT[0] should be 0x0FFFFFF8, but is 0x%X\n", FAT[0]);
+            printf("Inconsistent file system: FAT[0] should be 0x%#08X, but is 0x%#08X\n", bootSector.BPB_Media, (FAT[0] & EOC));
         }
 
         // validate FAT[1]
-        if ((int)(FAT[1] & EOC) == EOC)
+        if ((FAT[1] & EOC) != EOC)
         {
-            printf("Inconsistent file system: FAT[1] should be 0x0FFFFFFF, but is 0x%X\n", (FAT[1] & EOC));
+            printf("Inconsistent file system: FAT[1] should be %#08X, but is 0x%#08X\n", EOC, (FAT[1] & EOC));
         }
 
     }
