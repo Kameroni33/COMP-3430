@@ -78,9 +78,9 @@ int main(int argc, char* argv[])
             printf("MBR appears to be consistent.\n");
         }
 
-        printf("BPB_BytesPerSec: %d\n", bootSector.BPB_BytesPerSec);
-        printf("BPB_FSInfo:      %d\n", bootSector.BPB_FSInfo);
-        printf("BPB_RsvdSecCnt:  %d\n", bootSector.BPB_RsvdSecCnt);
+        // printf("BPB_BytesPerSec: %d\n", bootSector.BPB_BytesPerSec);
+        // printf("BPB_FSInfo:      %d\n", bootSector.BPB_FSInfo);
+        // printf("BPB_RsvdSecCnt:  %d\n", bootSector.BPB_RsvdSecCnt);
 
         // read File System Info Sector
         fseek(volume, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
@@ -88,14 +88,24 @@ int main(int argc, char* argv[])
 
         // read File Allocation Table
         fseek(volume, (bootSector.BPB_RsvdSecCnt * bootSector.BPB_BytesPerSec), SEEK_SET);
-        fread(&FAT, sizeof(char) * 2, 1, volume);
-
-        printf("fsInfoSector.signature: 0x%X\n", fsInfoSector.signature);
+        fread(&FAT, sizeof(FAT), 1, volume);
 
         // print FAT info
         printf("\n");
         printf("FAT[0]: 0x%X\n", bootSector.BS_jmpBoot[0]);
-        printf("FAT[1]: 0x%X\n", bootSector.BS_jmpBoot[1]);
+        printf("FAT[1]: 0x%X\n\n", bootSector.BS_jmpBoot[1]);
+
+        // validate FAT[0]
+        if (FAT[0] != 0x0FFFFFF8)
+        {
+            printf("Inconsistent file system: FAT[0] should be 0x0FFFFFF8, but is 0x%X\n", FAT[0]);
+        }
+
+        // validate FAT[1]
+        if ((FAT[1] & 0x0FFFFFFF) == 0x0FFFFFFF)
+        {
+            printf("Inconsistent file system: FAT[1] should be 0x0FFFFFFF, but is 0x%X\n", FAT[1]);
+        }
 
     }
 
