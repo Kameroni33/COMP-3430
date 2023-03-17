@@ -125,7 +125,7 @@ int main(int argc, char* argv[])
         if (fsiError)
             printf("\n");
 
-        printf("num of bytes in FAT: %d\n", (bootSector.BPB_FATSz32 * bootSector.BPB_BytesPerSec));
+        // printf("num of bytes in FAT: %d\n", (bootSector.BPB_FATSz32 * bootSector.BPB_BytesPerSec));
 
         // count free clusters
         freeSectors = 0;
