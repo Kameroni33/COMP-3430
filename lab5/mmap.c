@@ -49,6 +49,7 @@ int main(){
   }
   sprintf(syscmd, "pmap -x %d", getpid());
   system(syscmd);
+  printf("%p\n", mapped_file);
   printf("%s\n", (char *)mapped_file);
   close(fd);
   munmap(mapped_file, BUFSIZE);
