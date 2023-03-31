@@ -13,7 +13,13 @@ make clean  # remonce mmap
 
 ## Lab Report
 
-For consistency, I will refer to the arguments of mmap() and munmap() based on the function prototypes given in MMAP(2) of the Linux Man Pages, which are as follows:
+**Note:** The code for this was run on my personal linux server with the following specifications:
+
+```
+Linux kameronr-server 5.15.0-67-generic #74-Ubuntu SMP Wed Feb 22 14:14:39 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux
+```
+
+**Note:** For consistency, I will refer to the arguments of mmap() and munmap() based on the function prototypes given in MMAP(2) of the Linux Man Pages, which are as follows:
 
 ```c
 void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset);
@@ -72,7 +78,7 @@ Address           Kbytes     RSS   Dirty Mode  Mapping
 000055c8ee8e9000       4       4       4 rw--- mmap
 ```
 
-From the output it can be seen that there are 5 entries for the compiled program (mmap) with different modes/privages. 3 of these are read-only, one is read-write, and other is executable. Each of these memory mappings would correspond to a different part of the process image. For example, _r-x--_ would correspond to executable code such as the text/code segment and/or stack (return calls, etc...). The _rw---_ would correspond to section that need to be updated surring execution, such as the stack and/or heap. Finally, _r----_ mappings would correspond to portions of the process image that only need to read from such as certain global or static variables, PCB information about the process, or parts of the text segment (like string literals).
+From the output it can be seen that there are 5 entries for the compiled program (mmap) with different modes/privages. 3 of these are read-only, one is read-write, and other is executable. Each of these memory mappings would correspond to a different part of the process image. For example, _r-x--_ would correspond to executable code such as the text/code segment and/or stack (return calls, etc...). The _rw---_ would correspond to section that need to be updated during execution, such as the stack and/or heap. Finally, _r----_ mappings would correspond to portions of the process image that only need to read from, such as certain global or static variables, PCB information about the process, or parts of the text segment (ex. string literals).
 
 Based on the ordering of the addresses, I would suspect the first memory mapping (0x55c8ee8e5000) includes the PCB and other non-executable information. Next, the 0x55c8ee8e6000 mapping likely contains the code segement and heap (which grows upward in memory addresses). The 3rd and 4th memory mappings are probably additional space for the heap/stack if they need to grow. Then finally, the last memory mapping 0x55c8ee8e9000 would be the stack (which grows downward from high memory addresses).
 
@@ -85,4 +91,4 @@ Address           Kbytes     RSS   Dirty Mode  Mapping
 0x7f23b9a91000
 ```
 
-
+Yes, as seen in the code snippet above, the address returned from mmap() matches the address given by the pmap output.
