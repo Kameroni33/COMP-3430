@@ -76,4 +76,9 @@ From the output it can be seen that there are 5 entries for the compiled program
 
 **iv. Modify mmap.c. Immediately after the system() function call, print the value of the pointer returned by the mmap() function (use %p to print a pointer in hexadecimal). Does the return value of mmap and pmap match?**
 
+```
+Address           Kbytes     RSS   Dirty Mode  Mapping
+00007f23b9a91000       4       0       0 r--s- mmap.txt
 
+0x7f23b9a91000
+```
