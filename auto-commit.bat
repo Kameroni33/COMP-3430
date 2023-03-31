@@ -1,7 +1,7 @@
 @echo off
 
 rem Message to be displayed in auto-commits
-set message=COMP 3430 - lab 3
+set message=COMP 3430
 
 :loop
     rem Check if any files have been updated
