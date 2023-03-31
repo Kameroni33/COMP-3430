@@ -13,7 +13,7 @@ make clean  # remonce mmap
 
 ## Lab Report
 
-**Note:** The code for this was run on a personal linux server with the folowing kernel/system rather than the aviary system. I don't think it should matter but in case it does I figured I'd include the info:
+**Note:** The code for this was run on a personal linux server with the folowing kernel/system rather than the aviary system. I don't think it should make any difference, but in case it does I figured I would include the info:
 
 ```
 Linux kameronr-server 5.15.0-67-generic #74-Ubuntu SMP Wed Feb 22 14:14:39 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux
