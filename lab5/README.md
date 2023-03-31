@@ -45,7 +45,11 @@ So yes, a child process will have all the same access to the mapped memory segme
 
 **i. The system() function executes a shell command within a program. pmap command is being executed in mmap.c? Briefly describe this command.**
 
+```c
+ pmap [options] pid [...]
+ ```
 
+The pmap() command reports the memory map of mapped memory segments for a given process. by including the option _-x_ (or _--extended_) the pmap() command shows additional information about the memory map in an "extended format".
 
 **ii. Examine the output of the program and find the listing for your mapped file. What is the size of the mapping?**
 
