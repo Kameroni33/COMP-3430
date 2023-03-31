@@ -8,7 +8,7 @@ ronaldk1@myumanitoba.ca
 make        # compile mmap.c
 make clean  # remonce mmap
 
-./mmap mmap.txt
+./mmap
 ```
 
 
