@@ -27,6 +27,7 @@ void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
 int munmap(void *addr, size_t length);
 ```
 
+
 **1. The first parameter to mmap() allows the caller to specify the starting address of the mapped segment, but it is generally not used (i.e. we usually let the OS pick the address). Why do you suppose this is generally not used? How do we ask the OS to pick the address?**
 
 By passing a 0 (NULL) value to the argument _*addr_, mmap() lets the OS determine where to pick the starting address of the mapped segement. Generally this is the prefered method because it allows the OS to pick a location that does not conflict with any other existing mappings. Manually specifying the address could pontentially lead to problems, especially if the flag MAP_FIXED is used as well. As the Man Page describes:
