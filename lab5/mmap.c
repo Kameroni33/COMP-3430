@@ -47,7 +47,7 @@ int main(){
     printf("mmap returned error code %d\n", errno);
     exit(0);
   }
-  sprintf(syscmd, "pmap -XX %d", getpid());
+  sprintf(syscmd, "pmap -x -d -p %d", getpid());
   system(syscmd);
   printf("%s\n", (char *)mapped_file);
   close(fd);
