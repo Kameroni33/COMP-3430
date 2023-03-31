@@ -53,16 +53,26 @@ The pmap() command reports the memory map of mapped memory segments for a given 
 
 **ii. Examine the output of the program and find the listing for your mapped file. What is the size of the mapping?**
 
-From the output:
-
 ```
 Address           Kbytes     RSS   Dirty Mode  Mapping
 00007f5ab1846000       4       0       0 r--s- mmap.txt
 ```
 
+From the output it can be determined that mapping for mmap.txt is 4 Kbytes, starting at the address of 0x00007f5ab1846000.
+
+
 **iii. The program output should contain at least 2 listings for the compiled program (a.out). What is different about these listings? Can you explain this difference? (Hint - what does a process image look like?)**
 
+```
+Address           Kbytes     RSS   Dirty Mode  Mapping
+000055c8ee8e5000       4       4       4 r---- mmap
+000055c8ee8e6000       4       4       4 r-x-- mmap
+000055c8ee8e7000       4       4       4 r---- mmap
+000055c8ee8e8000       4       4       4 r---- mmap
+000055c8ee8e9000       4       4       4 rw--- mmap
+```
 
+From the output it can be seen that there are 5 entries for the compiled program (mmap). 3 of these are read-only, one is read-write, and other is executable.
 
 **iv. Modify mmap.c. Immediately after the system() function call, print the value of the pointer returned by the mmap() function (use %p to print a pointer in hexadecimal). Does the return value of mmap and pmap match?**
 
