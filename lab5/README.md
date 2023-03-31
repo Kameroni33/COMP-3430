@@ -58,7 +58,7 @@ Address           Kbytes     RSS   Dirty Mode  Mapping
 00007f5ab1846000       4       0       0 r--s- mmap.txt
 ```
 
-From the output it can be determined that mapping for mmap.txt is 4 Kbytes, starting at the address of 0x00007f5ab1846000.
+From the output it can be determined that mapping for mmap.txt is 4 Kbytes, starting at the address of 0x7f5ab1846000.
 
 
 **iii. The program output should contain at least 2 listings for the compiled program (a.out). What is different about these listings? Can you explain this difference? (Hint - what does a process image look like?)**
@@ -72,7 +72,9 @@ Address           Kbytes     RSS   Dirty Mode  Mapping
 000055c8ee8e9000       4       4       4 rw--- mmap
 ```
 
-From the output it can be seen that there are 5 entries for the compiled program (mmap). 3 of these are read-only, one is read-write, and other is executable.
+From the output it can be seen that there are 5 entries for the compiled program (mmap) with different modes/privages. 3 of these are read-only, one is read-write, and other is executable. Each of these memory mappings would correspond to a different part of the process image. For example, _r-x--_ would correspond to executable code such as the text/code segment and/or stack (return calls, etc...). The _rw---_ would correspond to section that need to be updated surring execution, such as the stack and/or heap. Finally, _r----_ mappings would correspond to portions of the process image that only need to read from such as certain global or static variables, PCB information about the process, or parts of the text segment (like string literals).
+
+Based on the ordering of the addresses, I would suspect the first memory mapping (0x55c8ee8e5000) includes the PCB and other non-executable information. Next, the 0x55c8ee8e6000 mapping likely contains the code segement and heap (which grows upward in memory addresses). The 3rd and 4th memory mappings are probably additional space for the heap/stack if they need to grow. Then finally, the last memory mapping 0x55c8ee8e9000 would be the stack (which grows downward from high memory addresses).
 
 **iv. Modify mmap.c. Immediately after the system() function call, print the value of the pointer returned by the mmap() function (use %p to print a pointer in hexadecimal). Does the return value of mmap and pmap match?**
 
@@ -82,3 +84,5 @@ Address           Kbytes     RSS   Dirty Mode  Mapping
 
 0x7f23b9a91000
 ```
+
+
