@@ -1,8 +1,7 @@
 CC = clang
 CFLAGS = -Wall -Wextra -Wpedantic -Werror -g
 
-all: mmap.c
-
+all: mmap
 
 mmap: mmap.c
 	$(CC) $(CFLAGS) mmap.c -o mmap
