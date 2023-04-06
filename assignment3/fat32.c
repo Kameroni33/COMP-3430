@@ -6,4 +6,5 @@
 int main(int argc, char *argv[]) {
     printf("argv[0]: %s\nargc: %d\n\n", argv[0], argc);
 
+    return 0;
 }
