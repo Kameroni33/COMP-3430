@@ -18,14 +18,15 @@ void get() {
 
 
 int main(int argc, char *argv[]) {
-    // printf("argc: %d\nargv[0]: %s\n\n", argc, argv[0]);
+    printf("argc: %d\nargv[0]: %s\n", argc, argv[0]);
 
     if (argc >= 3 && argc <= 4) {
         
     }
 
     else {
-        printf("\n\nProcess: fat32\n");
+        printf("ERROR: invalid number of arguments\n\n")
+        printf("Process: fat32\n");
         printf("  display information about a FAT32 drive\n\n");
         printf("Usage:\n");
         printf("  ./fat32 [imagefile] [command]\n\n");
