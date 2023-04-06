@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     }
 
     else {
-        printf("ERROR: invalid number of arguments\n\n")
+        printf("ERROR: invalid number of arguments\n\n");
         printf("Process: fat32\n");
         printf("  display information about a FAT32 drive\n\n");
         printf("Usage:\n");
