@@ -18,7 +18,7 @@ void get() {
 
 
 int main(int argc, char *argv[]) {
-    printf("argc: %d\nargv[0]: %s\n\n", argv[0], argc);
+    printf("argc: %d\nargv[0]: %s\n\n", argc, argv[0]);
 
     if (argc >= 3 && argc <= 4) {
         
