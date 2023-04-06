@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
         printf("Available Commands:\n");
         printf("  info   print out some general info about the drive\n");
         printf("  list   print all files and directories on the frive\n");
-        printf("  get    fetch and return a file from the drive. Files will be copied to an ./output folder. Requires an additional parameter [file].\n\n")
+        printf("  get    fetch and return a file from the drive. Files will be copied to an ./output folder. Requires an additional parameter [file].\n\n");
     }
 
     return 0;
