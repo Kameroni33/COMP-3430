@@ -165,7 +165,7 @@ void list(char *driveName) {
 
 }
 
-void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth) {
+void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int depth) {
 
     fat32Dir entry;
 
@@ -176,6 +176,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
 
     char dirName[12];
     off_t nextCluster;
+    off_t newCluster;
     off_t memAddress;
 
     // get memory address for the cluster
@@ -223,7 +224,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
                 printf("[dir] %s\n", dirName);
 
                 // look up address of next directory
-                uint32_t newCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
+                newCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
                 // printf("<< newCluster: %u >>\n", newCluster);
 
                 printFileStructure(drive, bs, fat, newCluster, depth+1);
