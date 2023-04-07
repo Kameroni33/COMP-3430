@@ -407,6 +407,6 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
         targetCluster = searchFile(drive, bs, fat, nextCluster, targetFile); 
     }
 
-    printf("not found... (%d)\n", targetCluster);
+    printf("not found... (%ld)\n", targetCluster);
     return targetCluster;
 }
