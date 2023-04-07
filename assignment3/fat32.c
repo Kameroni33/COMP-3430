@@ -218,9 +218,9 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth)
                 lseek(drive, (fat + fatOffset), SEEK_SET);
                 read(drive, &nextCluster, sizeof(uint32_t));
 
-                off_t dataAddress = calcDataClustAddress(nextCluster, bs);
+                off_t nextAddress = calcDataClustAddress(nextCluster, bs);
 
-                // printFileStructure(drive, bs, fat, _, depth+1);
+                printFileStructure(drive, bs, fat, nextAddress, depth+1);
             }
             // else FILE entry
             else {
