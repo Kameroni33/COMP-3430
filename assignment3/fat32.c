@@ -181,7 +181,7 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
         lseek(drive, (addr + (entrySize * i)), SEEK_SET);
         read(drive, &entry, sizeof(fat32Dir));
 
-        if (((int)entry.dir_name[0] || 0xFF) == 0xE5 || ((int)entry.dir_name[0] || 0xFF) == 0x00) {
+        if (((int)entry.dir_name[0] | 0xFF) == 0xE5 || ((int)entry.dir_name[0] | 0xFF) == 0x00) {
             printf("\n Empty Entry\n");
         }
 
