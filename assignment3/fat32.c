@@ -148,8 +148,8 @@ void list(char *driveName) {
     firstDataSector = bootSector.BPB_RsvdSecCnt + (bootSector.BPB_NumFATs * bootSector.BPB_FATSz32);
     rootAddress = (((bootSector.BPB_RootClus - 2) * bootSector.BPB_SecPerClus) + firstDataSector) * bootSector.BPB_BytesPerSec;
 
-    uint32_t sectorSize = bs.BPB_BytesPerSec;
-    uint32_t clusterSize = bs.BPB_SecPerClus * sectorSize;
+    uint32_t sectorSize = bootSector.BPB_BytesPerSec;
+    uint32_t clusterSize = bootSector.BPB_SecPerClus * sectorSize;
     uint32_t entrySize = sizeof(fat32Dir);
     uint32_t entriesPerCluster = clusterSize / entrySize;
 
