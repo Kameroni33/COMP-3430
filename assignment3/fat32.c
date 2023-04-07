@@ -382,18 +382,16 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
                 // look up address of next cluster
                 newCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
 
-                targetCluster = searchFile(drive, bs, fat, newCluster, targetFile);
-                if (targetCluster != 0) {
-                    return targetCluster;
-                }
+                targetCluster = searchFile(drive, bs, fat, newCluster, targetFile, targetCluster);
+                if (*targetCluster != 0) return;
             }
             // else FILE entry
             else {
                 calcFileName(entryName, fileName, 1);
 
                 if (strcmp(fileName, targetFile) == 0) {
-                    targetCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
-                    return targetCluster;
+                    *targetCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
+                    return;
                 }
             }
         }
@@ -406,7 +404,4 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
     if (nextCluster < 0x0FFFFFF8) {
         targetCluster = searchFile(drive, bs, fat, nextCluster, targetFile); 
     }
-
-    printf("not found... (%ld)\n", targetCluster);
-    return targetCluster;
 }
