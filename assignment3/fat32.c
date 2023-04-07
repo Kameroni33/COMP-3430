@@ -179,8 +179,9 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
 
     printf("\nDirectory Name: %s\n", dirName);
     printf("Attributes: 0x%x\n", entry.dir_attr);
-    printf("First Cluster: %x %x (high-low)\n", entry.dir_first_cluster_hi, entry.dir_first_cluster_lo);
     printf("File Size: %u\n", entry.dir_file_size);
+    printf("First Cluster: %x %x (high-low)\n", entry.dir_first_cluster_hi, entry.dir_first_cluster_lo);
+    
 
     // printf("dir_attr: %d\n", entry.dir_attr);
     // printf("dir_ntres: %d\n", entry.dir_ntres);
