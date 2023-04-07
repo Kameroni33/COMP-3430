@@ -5,18 +5,9 @@
 #define _FILE_OFFSET_BITS 64
 
 
-void info(char *drive) {
-    printf("\nINFO\n  drive: %s\n", drive);
-}
-
-void list(char *drive) {
-    printf("\nLIST\n  drive: %s\n", drive);
-}
-
-void get(char *drive, char *file) {
-    printf("\nGET\n  drive: %s\n  file: %s", drive, file);
-}
-
+void info(char *drive);
+void list(char *drive);
+void get(char *drive, char *file);
 
 int main(int argc, char *argv[]) {
     // printf("argc: %d\nargv[0]: %s\n\n", argc, argv[0]);
@@ -53,4 +44,16 @@ int main(int argc, char *argv[]) {
     }
 
     return 0;
+}
+
+void info(char *drive) {
+    printf("\nINFO\n  drive: %s\n", drive);
+}
+
+void list(char *drive) {
+    printf("\nLIST\n  drive: %s\n", drive);
+}
+
+void get(char *drive, char *file) {
+    printf("\nGET\n  drive: %s\n  file: %s", drive, file);
 }
