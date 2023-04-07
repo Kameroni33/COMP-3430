@@ -110,9 +110,11 @@ void list(char *driveName) {
     printf("\nreading drive '%s'...\n\n", driveName);
 
     int drive;
+    int clusterSize;
 
     fat32BS bootSector;
     fat32FSInfo fileSysInfo;
+    fat32Dir directoryEntry;
 
     // open the drive
     if ( (drive = open(driveName, O_RDONLY)) < 0) {
@@ -128,7 +130,25 @@ void list(char *driveName) {
     lseek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
     read(drive, &fileSysInfo, sizeof(fat32FSInfo));
 
+    clusterSize = bootSector.BPB_BytesPerSec * bootSector.BPB_SecPerClus;
+
+    // read root directory
+    lseek(drive, (bootSector.BPB_RootClus * clusterSize), SEEK_SET);
+    read(drive, &dirEntry, sizeof(fat32Dir));
+
     printf("Root Cluster: %u\n", bootSector.BPB_RootClus);
+    printf("Dir Name: %u\n", dirEntry.dir_name);
+    printf("dir_attr: %d\n", dirEntry.dir_attr);
+    printf("dir_ntres: %d\n", dirEntry.dir_ntres);
+    printf("dir_crt_time_tenth: %d\n", dirEntry.dir_crt_time_tenth);
+    printf("dir_crt_time: %d\n", dirEntry.dir_crt_time);
+    printf("dir_crt_date: %d\n", dirEntry.dir_crt_date);
+    printf("dir_last_access_time: %d\n", dirEntry.dir_last_access_time);
+    printf("dir_first_cluster_hi: %d\n", dirEntry.dir_first_cluster_hi);
+    printf("dir_wrt_time: %d\n", dirEntry.dir_wrt_time);
+    printf("dir_wrt_date: %d\n", dirEntry.dir_wrt_date);
+    printf("dir_first_cluster_lo: %d\n", dirEntry.dir_first_cluster_lo);
+    printf("dir_file_size: %d\n", dirEntry.dir_file_size);
 
 }
 
