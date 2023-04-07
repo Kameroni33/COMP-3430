@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     }
 
     else {
-        printf("Process: fat32\n");
+        printf("\nProcess: fat32\n");
         printf("  FAT32 drive reader\n\n");
         printf("Usage:\n");
         printf("  ./fat32 [imagefile] [command] {file}\n\n");
