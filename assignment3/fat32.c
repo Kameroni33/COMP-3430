@@ -326,7 +326,7 @@ void get(char *driveName, char *file) {
 
     if (targetCluster != 0) {
         targetAddress = calcClustAddress(targetCluster, bootSector);
-        printf("file found at memory address 0x%lx\n", targetAddress);
+        printf("\nfile found at memory address 0x%lx\n", targetAddress);
         printf("file downloaded to local directory './downloads'\n");
     }
     else {
