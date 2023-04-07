@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include <string.h>
 #include "fat32.h"
 
 #define _FILE_OFFSET_BITS 64
 
 
 void info() {
-
+    printf("")
 }
 
 void list() {
@@ -21,7 +22,9 @@ int main(int argc, char *argv[]) {
     printf("argc: %d\nargv[0]: %s\n\n", argc, argv[0]);
 
     if (argc >= 3 && argc <= 4) {
-        
+        if (strcmp(argv[2], "info")) {
+            info();
+        }
     }
 
     else {
