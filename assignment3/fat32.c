@@ -357,7 +357,7 @@ void get(char *drive, char *file) {
     printFileStructure(drive, bootSector, fatAddress, bootSector.BPB_RootClus, 1);
 }
 
-off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, int depth) {
+off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFile) {
 
     fat32Dir entry;
     off_t targetCluster = 0;
@@ -406,12 +406,13 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, int depth) {
                 // look up address of next cluster
                 newCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
 
-                searchFile(drive, bs, fat, newCluster, targetFile);
+                targetCluster = searchFile(drive, bs, fat, newCluster, targetFile);
             }
             // else FILE entry
             else {
-                for (int k = 0; k < depth; k++) printf("-");
                 calcFileName(entryName, fileName, 1);
+
+                if (strcmp(fileName, targetFile))
                 printf("[file] %s (%u bytes)\n", fileName, entry.dir_file_size);
             }
         }
@@ -422,9 +423,8 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, int depth) {
     read(drive, &nextCluster, sizeof(uint32_t));
 
     if (nextCluster < 0x0FFFFFF8) {
-        searchFile(drive, bs, fat, nextCluster, targetFile); 
+        targetCluster = searchFile(drive, bs, fat, nextCluster, targetFile); 
     }
 
-    // if file not found return 0
-    return 0;
+    return targetCluster;
 }
