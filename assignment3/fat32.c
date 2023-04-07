@@ -391,7 +391,7 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
             else {
                 calcFileName(entryName, fileName, 1);
 
-                if (strcmp(fileName, targetFile) ==) {
+                if (strcmp(fileName, targetFile) == 0) {
                     targetCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
                     return targetCluster;
                 }
