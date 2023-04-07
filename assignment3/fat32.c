@@ -403,7 +403,7 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
     lseek(drive, (fat + cluster), SEEK_SET);
     read(drive, &nextCluster, sizeof(uint32_t));
 
-    if (nextCluster < 0x0FFFFFF8 && targetCluster == 0) {
+    if (nextCluster < 0x0FFFFFF8) {
         targetCluster = searchFile(drive, bs, fat, nextCluster, targetFile); 
     }
 
