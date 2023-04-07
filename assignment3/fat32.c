@@ -259,7 +259,6 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
 
                 printFileStructure(drive, bs, fat, newCluster, depth+1);
             }
-            
             // else FILE entry
             else {
                 for (int k = 0; k < depth; k++) printf("-");
