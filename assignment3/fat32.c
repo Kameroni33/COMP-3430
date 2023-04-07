@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     }
 
     else {
-        printf("ERROR: incorrect usage.\n");
+        printf("Error: incorrect usage.\n");
         printUsage();
     }
 
@@ -62,5 +62,5 @@ void list(char *drive) {
 }
 
 void get(char *drive, char *file) {
-    printf("\nGET\n drive: %s\n file:  %s\n\n", drive, file);
+    printf("\nCommand: GET\n drive: %s\n file:  %s\n\n", drive, file);
 }
