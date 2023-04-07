@@ -172,7 +172,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
     char dirName[12];
 
     off_t memAddress = calcClustAddress(cluster, bs);
-    printf("<< memAddress: %lu >>\n", memAddress);
+    printf("<< memAddress: 0x%lx >>\n", memAddress);
 
     uint32_t sectorSize = bs.BPB_BytesPerSec;
     uint32_t clusterSize = bs.BPB_SecPerClus * sectorSize;
