@@ -11,7 +11,7 @@
 void printUsage(void);
 void info(char *drive);
 void list(char *drive);
-void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs, int depth);
+void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth);
 void get(char *drive, char *file);
 
 int main(int argc, char *argv[]) {
@@ -161,11 +161,11 @@ void list(char *driveName) {
     printf("fat32Dir Entries per Cluster: %u\n", entriesPerCluster);
 
     // read directory tree starting at the root
-    printFileStructure(drive, rootAddress, fatAddress, bootSector, 1);
+    printFileStructure(drive, bootSector, fatAddress, rootAddress, 1);
 
 }
 
-void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs, int depth) {
+void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth) {
 
     fat32Dir entry;
 
@@ -204,7 +204,13 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs, int depth)
             strncpy(dirName, entry.dir_name, 11);
             dirName[11] = '\0';
 
-            printf("%*s%s [%s]\n", depth, "-", dirName, (entry.dir_attr == ATTR_DIRECTORY) ? "dir" : "file");
+            if (entry.dir_attr == ATTR_DIRECTORY) {
+                printf("%*s%s [directory]\n", depth, "-", dirName);
+                printFileStructure(drive, bs, fat, _, depth+1);
+            }
+            else {
+                printf("%*s%s [file]\n", depth, "-", dirName);
+            }
 
             // printf("Directory Name: %s\n", dirName);
             // printf("Attributes: 0x%x\n", entry.dir_attr);
