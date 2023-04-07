@@ -107,7 +107,30 @@ void info(char *driveName) {
 }
 
 void list(char *drive) {
-    printf("\nLIST\n drive: %s\n\n", drive);
+    printf("\nreading drive '%s'...\n\n", driveName);
+
+    int drive;
+    char volLabel[12];
+    char FileSysType[9];
+
+    fat32BS bootSector;
+    fat32FSInfo fileSysInfo;
+
+    // open the drive
+    if ( (drive = open(driveName, O_RDONLY)) < 0) {
+        printf("ERROR: unable to open drive '%s'.\n", driveName);
+        exit(1);
+    }
+
+    // read Boot Sector (BS)
+    lseek(drive, 0, SEEK_SET);
+    read(drive, &bootSector, sizeof(fat32BS));
+
+    // read File System Info (FSInfo)
+    lseek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
+    read(drive, &fileSysInfo, sizeof(fat32FSInfo));
+
+    
 }
 
 void get(char *drive, char *file) {
