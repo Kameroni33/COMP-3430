@@ -6,15 +6,15 @@
 
 
 void info() {
-    printf("")
+    printf("info\n");
 }
 
 void list() {
-
+    printf("list\n");
 }
 
 void get() {
-
+    printf("list\n");
 }
 
 
@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     else {
         printf("ERROR: invalid number of arguments\n\n\n");
         printf("Process: fat32\n");
-        printf("  display information about a FAT32 drive\n\n");
+        printf("  FAT32 drive reader\n\n");
         printf("Usage:\n");
         printf("  ./fat32 [imagefile] [command]\n\n");
         printf("Available Commands:\n");
