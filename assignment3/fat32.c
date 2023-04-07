@@ -8,6 +8,7 @@
 #include "fat32.h"
 
 #define BUFFER_SIZE 512
+#define MAX_FILE_NAME 100
 
 
 void printUsage(void);
@@ -308,7 +309,7 @@ void get(char *driveName, char *fileName) {
 
     int drive;
     int download;
-    char downloadFileName[strlen(fileName) + 10] = "downloads/";
+    char downloadFileName[MAX_FILE_NAME] = "./downloads/";
     char buffer[BUFFER_SIZE];
     off_t fatAddress;
     off_t targetCluster = 0;
