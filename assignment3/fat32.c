@@ -166,20 +166,31 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
     uint32_t sectorSize = bootSector.BPB_BytesPerSec;
     uint32_t clusterSize = bootSector.BPB_SecPerClus * sectorSize;
     uint32_t entrySize = sizeof(fat32Dir);
-    uint32_t entriesPerSector = sectorSize / entrySize;
+    uint32_t entriesPerCluster = clusterSize / entrySize;
     printf("\nSectorSize: %u\n", sectorSize);
     printf("ClusterSize: %u\n", clusterSize);
     printf("EntrySize: %u\n", entrySize);
-    printf("Entries per Sector: %u\n", entriesPerSector);
-    
-    lseek(drive, (addr), SEEK_SET);
-    read(drive, &entry, sizeof(fat32Dir));
+    printf("Entries per Cluster: %u\n", entriesPerCluster);
 
     off_t nextCluster;
     lseek(drive, (fat + bs.BPB_RootClus), SEEK_SET);
     read(drive, &nextCluster, sizeof(uint32_t));
+    printf("\nNext cluster: 0x%lx (EOC: 0x%x)\n", nextCluster, EOC);
 
-    printf("\nNext cluster: %ld, 0x%lx (EOC: 0x%x)\n", nextCluster, nextCluster, EOC);
+    for (int i = 0; i < entriesPerSector; i++) {
+        lseek(drive, (addr + (entrySize * i)), SEEK_SET);
+        read(drive, &entry, sizeof(fat32Dir));
+
+        if (entry.dir_name[0] == 0xE5 || entry.dir_name[0] == 0x00)
+
+        strncpy(dirName, entry.dir_name, 11);
+        dirName[11] = '\0';
+
+        printf("\nDirectory Name: %s\n", dirName);
+        printf("Attributes: 0x%x\n", entry.dir_attr);
+        printf("File Size: %u\n", entry.dir_file_size);
+        printf("First Cluster: %x %x (high-low)\n", entry.dir_first_cluster_hi, entry.dir_first_cluster_lo);
+    }
 
     strncpy(dirName, entry.dir_name, 11);
     dirName[11] = '\0';
