@@ -335,7 +335,7 @@ void get(char *driveName, char *file) {
     }
 }
 
-off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFile, off_t *targetCluster) {
+void searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFile, off_t *targetCluster) {
 
     fat32Dir entry;
 
@@ -402,7 +402,7 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
     read(drive, &nextCluster, sizeof(uint32_t));
 
     if (nextCluster < 0x0FFFFFF8) {
-        targetCluster = searchFile(drive, bs, fat, nextCluster, targetFile); 
+        searchFile(drive, bs, fat, nextCluster, targetFile, targetCluster);
     }
 
     printf("target cluster not found...\n", targetCluster);
