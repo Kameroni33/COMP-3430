@@ -99,10 +99,10 @@ void info(char *driveName) {
     printf("Volume ID: %u\n", bootSector.BS_VolID);
     printf("Volume Label: %s\n", volLabel);
     printf("File System Type: %s\n", FileSysType);
-    printf("Bytes per Sector: %d\n", bootSector.BPB_BytesPerSec);
-    printf("Sectors per Cluster: %d\n", bootSector.BPB_SecPerClus);
-    printf("Cluster Size: %dkB\n", clusterSize);
-    printf("Free Clusters: %f\n", fileSysInfo.free_count);
+    printf("Bytes per Sector: %u\n", bootSector.BPB_BytesPerSec);
+    printf("Sectors per Cluster: %u\n", bootSector.BPB_SecPerClus);
+    printf("Cluster Size: %fkB\n", clusterSize);
+    printf("Free Clusters: %u\n", fileSysInfo.free_count);
     printf("Free Space: %fkB\n", freeSpace);
 }
 
