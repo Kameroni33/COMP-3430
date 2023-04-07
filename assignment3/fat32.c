@@ -181,15 +181,19 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
         lseek(drive, (addr + (entrySize * i)), SEEK_SET);
         read(drive, &entry, sizeof(fat32Dir));
 
-        if (entry.dir_name[0] == 0xE5 || entry.dir_name[0] == 0x00)
+        if (entry.dir_name[0] == 0xE5 || entry.dir_name[0] == 0x00) {
+            printf("\n Empty Entry\n");
+        }
 
-        strncpy(dirName, entry.dir_name, 11);
-        dirName[11] = '\0';
+        else {
+            strncpy(dirName, entry.dir_name, 11);
+            dirName[11] = '\0';
 
-        printf("\nDirectory Name: %s\n", dirName);
-        printf("Attributes: 0x%x\n", entry.dir_attr);
-        printf("File Size: %u\n", entry.dir_file_size);
-        printf("First Cluster: %x %x (high-low)\n", entry.dir_first_cluster_hi, entry.dir_first_cluster_lo);
+            printf("\nDirectory Name: %s\n", dirName);
+            printf("Attributes: 0x%x\n", entry.dir_attr);
+            printf("File Size: %u\n", entry.dir_file_size);
+            printf("First Cluster: %x %x (high-low)\n", entry.dir_first_cluster_hi, entry.dir_first_cluster_lo);
+        }
     }
 
     strncpy(dirName, entry.dir_name, 11);
