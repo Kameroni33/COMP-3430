@@ -10,7 +10,6 @@ void list(char *drive);
 void get(char *drive, char *file);
 
 int main(int argc, char *argv[]) {
-    // printf("argc: %d\nargv[0]: %s\n\n", argc, argv[0]);
 
     if (argc >= 3) {
         if (strcmp(argv[2], "info") == 0) {
@@ -47,13 +46,13 @@ int main(int argc, char *argv[]) {
 }
 
 void info(char *drive) {
-    printf("\nINFO\n> drive: %s\n\n", drive);
+    printf("\nINFO\n drive: %s\n\n", drive);
 }
 
 void list(char *drive) {
-    printf("\nLIST\n> drive: %s\n\n", drive);
+    printf("\nLIST\n drive: %s\n\n", drive);
 }
 
 void get(char *drive, char *file) {
-    printf("\nCommand: GET\n> drive: %s\n> file:  %s\n\n", drive, file);
+    printf("\nGET\n drive: %s\n file:  %s\n\n", drive, file);
 }
