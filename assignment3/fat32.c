@@ -110,8 +110,6 @@ void list(char *driveName) {
     printf("\nreading drive '%s'...\n\n", driveName);
 
     int drive;
-    char volLabel[12];
-    char FileSysType[9];
 
     fat32BS bootSector;
     fat32FSInfo fileSysInfo;
