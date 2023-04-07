@@ -175,7 +175,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
     uint32_t entriesPerCluster;
 
     char entryName[12];
-    char fileName[12];
+    char fileName[13];
     off_t nextCluster;
     off_t newCluster;
     off_t memAddress;
@@ -261,10 +261,23 @@ off_t calcClustAddress(int cluster, fat32BS bs) {
     return address;
 }
 
-void calcFileName(char entryName[12], char fileName[12]) {
+void calcFileName(char entryName[12], char fileName[13]) {
     int index = 0;
+    // add name
     for (int i = 0; i < 8) {
-        if (entryName[i] != ' ')
+        if (entryName[i] != ' ') {
+            fileName[index] = entryName[i];
+            index++;
+        }
+    }
+    // add extension
+    fileName[index] = '.';
+    index++;
+    for (int i = 8; i < 11; i++) {
+        if (entryName[i] != ' ') {
+            fileName[index] = entryName[i];
+            index++;
+        }
     }
 }
 
