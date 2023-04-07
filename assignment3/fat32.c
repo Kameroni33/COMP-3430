@@ -112,7 +112,6 @@ void list(char *driveName) {
     printf("\nreading drive '%s'...\n", driveName);
 
     int drive;
-    int firstDataSector;
 
     off_t rootAddress;
     off_t fatAddress;
