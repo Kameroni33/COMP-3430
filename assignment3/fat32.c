@@ -403,6 +403,7 @@ void searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFil
 
     if (nextCluster < 0x0FFFFFF8) {
         searchFile(drive, bs, fat, nextCluster, targetFile, targetCluster);
+        if (*targetCluster != 0) return;
     }
 
     printf("target cluster not found...\n");
