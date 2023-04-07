@@ -7,6 +7,8 @@
 #include <string.h>
 #include "fat32.h"
 
+#define BUFFER_SIZE 512
+
 
 void printUsage(void);
 void info(char *driveName);
@@ -108,6 +110,8 @@ void info(char *driveName) {
     printf("Cluster Size: %.3fkB\n", clusterSize);
     printf("Free Clusters: %u\n", fileSysInfo.free_count);
     printf("Free Space: %.1fkB\n", freeSpace);
+
+    close(drive);
 }
 
 void list(char *driveName) {
@@ -159,6 +163,7 @@ void list(char *driveName) {
     // read directory tree starting at the root
     printFileStructure(drive, bootSector, fatAddress, bootSector.BPB_RootClus, 1);
 
+    close(drive);
 }
 
 void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int depth) {
@@ -303,6 +308,7 @@ void get(char *driveName, char *fileName) {
 
     int drive;
     int download;
+    char buffer[BUFFER_SIZE];
     off_t fatAddress;
     off_t targetCluster = 0;
     off_t targetAddress = 0;
@@ -337,12 +343,17 @@ void get(char *driveName, char *fileName) {
             exit(1);
         }
 
+
+        close(download);
+        
         printf("\nFile %s coppied into local folder './downloads'\n", fileName);
     }
     else {
         printf("\n%s not found...\n", fileName);
         printf("Try using command [list] to see available files\n");
     }
+
+    close(drive);
 }
 
 void searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFile, off_t *targetCluster) {
