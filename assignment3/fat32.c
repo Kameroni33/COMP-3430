@@ -54,13 +54,13 @@ void printUsage() {
 }
 
 void info(char *drive) {
-    printf("\nCommand: info\n  drive: %s\n\n", drive);
+    printf("\nINFO\n drive: %s\n\n", drive);
 }
 
 void list(char *drive) {
-    printf("\nCommand: list\n  drive: %s\n\n", drive);
+    printf("\nLIST\n drive: %s\n\n", drive);
 }
 
 void get(char *drive, char *file) {
-    printf("\nCommand: get\n  drive: %s\n  file:  %s\n\n", drive, file);
+    printf("\nGET\n drive: %s\n file:  %s\n\n", drive, file);
 }
