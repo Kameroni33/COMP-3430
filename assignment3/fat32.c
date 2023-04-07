@@ -113,7 +113,6 @@ void list(char *driveName) {
     printf("\nreading drive '%s'...\n", driveName);
 
     int drive;
-
     off_t rootAddress;
     off_t fatAddress;
 
@@ -241,7 +240,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
                 calcFileName(entryName, fileName, 0);
                 printf("[directory] %s\n", fileName);
 
-                // look up address of next directory
+                // look up address of next cluster
                 newCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
                 // printf("<< newCluster: %u >>\n", newCluster);
 
@@ -303,7 +302,132 @@ void calcFileName(char entryName[12], char fileName[13], int extension) {
     fileName[index] = '\0';
 }
 
-
 void get(char *drive, char *file) {
-    printf("\nGET\n drive: %s\n file:  %s\n\n", drive, file);
+    printf("\nreading drive '%s'...\n", driveName);
+
+    int drive;
+    off_t rootAddress;
+    off_t fatAddress;
+
+    fat32BS bootSector;
+    fat32FSInfo fileSysInfo;
+
+    // open the drive
+    if ( (drive = open(driveName, O_RDONLY)) < 0) {
+        printf("ERROR: unable to open drive '%s'.\n", driveName);
+        exit(1);
+    }
+
+    // read Boot Sector (BS)
+    lseek(drive, 0, SEEK_SET);
+    read(drive, &bootSector, sizeof(fat32BS));
+
+    // read File System Info (FSInfo)
+    lseek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
+    read(drive, &fileSysInfo, sizeof(fat32FSInfo));
+
+    if (bootSector.BPB_RsvdSecCnt == 0) {
+        printf("WARNING: reserved number of sectors is 0\n");
+    }
+
+    // determine memory address of FAT
+    fatAddress = bootSector.BPB_RsvdSecCnt * bootSector.BPB_BytesPerSec;
+
+    if (bootSector.BPB_RootEntCnt != 0) {
+        printf("WARNING: root entry count is not 0\n");
+    }
+
+    // determine memory address of root directory
+    rootAddress = calcClustAddress(bootSector.BPB_RootClus, bootSector);
+
+    uint32_t sectorSize = bootSector.BPB_BytesPerSec;
+    uint32_t clusterSize = bootSector.BPB_SecPerClus * sectorSize;
+    uint32_t entrySize = sizeof(fat32Dir);
+    uint32_t entriesPerCluster = clusterSize / entrySize;
+
+    printf("\nSectorSize: %u\n", sectorSize);
+    printf("ClusterSize: %u\n", clusterSize);
+    printf("Root Cluster: %u\n", bootSector.BPB_RootClus);
+    printf("Root Address: 0x%lx\n", rootAddress);
+    printf("fat32Dir Size: %u\n", entrySize);
+    printf("fat32Dir Entries per Cluster: %u\n", entriesPerCluster);
+    printf("FAT Address: 0x%lx\n\n", fatAddress);
+
+    // read directory tree starting at the root
+    printFileStructure(drive, bootSector, fatAddress, bootSector.BPB_RootClus, 1);
+}
+
+off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, int depth) {
+
+    fat32Dir entry;
+
+    uint32_t sectorSize;
+    uint32_t clusterSize;
+    uint32_t entrySize;
+    uint32_t entriesPerCluster;
+
+    char entryName[12];
+    char fileName[13];
+    off_t nextCluster;
+    off_t newCluster;
+    off_t memAddress;
+
+    // get memory address for the cluster
+    memAddress = calcClustAddress(cluster, bs);
+
+    sectorSize = bs.BPB_BytesPerSec;
+    clusterSize = bs.BPB_SecPerClus * sectorSize;
+    entrySize = sizeof(fat32Dir);
+    entriesPerCluster = clusterSize / entrySize;
+
+    for (uint32_t i = 0; i < entriesPerCluster; i++) {
+
+        // go to entry location
+        lseek(drive, (memAddress + (entrySize * i)), SEEK_SET);
+        read(drive, &entry, sizeof(fat32Dir));
+
+        // check first char to see it=f it's an empty entry
+        uint32_t firstChar = (int)entry.dir_name[0] & 0xFF;
+        // printf("\nFirst Character: 0x%x\n", firstChar);
+        if (firstChar != 0xE5 && firstChar != 0x00) {
+
+            // get the entry name as a string
+            strncpy(entryName, entry.dir_name, 11);
+            entryName[11] = '\0';
+
+            
+            // if LONG_NAME, ./.., or VOLUME entry
+            if (entry.dir_attr == (ATTR_LONG_NAME) || entryName[0] == '.' || (entry.dir_attr & ATTR_VOLUME_ID) == ATTR_VOLUME_ID) {
+                // ignore...
+            }
+            // else if DIRECTORY entry
+            else if ((entry.dir_attr & ATTR_DIRECTORY) == ATTR_DIRECTORY) {
+                // look up address of next cluster
+                newCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
+
+                searchFile(drive, bs, fat, newCluster, depth+1);
+            }
+            // else FILE entry
+            else {
+                for (int k = 0; k < depth; k++) printf("-");
+                calcFileName(entryName, fileName, 1);
+                printf("[file] %s (%u bytes)\n", fileName, entry.dir_file_size);
+            }
+        }
+    }
+
+    // check if there is another cluster to read for this directory
+    lseek(drive, (fat + cluster), SEEK_SET);
+    read(drive, &nextCluster, sizeof(uint32_t));
+
+    if (nextCluster >= 0x0FFFFFF8) {
+        // printf("end of cluster...\n");   
+    }
+    else {
+        // printf("proceeding to next cluster... [0x%lx]\n", nextCluster);
+        printFileStructure(drive, bs, fat, nextCluster, depth+1);
+    }
+
+    // if file not found return 0
+    return 0;
 }
