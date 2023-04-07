@@ -352,9 +352,9 @@ void get(char *driveName, char *fileName) {
         // copy contents of file from drive -> downloads
         while (targetCluster < 0x0FFFFFF8) {
 
-            // go to luster memory location
-            calcClustAddress(targetCluster, bootSector);
-            lseek(drive, fatAddress + (targetCluster * sizeof(uint32_t)), SEEK_SET);
+            // go to cluster memory location
+            targetAddress = calcClustAddress(targetCluster, bootSector);
+            lseek(drive, targetAddress, SEEK_SET);
 
             // copy contents
             for (unsigned int i = 0; i < (clusterSize / BUFFER_SIZE); i++) {
