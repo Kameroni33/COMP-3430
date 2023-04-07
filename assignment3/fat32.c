@@ -24,18 +24,18 @@ int main(int argc, char *argv[]) {
                 get(argv[1], argv[3]);
             }
             else {
-                printf("Error: no target file specified.\n");
+                printf("ERROR: no target file specified.\n");
                 printUsage();
             }
         }
         else {
-            printf("Error: invalid command argument '%s'.\n", argv[2]);
+            printf("ERROR: invalid command argument '%s'.\n", argv[2]);
             printUsage();
         }
     }
 
     else {
-        printf("Error: incorrect usage.\n");
+        printf("ERROR: incorrect usage.\n");
         printUsage();
     }
 
