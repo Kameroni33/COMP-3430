@@ -217,7 +217,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
             // else if DIRECTORY entry
             else if (entry.dir_attr == ATTR_DIRECTORY) {
                 for (int k = 0; k < depth; k++) printf("-");
-                printf("%s [directory]\n", dirName);
+                printf("[dir] %s\n", dirName);
 
                 // look up address of next directory
                 uint32_t newCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
@@ -232,7 +232,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
             // else FILE entry
             else {
                 for (int k = 0; k < depth; k++) printf("-");
-                printf("%s [file]\n", dirName);
+                printf("[file] %s\n", dirName);
             }
             // printf("Directory Name: %s\n", dirName);
             // printf("Attributes: 0x%x\n", entry.dir_attr);
