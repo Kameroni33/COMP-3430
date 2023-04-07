@@ -189,7 +189,7 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
         }
         for (int j = 0; j < 11; j++) {
             uint32_t currChar = (int)entry.dir_name[0] & 0xFF;
-            if (currChar <= 0x20 || currChar == 0x00) {
+            if (currChar <= 0x20 && currChar != 0x05) {
                 printf("WARNING: Invalid Entry Name Character\n");
             }
         }
