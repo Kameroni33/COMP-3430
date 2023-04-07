@@ -162,6 +162,7 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
     fat32Dir entry;
 
     char dirName[12];
+    uint sdf = 0;
 
     uint32_t sectorSize = bs.BPB_BytesPerSec;
     uint32_t clusterSize = bs.BPB_SecPerClus * sectorSize;
@@ -181,7 +182,7 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
         lseek(drive, (addr + (entrySize * i)), SEEK_SET);
         read(drive, &entry, sizeof(fat32Dir));
 
-        if (entry.dir_name[0] == 0xE5 || entry.dir_name[0] == 0x00) {
+        if ((uint)entry.dir_name[0] == 0xE5 || entry.dir_name[0] == 0x00) {
             printf("\n Empty Entry\n");
         }
 
