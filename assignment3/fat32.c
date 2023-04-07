@@ -200,14 +200,6 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
         // printf("\nFirst Character: 0x%x\n", firstChar);
         if (firstChar != 0xE5 && firstChar != 0x00) {
 
-            // make sure the entry name is valid
-            for (int j = 0; j < 11; j++) {
-                uint32_t currChar = (int)entry.dir_name[0] & 0xFF;
-                if (currChar <= 0x20 && currChar != 0x05) {
-                    printf("WARNING: Invalid Entry Name Character\n");
-                }
-            }
-
             // get the entry name as a string
             strncpy(entryName, entry.dir_name, 11);
             entryName[11] = '\0';
