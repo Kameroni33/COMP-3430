@@ -153,9 +153,7 @@ void list(char *driveName) {
     printf("fat32Dir size: %lu\n", sizeof(fat32Dir));
 
     // read directory tree starting at the root
-    for (int i = 0; i < 8; i++) {
-        printFileStructure(drive, rootAddress + (sizeof(fat32Dir) * i), fatAddress, bootSector);
-    }
+    printFileStructure(drive, rootAddress, fatAddress, bootSector);
 
 }
 
@@ -165,8 +163,15 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
 
     char dirName[12];
 
-    uint32_t clusterSize = bootSector.BPB_SecPerClus * bootSector.BPB_BytesPerSec;
-
+    uint32_t sectorSize = bootSector.BPB_BytesPerSec;
+    uint32_t clusterSize = bootSector.BPB_SecPerClus * sectorSize;
+    uint32_t entrySize = sizeof(fat32Dir);
+    uint32_t entriesPerSector = sectorSize / entrySize;
+    printf("\nSectorSize: %u\n", sectorSize);
+    printf("ClusterSize: %u\n", clusterSize);
+    printf("EntrySize: %u\n", entrySize);
+    printf("Entries per Sector: %u\n", entriesPerSector);
+    
     lseek(drive, (addr), SEEK_SET);
     read(drive, &entry, sizeof(fat32Dir));
 
