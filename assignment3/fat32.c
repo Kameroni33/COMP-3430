@@ -154,7 +154,7 @@ void list(char *driveName) {
 
     // read directory tree starting at the root
     for (int i = 0; i < 8; i++) {
-        printFileStructure(drive, rootAddress + (bootSector.BPB_BytesPerSec * i), fatAddress, bootSector);
+        printFileStructure(drive, rootAddress + (sizeof(fat32Dir) * i), fatAddress, bootSector);
     }
 
 }
@@ -163,12 +163,17 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
 
     fat32Dir entry;
 
+    char dirName[12];
+
     lseek(drive, (addr), SEEK_SET);
     read(drive, &entry, sizeof(fat32Dir));
 
     off_t nextCluster;
     lseek(drive, (fat + bs.BPB_RootClus), SEEK_SET);
     read(drive, &nextCluster, sizeof(uint32_t));
+
+    strncpy(dirName, entry.dir_name, 11);
+    dirName[11] = '\0';
 
     printf("\nDir Name: %s\n", entry.dir_name);
     printf("Next cluster: %ld, 0x%lx (EOC: 0x%x)\n", nextCluster, nextCluster, EOC);
