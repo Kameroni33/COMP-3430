@@ -144,8 +144,8 @@ void list(char *driveName) {
     // determine memory address of FAT
     fatAddress = bootSector.BPB_RsvdSecCnt * bootSector.BPB_BytesPerSec;
 
-    if (bootSector.BPB_RootEntCnt == 0) {
-        printf("WARNING: root entry count is 0\n");
+    if (bootSector.BPB_RootEntCnt != 0) {
+        printf("WARNING: root entry count is not 0\n");
     }
 
     // determine memory address of root directory
