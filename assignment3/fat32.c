@@ -183,6 +183,7 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
 
 
         uint8_t firstChar = (int)entry.dir_name[0] | 0xFF;
+        printf("\nFirst Character: 0x%x\n", firstChar);
         if (firstChar == 0xE5 || firstChar == 0x00) {
             printf("\n Empty Entry\n");
         }
@@ -191,7 +192,6 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
             strncpy(dirName, entry.dir_name, 11);
             dirName[11] = '\0';
 
-            printf("\nFirst Character: 0x%x\n", (int)entry.dir_name[0]);
             printf("Directory Name: %s\n", dirName);
             printf("Attributes: 0x%x\n", entry.dir_attr);
             printf("File Size: %u\n", entry.dir_file_size);
