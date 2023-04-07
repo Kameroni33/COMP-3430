@@ -211,7 +211,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth)
                 printf("%*s%s [directory]\n", depth, "-", dirName);
 
                 // look up address of next directory
-                uint32_t fatOffset = (static_cast<uint32_t>(entry.dir_first_cluster_hi) << 16) + static_cast<uint32_t>(entry.dir_first_cluster_lo);
+                uint32_t fatOffset = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
                 off_t nextCluster;
                 
                 lseek(drive, (fat + fatOffset), SEEK_SET);
