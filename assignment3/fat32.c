@@ -32,9 +32,9 @@ int main(int argc, char *argv[]) {
             if (argc >= 4) {
                 get(argv[1], argv[3]);
             }
-            else {(}
+            else {
                 printf("Error: Invalid Command argument '%s'\n", argv[2]);
-            )
+            }
         }
         else (
             printf("Error: Invalid Command argument '%s'\n", argv[2]);
