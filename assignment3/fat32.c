@@ -169,19 +169,22 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
 
     fat32Dir entry;
 
+    uint32_t sectorSize;
+    uint32_t clusterSize;
+    uint32_t entrySize;
+    uint32_t entriesPerCluster;
+
     char dirName[12];
-
-    off_t memAddress = calcClustAddress(cluster, bs);
-    // printf("<< memAddress: 0x%lx >>\n", memAddress);
-
-    uint32_t sectorSize = bs.BPB_BytesPerSec;
-    uint32_t clusterSize = bs.BPB_SecPerClus * sectorSize;
-    uint32_t entrySize = sizeof(fat32Dir);
-    uint32_t entriesPerCluster = clusterSize / entrySize;
-
     off_t nextCluster;
-    lseek(drive, (fat + cluster), SEEK_SET);
-    read(drive, &nextCluster, sizeof(uint32_t));
+    off_t memAddress;
+
+    // get memory address for the cluster
+    memAddress = calcClustAddress(cluster, bs);
+
+    sectorSize = bs.BPB_BytesPerSec;
+    clusterSize = bs.BPB_SecPerClus * sectorSize;
+    entrySize = sizeof(fat32Dir);
+    entriesPerCluster = clusterSize / entrySize;
 
     for (uint32_t i = 0; i < entriesPerCluster; i++) {
 
@@ -234,14 +237,13 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
                 for (int k = 0; k < depth; k++) printf("-");
                 printf("[file] %s (%u bytes)\n", dirName, entry.dir_file_size);
             }
-            // printf("Directory Name: %s\n", dirName);
-            // printf("Attributes: 0x%x\n", entry.dir_attr);
-            // printf("File Size: %u\n", entry.dir_file_size);
-            // printf("First Cluster: %x %x (high-low)\n", entry.dir_first_cluster_hi, entry.dir_first_cluster_lo);
         }
     }
 
     // check if there is another cluster to read for this directory
+    lseek(drive, (fat + cluster), SEEK_SET);
+    read(drive, &nextCluster, sizeof(uint32_t));
+
     if (nextCluster >= 0x0FFFFFF8) {
         printf("end of cluster...\n");
     }
