@@ -1,11 +1,11 @@
+#define _FILE_OFFSET_BITS 64
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
 #include "fat32.h"
-
-#define _FILE_OFFSET_BITS 64
 
 
 void printUsage();
@@ -106,12 +106,17 @@ void info(char *driveName) {
     printf("Free Space: %.1fkB\n", freeSpace);
 }
 
+void printFileStructure() {
+
+}
+
 void list(char *driveName) {
     printf("\nreading drive '%s'...\n", driveName);
 
     int drive;
-    int firstDataSector;
-    int firstRootSector;
+    off_t firstDataSector;
+    off_t firstRootSector;
+    off_t firstFATSector;
 
     fat32BS bootSector;
     fat32FSInfo fileSysInfo;
@@ -131,6 +136,13 @@ void list(char *driveName) {
     lseek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
     read(drive, &fileSysInfo, sizeof(fat32FSInfo));
 
+    if (bootSector.BPB_RsvdSecCnt != 0) {
+        printf("WARNING: reserved number of sectors is 0\n");
+    }
+
+    firstFATSector = 
+
+
     if (bootSector.BPB_RootEntCnt != 0) {
         printf("WARNING: root entry count is 0\n");
     }
@@ -144,20 +156,8 @@ void list(char *driveName) {
     read(drive, &dirEntry, sizeof(fat32Dir));
 
     printf("Root Cluster: %u\n", bootSector.BPB_RootClus);
-    printf("Root Address: %u 0x%x\n", firstRootSector * bootSector.BPB_BytesPerSec, firstRootSector * bootSector.BPB_BytesPerSec);
+    printf("Root Address: 0x%x\n", firstRootSector * bootSector.BPB_BytesPerSec);
     printf("Dir Name: %s\n", dirEntry.dir_name);
-
-    printf("dir_attr: %d\n", dirEntry.dir_attr);
-    printf("dir_ntres: %d\n", dirEntry.dir_ntres);
-    printf("dir_crt_time_tenth: %d\n", dirEntry.dir_crt_time_tenth);
-    printf("dir_crt_time: %d\n", dirEntry.dir_crt_time);
-    printf("dir_crt_date: %d\n", dirEntry.dir_crt_date);
-    printf("dir_last_access_time: %d\n", dirEntry.dir_last_access_time);
-    printf("dir_first_cluster_hi: %d\n", dirEntry.dir_first_cluster_hi);
-    printf("dir_wrt_time: %d\n", dirEntry.dir_wrt_time);
-    printf("dir_wrt_date: %d\n", dirEntry.dir_wrt_date);
-    printf("dir_first_cluster_lo: %d\n", dirEntry.dir_first_cluster_lo);
-    printf("dir_file_size: %d\n", dirEntry.dir_file_size);
 
 }
 
