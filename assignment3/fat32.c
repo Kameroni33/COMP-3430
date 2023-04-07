@@ -344,7 +344,7 @@ void get(char *driveName, char *fileName) {
 
         // open file to writting
         strcat(downloadFileName, fileName);
-        if ( (download = open(downloadFileName, O_RDWR|O_CREAT|S_IRWXU|S_IRWXG|S_IRWXO)) < 0) {
+        if ( (download = open(downloadFileName, O_WRONLY | O_CREAT, 0777)) < 0) {
             printf("ERROR: unable to open download file '%s'.\n", fileName);
             exit(1);
         }
