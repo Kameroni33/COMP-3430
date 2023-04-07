@@ -183,16 +183,23 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
 
 
         uint32_t firstChar = (int)entry.dir_name[0] & 0xFF;
-        // printf("\nFirst Character: 0x%x\n", firstChar);
+        printf("\nFirst Character: 0x%x\n", firstChar);
         if (firstChar == 0xE5 || firstChar == 0x00) {
-            printf("\n Empty Entry\n");
+            printf("Empty Entry\n");
         }
+        for (int j = 0; j < 11; j++) {
+            uint32_t currChar = (int)entry.dir_name[0] & 0xFF;
+            if (currChar <= 0x20 || currChar == 0x00) {
+                printf("WARNING: Invalid Entry Name Character\n");
+            }
+        }
+        
 
         else {
             strncpy(dirName, entry.dir_name, 11);
             dirName[11] = '\0';
 
-            printf("\nDirectory Name: %s\n", dirName);
+            printf("Directory Name: %s\n", dirName);
             printf("Attributes: 0x%x\n", entry.dir_attr);
             printf("File Size: %u\n", entry.dir_file_size);
             printf("First Cluster: %x %x (high-low)\n", entry.dir_first_cluster_hi, entry.dir_first_cluster_lo);
