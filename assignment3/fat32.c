@@ -404,4 +404,6 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
     if (nextCluster < 0x0FFFFFF8) {
         targetCluster = searchFile(drive, bs, fat, nextCluster, targetFile); 
     }
+
+    printf("target cluster not found...\n", targetCluster);
 }
