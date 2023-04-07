@@ -216,7 +216,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
 
                 // look up address of next directory
                 uint32_t newCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
-                off_t nextAddress = calcDataClustAddress(newCluster, bs);
+                off_t nextAddress = calcClustAddress(newCluster, bs);
                 
                 printf("<< newCluster: %u >>\n", newCluster);
 
