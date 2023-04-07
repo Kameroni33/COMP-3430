@@ -64,6 +64,8 @@ void info(char *driveName) {
     int drive;
     char volLabel[12];
     char FileSysType[9];
+    float clusterSize;
+    float freeSpace;
 
     fat32BS bootSector;
     fat32FSInfo fileSysInfo;
@@ -82,10 +84,15 @@ void info(char *driveName) {
     lseek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
     read(drive, &fileSysInfo, sizeof(fat32FSInfo));
 
+    // get volume label and file system type strings
     strncpy(volLabel, bootSector.BS_VolLab, 11);
     strncpy(FileSysType, bootSector.BS_FilSysType, 8);
     volLabel[11] = '\0';
     FileSysType[8] = '\0';
+
+    // determin cluster size and free space
+    clusterSize = ((float)bootSector.BPB_BytesPerSec * (float)bootSector.BPB_SecPerClus) / 1000;
+    freeSpace = (float)fileSysInfo.free_count * clusterSize;
 
     // print information about the drive
     printf("OEM Name: %s\n", bootSector.BS_OEMName);
@@ -94,9 +101,9 @@ void info(char *driveName) {
     printf("File System Type: %s\n", FileSysType);
     printf("Bytes per Sector: %d\n", bootSector.BPB_BytesPerSec);
     printf("Sectors per Cluster: %d\n", bootSector.BPB_SecPerClus);
-    printf("Cluster Size: %dkB\n", (bootSector.BPB_BytesPerSec * bootSector.BPB_SecPerClus) / 1000);
+    printf("Cluster Size: %dkB\n", clusterSize);
     printf("Free Clusters: %d\n", fileSysInfo.free_count);
-    printf("Free Space: %dkB\n", fileSysInfo.free_count * (bootSector.BPB_BytesPerSec * bootSector.BPB_SecPerClus) / 1000);
+    printf("Free Space: %dkB\n", freeSpace);
 
 }
 
