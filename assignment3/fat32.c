@@ -8,7 +8,6 @@
 #include "fat32.h"
 
 #define BUFFER_SIZE 512
-#define BYTES_PER_FAT_ENTRY 4
 
 
 void printUsage(void);
@@ -258,7 +257,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
     }
 
     // check if there is another cluster to read for this directory
-    lseek(drive, fat + (cluster * BYTES_PER_FAT_ENTRY), SEEK_SET);
+    lseek(drive, fat + (cluster * sizeof(uint32_t)), SEEK_SET);
     read(drive, &nextCluster, sizeof(uint32_t));
 
     if (nextCluster >= 0x0FFFFFF8) {
@@ -313,6 +312,7 @@ void get(char *driveName, char *fileName) {
     off_t fatAddress;
     off_t targetCluster = 0;
     off_t targetAddress = 0;
+    off_t nextCluster;
 
     fat32BS bootSector;
 
@@ -344,9 +344,13 @@ void get(char *driveName, char *fileName) {
             exit(1);
         }
 
-        // copy contents from drive -> download
-        lseek(drive, (fat + targetCluster), SEEK_SET);
-        read(drive, &nextCluster, sizeof(uint32_t));
+        while (targetCluster < 0x0FFFFFF8) {
+            
+
+
+            lseek(drive, fatAddress + (targetCluster * sizeof(uint32_t)), SEEK_SET);
+            read(drive, &targetCluster, sizeof(uint32_t));
+        }
 
         close(download);
 
@@ -423,7 +427,7 @@ void searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFil
     }
 
     // check if there is another cluster to read for this directory
-    lseek(drive, fat + (cluster * BYTES_PER_FAT_ENTRY), SEEK_SET);
+    lseek(drive, fat + (cluster * sizeof(uint32_t)), SEEK_SET);
     read(drive, &nextCluster, sizeof(uint32_t));
 
     if (nextCluster < 0x0FFFFFF8) {
