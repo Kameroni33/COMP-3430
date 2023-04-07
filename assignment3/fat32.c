@@ -235,10 +235,10 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
 
     // check if there is another cluster to read for this directory
     if (nextCluster == EOC) {
-        printf("\nend of cluster... [0x%lx 0x%x]\n", nextCluster, EOC);
+        printf("end of cluster... [0x%lx 0x%x]\n", nextCluster, EOC);
     }
     else {
-        printf("\nproceeding to next cluster... [0x%lx]\n", nextCluster);
+        printf("proceeding to next cluster... [0x%lx]\n", nextCluster);
     }
 
     // printf("dir_attr: %d\n", entry.dir_attr);
