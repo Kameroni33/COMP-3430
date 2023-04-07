@@ -160,9 +160,8 @@ void list(char *driveName) {
 }
 
 void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
-    fat32Dir entry;
 
-    
+    fat32Dir entry;
 
     lseek(drive, (addr), SEEK_SET);
     read(drive, &entry, sizeof(fat32Dir));
