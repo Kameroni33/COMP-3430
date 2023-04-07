@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     }
 
     else {
-        printf("Error: incorrect usage '%s'.\n", argv[2]);
+        printf("Error: incorrect usage '%s'.\n");
         printUsage();
     }
 
