@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
 #include "fat32.h"
@@ -72,7 +73,7 @@ void info(char *driveName) {
     }
 
     // read Boot Sector (BS)
-    read(&bootSector, sizeof(fat32BS), 1, drive);
+    read(drive, &bootSector, sizeof(fat32BS));
 
     // read File System Info (FSInfo)
     fseek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
