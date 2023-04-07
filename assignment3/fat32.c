@@ -179,7 +179,6 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth)
     off_t nextCluster;
     lseek(drive, (fat + bs.BPB_RootClus), SEEK_SET);
     read(drive, &nextCluster, sizeof(uint32_t));
-    printf("\nNext cluster: 0x%lx (EOC: 0x%x)\n", nextCluster, EOC);
 
     for (uint32_t i = 0; i < entriesPerCluster; i++) {
 
@@ -227,6 +226,17 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth)
             // printf("First Cluster: %x %x (high-low)\n", entry.dir_first_cluster_hi, entry.dir_first_cluster_lo);
         }
     }
+
+    // check if there is another cluster to read for this directory
+    if (nextCluster == EOC) {
+        printf("\nend of cluster... [0x%lx 0x%x]\n", nextCluster, EOC);
+    }
+    else (
+        printf("\nproceeding to next cluster... [0x%lx]\n", nextCluster, EOC);
+    )
+
+    printf("\nNext cluster: 0x%lx (EOC: 0x%x)\n", nextCluster, EOC);
+
     // printf("dir_attr: %d\n", entry.dir_attr);
     // printf("dir_ntres: %d\n", entry.dir_ntres);
     // printf("dir_crt_time_tenth: %d\n", entry.dir_crt_time_tenth);
