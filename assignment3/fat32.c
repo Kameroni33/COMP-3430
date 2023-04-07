@@ -114,9 +114,10 @@ void list(char *driveName) {
     printf("\nreading drive '%s'...\n", driveName);
 
     int drive;
-    off_t firstDataSector;
-    off_t firstRootSector;
-    off_t firstFATSector;
+    int firstDataSector;
+
+    off_t rootAddress;
+    off_t fatAddress;
 
     fat32BS bootSector;
     fat32FSInfo fileSysInfo;
@@ -140,23 +141,27 @@ void list(char *driveName) {
         printf("WARNING: reserved number of sectors is 0\n");
     }
 
-    firstFATSector = 
-
+    // determine memory address of FAT
+    fatAddress = bootSector.BPB_RsvdSecCnt * bootSector.BPB_BytesPerSec;
 
     if (bootSector.BPB_RootEntCnt != 0) {
         printf("WARNING: root entry count is 0\n");
     }
+    if (bootSector.BPB_RootEntCnt != 0) {
+        printf("WARNING: root entry count is 0\n");
+    }
 
-    // determine first sector of the root directory
+    // determine memory address of root directory
     firstDataSector = bootSector.BPB_RsvdSecCnt + (bootSector.BPB_NumFATs * bootSector.BPB_FATSz32);
-    firstRootSector = ((bootSector.BPB_RootClus - 2) * bootSector.BPB_SecPerClus) + firstDataSector;
+    rootAddress = (((bootSector.BPB_RootClus - 2) * bootSector.BPB_SecPerClus) + firstDataSector) * bootSector.BPB_BytesPerSec;
 
     // read root directory
-    lseek(drive, (firstRootSector * bootSector.BPB_BytesPerSec), SEEK_SET);
+    lseek(drive, (rootAddress), SEEK_SET);
     read(drive, &dirEntry, sizeof(fat32Dir));
 
     printf("Root Cluster: %u\n", bootSector.BPB_RootClus);
-    printf("Root Address: 0x%x\n", firstRootSector * bootSector.BPB_BytesPerSec);
+    printf("Root Address: 0x%x\n", rootAddress)
+    
     printf("Dir Name: %s\n", dirEntry.dir_name);
 
 }
