@@ -187,7 +187,7 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs, int depth)
 
 
         uint32_t firstChar = (int)entry.dir_name[0] & 0xFF;
-        printf("\nFirst Character: 0x%x\n", firstChar);
+        // printf("\nFirst Character: 0x%x\n", firstChar);
         if (firstChar == 0xE5 || firstChar == 0x00) {
             // printf("Empty Entry\n");
         }
@@ -212,16 +212,6 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs, int depth)
             // printf("First Cluster: %x %x (high-low)\n", entry.dir_first_cluster_hi, entry.dir_first_cluster_lo);
         }
     }
-
-    strncpy(dirName, entry.dir_name, 11);
-    dirName[11] = '\0';
-
-    printf("\nDirectory Name: %s\n", dirName);
-    printf("Attributes: 0x%x\n", entry.dir_attr);
-    printf("File Size: %u\n", entry.dir_file_size);
-    printf("First Cluster: %x %x (high-low)\n", entry.dir_first_cluster_hi, entry.dir_first_cluster_lo);
-    
-
     // printf("dir_attr: %d\n", entry.dir_attr);
     // printf("dir_ntres: %d\n", entry.dir_ntres);
     // printf("dir_crt_time_tenth: %d\n", entry.dir_crt_time_tenth);
