@@ -222,7 +222,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
                 // do nothing...
             }
             // else if DIRECTORY entry
-            else if (entry.dir_attr == ATTR_DIRECTORY) {
+            else if (entry.dir_attr == ATTR_DIRECTORY || entry.dir_attr == ATTR_ARCHIVE) {
                 for (int k = 0; k < depth; k++) printf("-");
                 calcFileName(entryName, fileName, 0);
                 printf("[dir] %s\n", fileName);
