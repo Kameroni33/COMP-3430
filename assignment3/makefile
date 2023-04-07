@@ -10,4 +10,4 @@ folders:
 	mkdir -p downloads
 
 clean:
-	rm -rf fat32 doenloads
+	rm -rf fat32 downloads
