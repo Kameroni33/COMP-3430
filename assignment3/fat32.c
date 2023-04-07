@@ -248,18 +248,6 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
     else {
         printf("proceeding to next cluster... [0x%lx]\n", nextCluster);
     }
-
-    // printf("dir_attr: %d\n", entry.dir_attr);
-    // printf("dir_ntres: %d\n", entry.dir_ntres);
-    // printf("dir_crt_time_tenth: %d\n", entry.dir_crt_time_tenth);
-    // printf("dir_crt_time: %d\n", entry.dir_crt_time);
-    // printf("dir_crt_date: %d\n", entry.dir_crt_date);
-    // printf("dir_last_access_time: %d\n", entry.dir_last_access_time);
-    // printf("dir_first_cluster_hi: %d\n", entry.dir_first_cluster_hi);
-    // printf("dir_wrt_time: %d\n", entry.dir_wrt_time);
-    // printf("dir_wrt_date: %d\n", entry.dir_wrt_date);
-    // printf("dir_first_cluster_lo: %d\n", entry.dir_first_cluster_lo);
-    // printf("dir_file_size: %d\n", entry.dir_file_size);
 }
 
 off_t calcClustAddress(int cluster, fat32BS bs) {
