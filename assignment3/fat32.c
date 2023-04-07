@@ -15,6 +15,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
 off_t calcClustAddress(int cluster, fat32BS bs);
 void calcFileName(char entryName[12], char fileName[13], int extension);
 void get(char *driveName, char *file);
+off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFile);
 
 int main(int argc, char *argv[]) {
 
@@ -304,6 +305,7 @@ void get(char *driveName, char *file) {
     off_t rootAddress;
     off_t fatAddress;
     off_t targetCluster;
+    off_t targetAddress;
 
     fat32BS bootSector;
 
@@ -324,6 +326,8 @@ void get(char *driveName, char *file) {
     targetCluster = searchFile(drive, bootSector, fatAddress, bootSector.BPB_RootClus, file);
 
     if (targetCluster != 0) {
+        targetAddress = calcClustAddress(targetCluster, bootSector);
+        printf("file found at memory address 0x%x\n", targetAddress);
         printf("file downlaoded to local directory './downloads'\n");
     }
     else {
@@ -386,8 +390,9 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
             else {
                 calcFileName(entryName, fileName, 1);
 
-                if (strcmp(fileName, targetFile))
-                printf("[file] %s (%u bytes)\n", fileName, entry.dir_file_size);
+                if (strcmp(fileName, targetFile)) {
+                    targetCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
+                }
             }
         }
     }
