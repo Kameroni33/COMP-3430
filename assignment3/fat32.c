@@ -175,6 +175,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
     uint32_t entriesPerCluster;
 
     char entryName[12];
+    char fileName[12];
     off_t nextCluster;
     off_t newCluster;
     off_t memAddress;
