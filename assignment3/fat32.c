@@ -268,7 +268,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
     lseek(drive, (fat + cluster), SEEK_SET);
     read(drive, &nextCluster, sizeof(uint32_t));
 
-    if (nextCluster >= 0x0FFFFFF8) {
+    if (nextCluster >= 0x0FFFFFFF) {
         // printf("end of cluster...\n");
     }
     else {
