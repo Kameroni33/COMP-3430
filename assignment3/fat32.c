@@ -263,7 +263,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
             else {
                 for (int k = 0; k < depth; k++) printf("-");
                 calcFileName(entryName, fileName, 1);
-                printf("[file] %s (%u bytes)\n", fileName, entry.dir_file_size);
+                printf("[file] %s (%u bytes) (attr: %x)\n", fileName, entry.dir_file_size, entry.dir_attr);
             }
         }
     }
