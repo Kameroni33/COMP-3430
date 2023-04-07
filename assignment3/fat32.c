@@ -262,10 +262,10 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
     read(drive, &nextCluster, sizeof(uint32_t));
 
     if (nextCluster >= 0x0FFFFFF8) {
-        printf("end of cluster...\n");
+        // printf("end of cluster...\n");
     }
     else {
-        printf("proceeding to next cluster... [0x%lx]\n", nextCluster);
+        // printf("proceeding to next cluster... [0x%lx]\n", nextCluster);
         printFileStructure(drive, bs, fat, nextCluster, depth+1);
     }
 }
