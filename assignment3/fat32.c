@@ -5,15 +5,15 @@
 #define _FILE_OFFSET_BITS 64
 
 
-void info() {
+void info(char *drive) {
     printf("info\n");
 }
 
-void list() {
+void list(char *drive) {
     printf("list\n");
 }
 
-void get() {
+void get(char *drive, char *file) {
     printf("list\n");
 }
 
@@ -21,10 +21,24 @@ void get() {
 int main(int argc, char *argv[]) {
     printf("argc: %d\nargv[0]: %s\n\n", argc, argv[0]);
 
-    if (argc >= 3 && argc <= 4) {
+    if (argc >= 3) {
         if (strcmp(argv[2], "info")) {
-            info();
+            info(argv[1]);
         }
+        else if (strcmp(argv[2], "list")) {
+            list(argv[1]);
+        }
+        else if (strcmp(argv[2], "get")) {
+            if (argc >= 4) {
+                get(argv[1], argv[3]);
+            }
+            else {(}
+                printf("Error: Invalid Command argument '%s'\n", argv[2]);
+            )
+        }
+        else (
+            printf("Error: Invalid Command argument '%s'\n", argv[2]);
+        )
     }
 
     else {
