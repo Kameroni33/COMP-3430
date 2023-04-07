@@ -10,7 +10,7 @@
 
 void printUsage(void);
 void info(char *driveName);
-void list(char *driveName)
+void list(char *driveName);
 void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int depth);
 off_t calcClustAddress(int cluster, fat32BS bs);
 void calcFileName(char entryName[12], char fileName[13], int extension);
