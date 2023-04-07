@@ -382,7 +382,7 @@ void searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFil
                 // look up address of next cluster
                 newCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
 
-                targetCluster = searchFile(drive, bs, fat, newCluster, targetFile, targetCluster);
+                searchFile(drive, bs, fat, newCluster, targetFile, targetCluster);
                 if (*targetCluster != 0) return;
             }
             // else FILE entry
