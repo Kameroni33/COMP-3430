@@ -192,8 +192,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
         // check first char to see it=f it's an empty entry
         uint32_t firstChar = (int)entry.dir_name[0] & 0xFF;
         // printf("\nFirst Character: 0x%x\n", firstChar);
-
-        if (firstChar != 0xE5 && firstChar != 0x00 && entry.dir_attr != ATTR_LONG_NAME) {
+        if (firstChar != 0xE5 && firstChar != 0x00) {
 
             // make sure the entry name is valid
             // for (int j = 0; j < 11; j++) {
@@ -223,7 +222,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
                 printFileStructure(drive, bs, fat, newCluster, depth+1);
             }
             // else if LONG_NAME entry
-            else if (entry.dir_attr == ATTR_LONG_NAME) {
+            else if (entry.dir_attr == (ATTR_LONG_NAME)) {
                 printf("Long Name entry\n");
             }
             // else FILE entry
