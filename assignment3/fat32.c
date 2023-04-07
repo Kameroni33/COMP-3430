@@ -87,7 +87,7 @@ void info(char *driveName) {
 
     // print information about the drive
     printf("OEM Name: %s\n", bootSector.BS_OEMName);
-    printf("Volume ID: %d\n", bootSector.BS_VolID);
+    printf("Volume ID: %lu\n", bootSector.BS_VolID);
     printf("Volume Label: %s\n", volLabel);
     printf("File System Type: %s\n", FileSysType);
     printf("Bytes per Sector: %d\n", bootSector.BPB_BytesPerSec);
