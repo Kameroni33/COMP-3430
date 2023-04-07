@@ -208,20 +208,20 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
 
             // get the entry name as a string
             strncpy(entryName, entry.dir_name, 11);
-            dirName[11] = '\0';
+            entryName[11] = '\0';
 
             // if VOLUME entry
             if (entry.dir_attr == ATTR_VOLUME_ID) {
                 printf("[volume] %s\n", dirName);
             }
             // else if . or .. entry
-            else if (dirName[0] == '.') {
+            else if (entryName[0] == '.') {
                 // do nothing...
             }
             // else if DIRECTORY entry
             else if (entry.dir_attr == ATTR_DIRECTORY) {
                 for (int k = 0; k < depth; k++) printf("-");
-                printf("[dir] %s\n", dirName);
+                printf("[dir] %s\n", entryName);
 
                 // look up address of next directory
                 newCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
