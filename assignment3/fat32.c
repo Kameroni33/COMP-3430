@@ -146,8 +146,7 @@ void list(char *driveName) {
     }
 
     // determine memory address of root directory
-    firstDataSector = bootSector.BPB_RsvdSecCnt + (bootSector.BPB_NumFATs * bootSector.BPB_FATSz32);
-    rootAddress = (((bootSector.BPB_RootClus - 2) * bootSector.BPB_SecPerClus) + firstDataSector) * bootSector.BPB_BytesPerSec;
+    rootAddress = calcDataClustAddress(bootSector.BPB_RootClus, bootSector);
 
     uint32_t sectorSize = bootSector.BPB_BytesPerSec;
     uint32_t clusterSize = bootSector.BPB_SecPerClus * sectorSize;
@@ -215,6 +214,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth)
                 // look up address of next directory
                 uint32_t fatOffset = (static_cast<uint32_t>(entry.dir_first_cluster_hi) << 16) + static_cast<uint32_t>(entry.dir_first_cluster_lo);
                 off_t nextCluster;
+                
                 lseek(drive, (fat + fatOffset), SEEK_SET);
                 read(drive, &nextCluster, sizeof(uint32_t));
 
