@@ -8,7 +8,7 @@
 #include "fat32.h"
 
 #define BUFFER_SIZE 512
-#define BYTES_PER_FAT_ENTRY 32
+#define BYTES_PER_FAT_ENTRY 4
 
 
 void printUsage(void);
