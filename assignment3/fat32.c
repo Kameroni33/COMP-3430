@@ -12,6 +12,7 @@ void printUsage(void);
 void info(char *drive);
 void list(char *drive);
 void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth);
+off_t calcDataClustAddress(int cluster, fat32BS bs);
 void get(char *drive, char *file);
 
 int main(int argc, char *argv[]) {
@@ -217,8 +218,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth)
                 lseek(drive, (fat + fatOffset), SEEK_SET);
                 read(drive, &nextCluster, sizeof(uint32_t));
 
-                int firstDataSector = bootSector.BPB_RsvdSecCnt + (bootSector.BPB_NumFATs * bootSector.BPB_FATSz32);
-                off_t = (((nextCluster - 2) * bootSector.BPB_SecPerClus) + firstDataSector) * bootSector.BPB_BytesPerSec;
+                off_t dataAddress = calcDataClustAddress(nextCluster, bs);
 
                 // printFileStructure(drive, bs, fat, _, depth+1);
             }
