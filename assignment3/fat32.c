@@ -166,6 +166,18 @@ void list(char *driveName) {
     printf("Dir Name: %s\n", dirEntry.dir_name);
     printf("Next cluster: %ld, 0x%lx (EOC: 0x%x)\n", nextCluster, nextCluster, EOC);
 
+    printf("dir_attr: %d\n", dir_attr);
+    printf("dir_ntres: %d\n", dir_ntres);
+    printf("dir_crt_time_tenth: %d\n", dir_crt_time_tenth);
+    printf("dir_crt_time: %d\n", dir_crt_time);
+    printf("dir_crt_date: %d\n", dir_crt_date);
+    printf("dir_last_access_time: %d\n", dir_last_access_time);
+    printf("dir_first_cluster_hi: %d\n", dir_first_cluster_hi);
+    printf("dir_wrt_time: %d\n", dir_wrt_time);
+    printf("dir_wrt_date: %d\n", dir_wrt_date);
+    printf("dir_first_cluster_lo: %d\n", dir_first_cluster_lo);
+    printf("dir_file_size: %d\n", dir_file_size);
+
 }
 
 void get(char *drive, char *file) {
