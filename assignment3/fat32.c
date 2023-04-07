@@ -81,8 +81,11 @@ void info(char *driveName) {
     read(drive, &fileSysInfo, sizeof(fat32FSInfo));
 
     // print information about the drive
-    printf("OEM Name:      %s\n", bootSector.BS_OEMName);
-    printf("Volume Label:  %s\n", bootSector.BS_VolLab);
+    printf("OEM Name:     %s\n", bootSector.BS_OEMName);
+    printf("Volume Label: %s\n\n", bootSector.BS_VolLab);
+    printf("Bytes per Sector:     %s\n", bootSector.BPB_BytesPerSec);
+    printf("Sectors per Cluster:  %s\n", bootSector.BPB_SecPerClus);
+    printf("Cluster Size:         %skB\n\n", (bootSector.BPB_BytesPerSec * bootSector.BPB_SecPerClus) / 1000);
     printf("Free Clusters: %d\n", fileSysInfo.free_count);
     printf("Free Space:    %dkB\n", fileSysInfo.free_count * (bootSector.BPB_BytesPerSec * bootSector.BPB_SecPerClus) / 1000);
 
