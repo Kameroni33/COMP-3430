@@ -150,7 +150,7 @@ void list(char *driveName) {
 
     printf("\nRoot Cluster: %u\n", bootSector.BPB_RootClus);
     printf("Root Address: 0x%lx\n", rootAddress);
-    printf("fat32Dir size: %lu\n", sizeof(fat32Dir));
+    printf("fat32Dir size: %lu bytes\n", sizeof(fat32Dir));
 
     // read directory tree starting at the root
     printFileStructure(drive, rootAddress, fatAddress, bootSector);
