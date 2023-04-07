@@ -329,6 +329,9 @@ void get(char *driveName, char *fileName) {
     // determine memory address of FAT
     fatAddress = bootSector.BPB_RsvdSecCnt * bootSector.BPB_BytesPerSec;
 
+    // get cluster size
+    uint32_t clusterSize = bootSector.BPB_SecPerClus * bootSector.BPB_BytesPerSec;
+
     // read directory tree starting at the root
     searchFile(drive, bootSector, fatAddress, bootSector.BPB_RootClus, fileName, &targetCluster);
 
@@ -344,10 +347,20 @@ void get(char *driveName, char *fileName) {
             exit(1);
         }
 
+        // copy contents of file from drive -> downloads
         while (targetCluster < 0x0FFFFFF8) {
-            
 
+            // go to luster memory location
+            calcClustAddress(targetCluster, bootSector);
+            lseek(drive, fatAddress + (targetCluster * sizeof(uint32_t)), SEEK_SET);
 
+            // copy contents
+            for (int i = 0; i < (clusterSize / BUFFER_SIZE); i++) {
+                read(drive, &buffer, BUFFER_SIZE);
+                write(download, buffer, BUFFER_SIZE);
+            }
+
+            // check for next cluster
             lseek(drive, fatAddress + (targetCluster * sizeof(uint32_t)), SEEK_SET);
             read(drive, &targetCluster, sizeof(uint32_t));
         }
