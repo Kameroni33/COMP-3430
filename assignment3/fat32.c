@@ -137,17 +137,14 @@ void list(char *driveName) {
     lseek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
     read(drive, &fileSysInfo, sizeof(fat32FSInfo));
 
-    if (bootSector.BPB_RsvdSecCnt != 0) {
+    if (bootSector.BPB_RsvdSecCnt == 0) {
         printf("WARNING: reserved number of sectors is 0\n");
     }
 
     // determine memory address of FAT
     fatAddress = bootSector.BPB_RsvdSecCnt * bootSector.BPB_BytesPerSec;
 
-    if (bootSector.BPB_RootEntCnt != 0) {
-        printf("WARNING: root entry count is 0\n");
-    }
-    if (bootSector.BPB_RootEntCnt != 0) {
+    if (bootSector.BPB_RootEntCnt == 0) {
         printf("WARNING: root entry count is 0\n");
     }
 
@@ -159,7 +156,7 @@ void list(char *driveName) {
     lseek(drive, (rootAddress), SEEK_SET);
     read(drive, &dirEntry, sizeof(fat32Dir));
 
-    printf("Root Cluster: %u\n", bootSector.BPB_RootClus);
+    printf("\nRoot Cluster: %u\n", bootSector.BPB_RootClus);
     printf("Root Address: 0x%lx\n", rootAddress);
 
     off_t nextCluster;
