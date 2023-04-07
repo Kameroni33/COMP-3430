@@ -91,7 +91,7 @@ void info(char *driveName) {
     FileSysType[8] = '\0';
 
     // determin cluster size and free space
-    clusterSize = ((float)bootSector.BPB_BytesPerSec * (float)bootSector.BPB_SecPerClus) / 1000;
+    clusterSize = ((float)bootSector.BPB_BytesPerSec * (float)bootSector.BPB_SecPerClus) / 1024;
     freeSpace = (float)fileSysInfo.free_count * clusterSize;
 
     // print information about the drive
@@ -130,7 +130,7 @@ void list(char *drive) {
     lseek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
     read(drive, &fileSysInfo, sizeof(fat32FSInfo));
 
-    
+
 }
 
 void get(char *drive, char *file) {
