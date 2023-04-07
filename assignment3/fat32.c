@@ -327,11 +327,14 @@ void get(char *driveName, char *file) {
 
     if (targetCluster != 0) {
         targetAddress = calcClustAddress(targetCluster, bootSector);
-        printf("\nfile found at memory address 0x%lx\n", targetAddress);
-        printf("file downloaded to local directory './downloads'\n");
+        printf("\n%s found\n");
+        printf(" Cluster: %lu\n", targetCluster);
+        printf(" Address: 0x%lx\n", targetAddress);
+        printf("\nFile coppied into local directory './downloads'\n");
     }
     else {
-        printf("\nunable to find %s\n", file);
+        printf("\n%s not found...\n", file);
+        printf("Try using command [list] to see available files\n", file);
     }
 }
 
