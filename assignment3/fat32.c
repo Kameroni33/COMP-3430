@@ -164,7 +164,7 @@ void list(char *driveName) {
     read(drive, &nextCluster, sizeof(uint32_t));
     
     printf("Dir Name: %s\n", dirEntry.dir_name);
-    printf("Next cluster: %ld, 0x%lx (EOC: 0x%lx)\n", nextCluster, nextCluster, EOC);
+    printf("Next cluster: %ld, 0x%lx (EOC: 0x%x)\n", nextCluster, nextCluster, EOC);
 
 }
 
