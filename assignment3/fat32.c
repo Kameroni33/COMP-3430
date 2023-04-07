@@ -102,9 +102,8 @@ void info(char *driveName) {
     printf("Bytes per Sector: %d\n", bootSector.BPB_BytesPerSec);
     printf("Sectors per Cluster: %d\n", bootSector.BPB_SecPerClus);
     printf("Cluster Size: %dkB\n", clusterSize);
-    printf("Free Clusters: %d\n", fileSysInfo.free_count);
-    printf("Free Space: %dkB\n", freeSpace);
-
+    printf("Free Clusters: %f\n", fileSysInfo.free_count);
+    printf("Free Space: %fkB\n", freeSpace);
 }
 
 void list(char *drive) {
