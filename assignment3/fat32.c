@@ -390,8 +390,8 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
                 calcFileName(entryName, fileName, 1);
 
                 if (strcmp(fileName, targetFile)) {
-                    printf("found!\n");
                     targetCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
+                    printf("found %s == %s at cluster 0x%lx\n", fileName, targetFile);
                     return targetCluster;
                 }
             }
