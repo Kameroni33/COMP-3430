@@ -360,6 +360,7 @@ void get(char *drive, char *file) {
 off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, int depth) {
 
     fat32Dir entry;
+    off_t targetCluster = 0;
 
     uint32_t sectorSize;
     uint32_t clusterSize;
@@ -405,7 +406,7 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, int depth) {
                 // look up address of next cluster
                 newCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
 
-                searchFile(drive, bs, fat, newCluster, depth+1);
+                searchFile(drive, bs, fat, newCluster, targetFile);
             }
             // else FILE entry
             else {
@@ -420,12 +421,8 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, int depth) {
     lseek(drive, (fat + cluster), SEEK_SET);
     read(drive, &nextCluster, sizeof(uint32_t));
 
-    if (nextCluster >= 0x0FFFFFF8) {
-        // printf("end of cluster...\n");   
-    }
-    else {
-        // printf("proceeding to next cluster... [0x%lx]\n", nextCluster);
-        printFileStructure(drive, bs, fat, nextCluster, depth+1);
+    if (nextCluster < 0x0FFFFFF8) {
+        searchFile(drive, bs, fat, nextCluster, targetFile); 
     }
 
     // if file not found return 0
