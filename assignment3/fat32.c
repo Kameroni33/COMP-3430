@@ -76,7 +76,7 @@ void info(char *driveName) {
     read(drive, &bootSector, sizeof(fat32BS));
 
     // read File System Info (FSInfo)
-    seek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
+    lseek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
     read(drive, &fileSysInfo, sizeof(fat32FSInfo));
 
     // print information about the drive
