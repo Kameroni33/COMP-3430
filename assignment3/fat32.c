@@ -130,6 +130,7 @@ void list(char *drive) {
     lseek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
     read(drive, &fileSysInfo, sizeof(fat32FSInfo));
 
+    printf("Root Cluster: %u\n", bootSector.BPB_RootClus);
 
 }
 
