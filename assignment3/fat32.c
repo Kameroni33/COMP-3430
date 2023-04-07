@@ -172,7 +172,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
     char dirName[12];
 
     off_t memAddress = calcClustAddress(cluster, bs);
-    printf("<< memAddress: 0x%lx >>\n", memAddress);
+    // printf("<< memAddress: 0x%lx >>\n", memAddress);
 
     uint32_t sectorSize = bs.BPB_BytesPerSec;
     uint32_t clusterSize = bs.BPB_SecPerClus * sectorSize;
@@ -217,7 +217,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
 
                 // look up address of next directory
                 uint32_t newCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
-                printf("<< newCluster: %u >>\n", newCluster);
+                // printf("<< newCluster: %u >>\n", newCluster);
 
                 printFileStructure(drive, bs, fat, newCluster, depth+1);
             }
@@ -238,8 +238,8 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
     }
 
     // check if there is another cluster to read for this directory
-    if (nextCluster == EOC) {
-        printf("end of cluster... [0x%lx 0x%x]\n", nextCluster, EOC);
+    if (nextCluster >= 0x0FFFFFF8) {
+        printf("end of cluster...\n");
     }
     else {
         printf("proceeding to next cluster... [0x%lx]\n", nextCluster);
