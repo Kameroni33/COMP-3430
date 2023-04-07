@@ -201,12 +201,12 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
         if (firstChar != 0xE5 && firstChar != 0x00) {
 
             // make sure the entry name is valid
-            // for (int j = 0; j < 11; j++) {
-            //     uint32_t currChar = (int)entry.dir_name[0] & 0xFF;
-            //     if (currChar <= 0x20 && currChar != 0x05) {
-            //         printf("WARNING: Invalid Entry Name Character\n");
-            //     }
-            // }
+            for (int j = 0; j < 11; j++) {
+                uint32_t currChar = (int)entry.dir_name[0] & 0xFF;
+                if (currChar <= 0x20 && currChar != 0x05) {
+                    printf("WARNING: Invalid Entry Name Character\n");
+                }
+            }
 
             // get the entry name as a string
             strncpy(entryName, entry.dir_name, 11);
@@ -269,7 +269,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
     read(drive, &nextCluster, sizeof(uint32_t));
 
     if (nextCluster >= 0x0FFFFFF8) {
-        // printf("end of cluster...\n");
+        // printf("end of cluster...\n");   
     }
     else {
         // printf("proceeding to next cluster... [0x%lx]\n", nextCluster);
