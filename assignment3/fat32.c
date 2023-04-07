@@ -62,8 +62,8 @@ void info(char *driveName) {
     printf("\nreading drive '%s'...\n\n", driveName);
 
     int drive;
-    char volLabel[11];
-    char FileSysType[8];
+    char volLabel[12];
+    char FileSysType[9];
 
     fat32BS bootSector;
     fat32FSInfo fileSysInfo;
@@ -84,6 +84,8 @@ void info(char *driveName) {
 
     strncpy(volLabel, bootSector.BS_VolLab, 11);
     strncpy(FileSysType, bootSector.BS_FilSysType, 8);
+    volLabel[11] = EOF;
+    FileSysType[8] = EOF;
 
     // print information about the drive
     printf("OEM Name: %s\n", bootSector.BS_OEMName);
