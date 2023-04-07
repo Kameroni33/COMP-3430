@@ -1,14 +1,14 @@
 #include <inttypes.h>
 #ifndef FAT32_H
 #define FAT32_H
-
 #include <inttypes.h>
 
-/* boot sector constants */
+// Boot Sector (BS) Constants
 #define BS_OEMName_LENGTH 8
 #define BS_VolLab_LENGTH 11
 #define BS_FilSysType_LENGTH 8 
 
+// Boot Sector (BS) Struct
 #pragma pack(push)
 #pragma pack(1)
 struct fat32BS_struct {
@@ -48,9 +48,10 @@ struct fat32BS_struct {
 
 typedef struct fat32BS_struct fat32BS;
 
+// File System Information (FSInfo) Struct
 #pragma pack(push)
 #pragma pack(1)
-struct FSInfo_struct{
+struct fat32FSInfo_struct{
     uint32_t lead_sig;
     uint8_t reserved1[480];
     uint32_t signature;
@@ -59,10 +60,14 @@ struct FSInfo_struct{
     uint8_t reserved2[12];
     uint32_t trail_signature;
 };
+#pragma pack(pop)
 
-typedef struct FSInfo_struct FSInfo;
+typedef struct fat32FSInfo_struct fat32FSInfo;
 
-struct DirInfo {
+// Directory Entry (Dir) Struct
+#pragma pack(push)
+#pragma pack(1)
+struct fat32Dir_struct {
     char dir_name[11];
     uint8_t dir_attr;
     uint8_t dir_ntres;
@@ -76,9 +81,11 @@ struct DirInfo {
     uint16_t dir_first_cluster_lo;
     uint32_t dir_file_size;
 };
-
 #pragma pack(pop)
 
+typedef struct fat32Dir_struct fat32Dir;
+
+// idk...
 #pragma pack(push)
 #pragma pack(1)
 struct Fsinfo {
