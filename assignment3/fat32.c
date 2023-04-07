@@ -211,7 +211,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
                 printf("%s [volume]\n", dirName);
             }
             // else if . or .. entry
-            else if (dirName[0] != '.' && dirName[1] != '.') {
+            else if (dirName[0] == '.' && dirName[1] == '.') {
                 // do nothing...
             }
             // else if DIRECTORY entry
