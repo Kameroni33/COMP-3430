@@ -55,7 +55,7 @@ void printUsage() {
     printf("Available Commands:\n");
     printf("  info   print out some general info about the drive\n");
     printf("  list   print all files and directories on the frive\n");
-    printf("  get    fetch and return a file from the drive. Files will be copied to a ./downloads folder in current directory. Requires an additional argument {file}.\n");
+    printf("  get    fetch and return a file from the drive. Files will be copied to a ./downloads folder in current directory. Requires an additional argument {file}.\n\n");
 }
 
 void info(char *driveName) {
