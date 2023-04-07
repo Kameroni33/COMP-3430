@@ -163,8 +163,8 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
 
     char dirName[12];
 
-    uint32_t sectorSize = bootSector.BPB_BytesPerSec;
-    uint32_t clusterSize = bootSector.BPB_SecPerClus * sectorSize;
+    uint32_t sectorSize = bs.BPB_BytesPerSec;
+    uint32_t clusterSize = bs.BPB_SecPerClus * sectorSize;
     uint32_t entrySize = sizeof(fat32Dir);
     uint32_t entriesPerCluster = clusterSize / entrySize;
     printf("\nSectorSize: %u\n", sectorSize);
@@ -177,7 +177,7 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
     read(drive, &nextCluster, sizeof(uint32_t));
     printf("\nNext cluster: 0x%lx (EOC: 0x%x)\n", nextCluster, EOC);
 
-    for (int i = 0; i < entriesPerSector; i++) {
+    for (uint32_t i = 0; i < entriesPerCluster; i++) {
         lseek(drive, (addr + (entrySize * i)), SEEK_SET);
         read(drive, &entry, sizeof(fat32Dir));
 
