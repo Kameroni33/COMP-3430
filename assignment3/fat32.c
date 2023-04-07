@@ -241,7 +241,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth)
         printf("\nend of cluster... [0x%lx 0x%x]\n", nextCluster, EOC);
     }
     else (
-        printf("\nproceeding to next cluster... [0x%lx]\n", nextCluster, EOC);
+        printf("\nproceeding to next cluster... [0x%lx]\n", nextCluster);
     )
 
     // printf("dir_attr: %d\n", entry.dir_attr);
