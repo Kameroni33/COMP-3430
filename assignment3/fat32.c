@@ -279,6 +279,8 @@ void calcFileName(char entryName[12], char fileName[13]) {
             index++;
         }
     }
+    // add end of string character
+    fileName[index] = '\0';
 }
 
 
