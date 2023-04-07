@@ -65,7 +65,7 @@ void info(char *driveName) {
     fat32FSInfo fileSysInfo;
 
     // open the drive
-    if (drive = open(driveName) > 0) {
+    if ( (drive = open(driveName)) > 0) {
         printf("ERROR: unable to open drive '%s'.\n", driveName);
         exit(1);
     }
