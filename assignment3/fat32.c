@@ -161,7 +161,7 @@ void list(char *driveName) {
 
     off_t nextCluster;
     lseek(drive, (fatAddress + bootSector.BPB_RootClus), SEEK_SET);
-    read(drive, &nextCluster, sizeof(int));
+    read(drive, &nextCluster, 4);
     
     printf("Dir Name: %s\n", dirEntry.dir_name);
     printf("Next cluster: %ld, 0x%lx", nextCluster, nextCluster);
