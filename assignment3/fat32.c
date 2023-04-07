@@ -8,9 +8,10 @@
 #include "fat32.h"
 
 
-void printUsage();
+void printUsage(void);
 void info(char *drive);
 void list(char *drive);
+void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs);
 void get(char *drive, char *file);
 
 int main(int argc, char *argv[]) {
@@ -47,7 +48,7 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-void printUsage() {
+void printUsage(void) {
     printf("\nProcess: fat32\n");
     printf("  FAT32 drive reader\n\n");
     printf("Usage:\n");
@@ -106,10 +107,6 @@ void info(char *driveName) {
     printf("Free Space: %.1fkB\n", freeSpace);
 }
 
-void printFileStructure() {
-
-}
-
 void list(char *driveName) {
     printf("\nreading drive '%s'...\n", driveName);
 
@@ -121,7 +118,6 @@ void list(char *driveName) {
 
     fat32BS bootSector;
     fat32FSInfo fileSysInfo;
-    fat32Dir dirEntry;
 
     // open the drive
     if ( (drive = open(driveName, O_RDONLY)) < 0) {
@@ -152,33 +148,45 @@ void list(char *driveName) {
     firstDataSector = bootSector.BPB_RsvdSecCnt + (bootSector.BPB_NumFATs * bootSector.BPB_FATSz32);
     rootAddress = (((bootSector.BPB_RootClus - 2) * bootSector.BPB_SecPerClus) + firstDataSector) * bootSector.BPB_BytesPerSec;
 
-    // read root directory
-    lseek(drive, (rootAddress), SEEK_SET);
-    read(drive, &dirEntry, sizeof(fat32Dir));
-
     printf("\nRoot Cluster: %u\n", bootSector.BPB_RootClus);
     printf("Root Address: 0x%lx\n", rootAddress);
+    printf("fat32Dir size: %lu\n", sizeof(fat32Dir));
 
-    off_t nextCluster;
-    lseek(drive, (fatAddress + bootSector.BPB_RootClus), SEEK_SET);
-    read(drive, &nextCluster, sizeof(uint32_t));
-    
-    printf("Dir Name: %s\n", dirEntry.dir_name);
-    printf("Next cluster: %ld, 0x%lx (EOC: 0x%x)\n", nextCluster, nextCluster, EOC);
-
-    printf("dir_attr: %d\n", dirEntry.dir_attr);
-    printf("dir_ntres: %d\n", dirEntry.dir_ntres);
-    printf("dir_crt_time_tenth: %d\n", dirEntry.dir_crt_time_tenth);
-    printf("dir_crt_time: %d\n", dirEntry.dir_crt_time);
-    printf("dir_crt_date: %d\n", dirEntry.dir_crt_date);
-    printf("dir_last_access_time: %d\n", dirEntry.dir_last_access_time);
-    printf("dir_first_cluster_hi: %d\n", dirEntry.dir_first_cluster_hi);
-    printf("dir_wrt_time: %d\n", dirEntry.dir_wrt_time);
-    printf("dir_wrt_date: %d\n", dirEntry.dir_wrt_date);
-    printf("dir_first_cluster_lo: %d\n", dirEntry.dir_first_cluster_lo);
-    printf("dir_file_size: %d\n", dirEntry.dir_file_size);
+    // read directory tree starting at the root
+    for (int i = 0; i < 8; i++) {
+        printFileStructure(drive, rootAddress + (sizeof(fat32Dir) * i), fatAddress, bootSector);
+    }
 
 }
+
+void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
+    fat32Dir entry;
+
+    
+
+    lseek(drive, (addr), SEEK_SET);
+    read(drive, &entry, sizeof(fat32Dir));
+
+    off_t nextCluster;
+    lseek(drive, (fat + bs.BPB_RootClus), SEEK_SET);
+    read(drive, &nextCluster, sizeof(uint32_t));
+
+    printf("\nDir Name: %s\n", entry.dir_name);
+    printf("Next cluster: %ld, 0x%lx (EOC: 0x%x)\n", nextCluster, nextCluster, EOC);
+
+    printf("dir_attr: %d\n", entry.dir_attr);
+    printf("dir_ntres: %d\n", entry.dir_ntres);
+    printf("dir_crt_time_tenth: %d\n", entry.dir_crt_time_tenth);
+    printf("dir_crt_time: %d\n", entry.dir_crt_time);
+    printf("dir_crt_date: %d\n", entry.dir_crt_date);
+    printf("dir_last_access_time: %d\n", entry.dir_last_access_time);
+    printf("dir_first_cluster_hi: %d\n", entry.dir_first_cluster_hi);
+    printf("dir_wrt_time: %d\n", entry.dir_wrt_time);
+    printf("dir_wrt_date: %d\n", entry.dir_wrt_date);
+    printf("dir_first_cluster_lo: %d\n", entry.dir_first_cluster_lo);
+    printf("dir_file_size: %d\n", entry.dir_file_size);
+}
+
 
 void get(char *drive, char *file) {
     printf("\nGET\n drive: %s\n file:  %s\n\n", drive, file);
