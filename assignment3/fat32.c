@@ -172,23 +172,26 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
     lseek(drive, (fat + bs.BPB_RootClus), SEEK_SET);
     read(drive, &nextCluster, sizeof(uint32_t));
 
+    printf("\nNext cluster: %ld, 0x%lx (EOC: 0x%x)\n", nextCluster, nextCluster, EOC);
+
     strncpy(dirName, entry.dir_name, 11);
     dirName[11] = '\0';
 
-    printf("\nDir Name: %s\n", entry.dir_name);
-    printf("Next cluster: %ld, 0x%lx (EOC: 0x%x)\n", nextCluster, nextCluster, EOC);
+    printf("\nDirectory Name: %s\n", dirName);
+    printf("Attributes: 0x%x\n", entry.dir_attr);
+    printf("First Cluster: %x %x (high-low)\n", entry.dir_first_cluster_hi, entry.dir_first_cluster_lo)
 
-    printf("dir_attr: %d\n", entry.dir_attr);
-    printf("dir_ntres: %d\n", entry.dir_ntres);
-    printf("dir_crt_time_tenth: %d\n", entry.dir_crt_time_tenth);
-    printf("dir_crt_time: %d\n", entry.dir_crt_time);
-    printf("dir_crt_date: %d\n", entry.dir_crt_date);
-    printf("dir_last_access_time: %d\n", entry.dir_last_access_time);
-    printf("dir_first_cluster_hi: %d\n", entry.dir_first_cluster_hi);
-    printf("dir_wrt_time: %d\n", entry.dir_wrt_time);
-    printf("dir_wrt_date: %d\n", entry.dir_wrt_date);
-    printf("dir_first_cluster_lo: %d\n", entry.dir_first_cluster_lo);
-    printf("dir_file_size: %d\n", entry.dir_file_size);
+    // printf("dir_attr: %d\n", entry.dir_attr);
+    // printf("dir_ntres: %d\n", entry.dir_ntres);
+    // printf("dir_crt_time_tenth: %d\n", entry.dir_crt_time_tenth);
+    // printf("dir_crt_time: %d\n", entry.dir_crt_time);
+    // printf("dir_crt_date: %d\n", entry.dir_crt_date);
+    // printf("dir_last_access_time: %d\n", entry.dir_last_access_time);
+    // printf("dir_first_cluster_hi: %d\n", entry.dir_first_cluster_hi);
+    // printf("dir_wrt_time: %d\n", entry.dir_wrt_time);
+    // printf("dir_wrt_date: %d\n", entry.dir_wrt_date);
+    // printf("dir_first_cluster_lo: %d\n", entry.dir_first_cluster_lo);
+    // printf("dir_file_size: %d\n", entry.dir_file_size);
 }
 
 
