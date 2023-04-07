@@ -235,8 +235,6 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth)
         printf("\nproceeding to next cluster... [0x%lx]\n", nextCluster, EOC);
     )
 
-    printf("\nNext cluster: 0x%lx (EOC: 0x%x)\n", nextCluster, EOC);
-
     // printf("dir_attr: %d\n", entry.dir_attr);
     // printf("dir_ntres: %d\n", entry.dir_ntres);
     // printf("dir_crt_time_tenth: %d\n", entry.dir_crt_time_tenth);
