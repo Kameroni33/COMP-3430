@@ -206,7 +206,10 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth)
 
             if (entry.dir_attr == ATTR_DIRECTORY) {
                 printf("%*s%s [directory]\n", depth, "-", dirName);
-                printFileStructure(drive, bs, fat, _, depth+1);
+
+                // look up address of next directory
+
+                // printFileStructure(drive, bs, fat, _, depth+1);
             }
             else {
                 printf("%*s%s [file]\n", depth, "-", dirName);
