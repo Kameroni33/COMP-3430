@@ -137,7 +137,7 @@ void list(char *driveName) {
     read(drive, &dirEntry, sizeof(fat32Dir));
 
     printf("Root Cluster: %u\n", bootSector.BPB_RootClus);
-    printf("Root Address: %u\n", bootSector.BPB_RootClus * clusterSize);
+    printf("Root Address: %x\n", bootSector.BPB_RootClus * clusterSize);
     printf("Dir Name: %s\n", dirEntry.dir_name);
     printf("dir_attr: %d\n", dirEntry.dir_attr);
     printf("dir_ntres: %d\n", dirEntry.dir_ntres);
