@@ -15,7 +15,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
 off_t calcClustAddress(int cluster, fat32BS bs);
 void calcFileName(char entryName[12], char fileName[13], int extension);
 void get(char *driveName, char *file);
-off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFile);
+void searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFile, off_t *targetCluster);
 
 int main(int argc, char *argv[]) {
 
