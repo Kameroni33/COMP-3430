@@ -83,9 +83,9 @@ void info(char *driveName) {
     // print information about the drive
     printf("OEM Name:     %s\n", bootSector.BS_OEMName);
     printf("Volume Label: %s\n\n", bootSector.BS_VolLab);
-    printf("Bytes per Sector:     %s\n", bootSector.BPB_BytesPerSec);
-    printf("Sectors per Cluster:  %s\n", bootSector.BPB_SecPerClus);
-    printf("Cluster Size:         %skB\n\n", (bootSector.BPB_BytesPerSec * bootSector.BPB_SecPerClus) / 1000);
+    printf("Bytes per Sector:     %d\n", bootSector.BPB_BytesPerSec);
+    printf("Sectors per Cluster:  %d\n", bootSector.BPB_SecPerClus);
+    printf("Cluster Size:         %dkB\n\n", (bootSector.BPB_BytesPerSec * bootSector.BPB_SecPerClus) / 1000);
     printf("Free Clusters: %d\n", fileSysInfo.free_count);
     printf("Free Space:    %dkB\n", fileSysInfo.free_count * (bootSector.BPB_BytesPerSec * bootSector.BPB_SecPerClus) / 1000);
 
