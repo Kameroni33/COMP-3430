@@ -158,6 +158,7 @@ void list(char *driveName) {
     printf("Root Address: 0x%lx\n", rootAddress);
     printf("fat32Dir Size: %u\n", entrySize);
     printf("fat32Dir Entries per Cluster: %u\n", entriesPerCluster);
+    printf("FAT Address: 0x%lx\n", fatAddress);
 
     // read directory tree starting at the root
     printFileStructure(drive, bootSector, fatAddress, rootAddress, 1);
