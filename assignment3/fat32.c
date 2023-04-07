@@ -312,7 +312,6 @@ void get(char *driveName, char *fileName) {
     off_t fatAddress;
     off_t targetCluster = 0;
     off_t targetAddress = 0;
-    off_t nextCluster;
 
     fat32BS bootSector;
 
@@ -355,7 +354,7 @@ void get(char *driveName, char *fileName) {
             lseek(drive, fatAddress + (targetCluster * sizeof(uint32_t)), SEEK_SET);
 
             // copy contents
-            for (int i = 0; i < (clusterSize / BUFFER_SIZE); i++) {
+            for (unsigned int i = 0; i < (clusterSize / BUFFER_SIZE); i++) {
                 read(drive, &buffer, BUFFER_SIZE);
                 write(download, buffer, BUFFER_SIZE);
             }
