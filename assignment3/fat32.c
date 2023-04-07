@@ -145,7 +145,7 @@ void list(char *driveName) {
     }
 
     // determine memory address of root directory
-    rootAddress = calcDataClustAddress(bootSector.BPB_RootClus, bootSector);
+    rootAddress = calcClustAddress(bootSector.BPB_RootClus, bootSector);
 
     uint32_t sectorSize = bootSector.BPB_BytesPerSec;
     uint32_t clusterSize = bootSector.BPB_SecPerClus * sectorSize;
