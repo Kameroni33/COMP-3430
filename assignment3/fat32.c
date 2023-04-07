@@ -9,12 +9,12 @@
 
 
 void printUsage(void);
-void info(char *drive);
-void list(char *drive);
+void info(char *driveName);
+void list(char *driveName)
 void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int depth);
 off_t calcClustAddress(int cluster, fat32BS bs);
 void calcFileName(char entryName[12], char fileName[13], int extension);
-void get(char *drive, char *file);
+void get(char *driveName, char *file);
 
 int main(int argc, char *argv[]) {
 
@@ -117,7 +117,6 @@ void list(char *driveName) {
     off_t fatAddress;
 
     fat32BS bootSector;
-    fat32FSInfo fileSysInfo;
 
     // open the drive
     if ( (drive = open(driveName, O_RDONLY)) < 0) {
@@ -128,10 +127,6 @@ void list(char *driveName) {
     // read Boot Sector (BS)
     lseek(drive, 0, SEEK_SET);
     read(drive, &bootSector, sizeof(fat32BS));
-
-    // read File System Info (FSInfo)
-    lseek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
-    read(drive, &fileSysInfo, sizeof(fat32FSInfo));
 
     if (bootSector.BPB_RsvdSecCnt == 0) {
         printf("WARNING: reserved number of sectors is 0\n");
@@ -302,15 +297,15 @@ void calcFileName(char entryName[12], char fileName[13], int extension) {
     fileName[index] = '\0';
 }
 
-void get(char *drive, char *file) {
+void get(char *driveName, char *file) {
     printf("\nreading drive '%s'...\n", driveName);
 
     int drive;
     off_t rootAddress;
     off_t fatAddress;
+    off_t targetCluster;
 
     fat32BS bootSector;
-    fat32FSInfo fileSysInfo;
 
     // open the drive
     if ( (drive = open(driveName, O_RDONLY)) < 0) {
@@ -322,39 +317,18 @@ void get(char *drive, char *file) {
     lseek(drive, 0, SEEK_SET);
     read(drive, &bootSector, sizeof(fat32BS));
 
-    // read File System Info (FSInfo)
-    lseek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
-    read(drive, &fileSysInfo, sizeof(fat32FSInfo));
-
-    if (bootSector.BPB_RsvdSecCnt == 0) {
-        printf("WARNING: reserved number of sectors is 0\n");
-    }
-
     // determine memory address of FAT
     fatAddress = bootSector.BPB_RsvdSecCnt * bootSector.BPB_BytesPerSec;
 
-    if (bootSector.BPB_RootEntCnt != 0) {
-        printf("WARNING: root entry count is not 0\n");
-    }
-
-    // determine memory address of root directory
-    rootAddress = calcClustAddress(bootSector.BPB_RootClus, bootSector);
-
-    uint32_t sectorSize = bootSector.BPB_BytesPerSec;
-    uint32_t clusterSize = bootSector.BPB_SecPerClus * sectorSize;
-    uint32_t entrySize = sizeof(fat32Dir);
-    uint32_t entriesPerCluster = clusterSize / entrySize;
-
-    printf("\nSectorSize: %u\n", sectorSize);
-    printf("ClusterSize: %u\n", clusterSize);
-    printf("Root Cluster: %u\n", bootSector.BPB_RootClus);
-    printf("Root Address: 0x%lx\n", rootAddress);
-    printf("fat32Dir Size: %u\n", entrySize);
-    printf("fat32Dir Entries per Cluster: %u\n", entriesPerCluster);
-    printf("FAT Address: 0x%lx\n\n", fatAddress);
-
     // read directory tree starting at the root
-    printFileStructure(drive, bootSector, fatAddress, bootSector.BPB_RootClus, 1);
+    targetCluster = searchFile(drive, bootSector, fatAddress, bootSector.BPB_RootClus, file);
+
+    if (targetCluster != 0) {
+        printf("file downlaoded to local directory './downloads'\n");
+    }
+    else {
+        printf("unable to find %s\n", file);
+    }
 }
 
 off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFile) {
