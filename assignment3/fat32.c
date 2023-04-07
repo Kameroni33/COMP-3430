@@ -189,7 +189,7 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
             strncpy(dirName, entry.dir_name, 11);
             dirName[11] = '\0';
 
-            printf("First Character: %c\n", entry.dir_name[0])
+            printf("First Character: %c\n", entry.dir_name[0]);
             printf("\nDirectory Name: %s\n", dirName);
             printf("Attributes: 0x%x\n", entry.dir_attr);
             printf("File Size: %u\n", entry.dir_file_size);
