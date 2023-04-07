@@ -391,7 +391,7 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
 
                 if (strcmp(fileName, targetFile)) {
                     targetCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
-                    printf("found %s == %s at cluster 0x%lx\n", fileName, targetFile);
+                    printf("found %s == %s at cluster 0x%lx\n", fileName, targetFile, targetCluster);
                     return targetCluster;
                 }
             }
