@@ -31,11 +31,11 @@ int main(int argc, char *argv[]) {
         printf("Process: fat32\n");
         printf("  FAT32 drive reader\n\n");
         printf("Usage:\n");
-        printf("  ./fat32 [imagefile] [command]\n\n");
+        printf("  ./fat32 [imagefile] [command] {file}\n\n");
         printf("Available Commands:\n");
         printf("  info   print out some general info about the drive\n");
         printf("  list   print all files and directories on the frive\n");
-        printf("  get    fetch and return a file from the drive. Files will be copied to an ./output folder. Requires an additional parameter [file].\n\n");
+        printf("  get    fetch and return a file from the drive. Files will be copied to ./output folder in current directory. Requires an additional argument {file}.\n\n");
     }
 
     return 0;
