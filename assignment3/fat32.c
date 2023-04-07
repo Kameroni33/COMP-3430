@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
             }
         }
         else {
-            printf("Error: Invalid Command argument '%s'.\n", argv[2]);
+            printf("Error: Invalid command argument '%s'.\n", argv[2]);
         }
     }
 
