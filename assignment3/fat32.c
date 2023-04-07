@@ -373,7 +373,6 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
             strncpy(entryName, entry.dir_name, 11);
             entryName[11] = '\0';
 
-            
             // if LONG_NAME, ./.., or VOLUME entry
             if (entry.dir_attr == (ATTR_LONG_NAME) || entryName[0] == '.' || (entry.dir_attr & ATTR_VOLUME_ID) == ATTR_VOLUME_ID) {
                 // ignore...
@@ -384,6 +383,9 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
                 newCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
 
                 targetCluster = searchFile(drive, bs, fat, newCluster, targetFile);
+                if (targetCluster != 0) {
+                    return targetCluster;
+                }
             }
             // else FILE entry
             else {
@@ -391,7 +393,7 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
 
                 if (strcmp(fileName, targetFile)) {
                     targetCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
-                    break;
+                    return targetCluster;
                 }
             }
         }
