@@ -204,7 +204,7 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs, int depth)
             strncpy(dirName, entry.dir_name, 11);
             dirName[11] = '\0';
 
-            printf("%*s%s (%s)", depth, "-", dirName, (entry.dir_attr == ATTR_DIRECTORY) ? "dir" : "file");
+            printf("%*s%s (%s)\n", depth, "-", dirName, (entry.dir_attr == ATTR_DIRECTORY) ? "dir" : "file");
 
             // printf("Directory Name: %s\n", dirName);
             // printf("Attributes: 0x%x\n", entry.dir_attr);
