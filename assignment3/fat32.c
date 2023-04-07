@@ -343,9 +343,11 @@ void get(char *driveName, char *fileName) {
             exit(1);
         }
 
+        // copy contents from drive -> download
+
 
         close(download);
-        
+
         printf("\nFile %s coppied into local folder './downloads'\n", fileName);
     }
     else {
