@@ -47,13 +47,13 @@ int main(int argc, char *argv[]) {
 }
 
 void info(char *drive) {
-    printf("\nINFO\n  drive: %s\n\n", drive);
+    printf("\nINFO\n> drive: %s\n\n", drive);
 }
 
 void list(char *drive) {
-    printf("\nLIST\n  drive: %s\n\n", drive);
+    printf("\nLIST\n> drive: %s\n\n", drive);
 }
 
 void get(char *drive, char *file) {
-    printf("\nGET\n  drive: %s\n  file: %s\n\n", drive, file);
+    printf("\nCommand: GET\n> drive: %s\n> file:  %s\n\n", drive, file);
 }
