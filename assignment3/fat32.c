@@ -211,7 +211,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
                 printf("%s [volume]\n", dirName);
             }
             // else if DIRECTORY entry
-            else if (entry.dir_attr == ATTR_DIRECTORY) {
+            else if (entry.dir_attr == ATTR_DIRECTORY && dirName[0] != '.' && dirname[1] != '.') {
                 printf("%*s%s [directory]\n", depth, "-", dirName);
 
                 // look up address of next directory
