@@ -182,18 +182,17 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth)
     printf("\nNext cluster: 0x%lx (EOC: 0x%x)\n", nextCluster, EOC);
 
     for (uint32_t i = 0; i < entriesPerCluster; i++) {
+
+        // go to entry location
         lseek(drive, (addr + (entrySize * i)), SEEK_SET);
         read(drive, &entry, sizeof(fat32Dir));
 
-
+        // check first char to see it=f it's an empty entry
         uint32_t firstChar = (int)entry.dir_name[0] & 0xFF;
         // printf("\nFirst Character: 0x%x\n", firstChar);
-        if (firstChar == 0xE5 || firstChar == 0x00) {
-            // printf("Empty Entry\n");
-        }
-        
-        else {
+        if (firstChar != 0xE5 && firstChar != 0x00) {
 
+            // make sure the entry name is valid
             for (int j = 0; j < 11; j++) {
                 uint32_t currChar = (int)entry.dir_name[0] & 0xFF;
                 if (currChar <= 0x20 && currChar != 0x05) {
@@ -201,16 +200,23 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth)
                 }
             }
 
+            // get the entry name as a string
             strncpy(dirName, entry.dir_name, 11);
             dirName[11] = '\0';
 
-            if (entry.dir_attr == ATTR_DIRECTORY) {
+            // if VOLUME entry
+            if (entry.dir_attr == ATTR_VOLUME_ID) {
+                printf("%s [volume]\n", dirName);
+            }
+            // else if DIRECTORY entry
+            else if (entry.dir_attr == ATTR_DIRECTORY) {
                 printf("%*s%s [directory]\n", depth, "-", dirName);
 
                 // look up address of next directory
 
                 // printFileStructure(drive, bs, fat, _, depth+1);
             }
+            // else FILE entry
             else {
                 printf("%*s%s [file]\n", depth, "-", dirName);
             }
