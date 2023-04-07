@@ -212,6 +212,13 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth)
                 printf("%*s%s [directory]\n", depth, "-", dirName);
 
                 // look up address of next directory
+                uint32_t fatOffset = (static_cast<uint32_t>(entry.dir_first_cluster_hi) << 16) + static_cast<uint32_t>(entry.dir_first_cluster_lo);
+                off_t nextCluster;
+                lseek(drive, (fat + fatOffset), SEEK_SET);
+                read(drive, &nextCluster, sizeof(uint32_t));
+
+                int firstDataSector = bootSector.BPB_RsvdSecCnt + (bootSector.BPB_NumFATs * bootSector.BPB_FATSz32);
+                off_t = (((nextCluster - 2) * bootSector.BPB_SecPerClus) + firstDataSector) * bootSector.BPB_BytesPerSec;
 
                 // printFileStructure(drive, bs, fat, _, depth+1);
             }
@@ -246,6 +253,12 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth)
     // printf("dir_wrt_date: %d\n", entry.dir_wrt_date);
     // printf("dir_first_cluster_lo: %d\n", entry.dir_first_cluster_lo);
     // printf("dir_file_size: %d\n", entry.dir_file_size);
+}
+
+off_t calcDataClustAddress(int cluster, fat32BS bs) {
+    int firstDataSector = bs.BPB_RsvdSecCnt + (bs.BPB_NumFATs * bs.BPB_FATSz32);
+    off_t address = (((cluster - 2) * bs.BPB_SecPerClus) + firstDataSector) * bs.BPB_BytesPerSec;
+    return address;
 }
 
 
