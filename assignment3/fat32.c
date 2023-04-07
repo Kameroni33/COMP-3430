@@ -158,7 +158,7 @@ void list(char *driveName) {
     printf("Root Address: 0x%lx\n", rootAddress);
     printf("fat32Dir Size: %u\n", entrySize);
     printf("fat32Dir Entries per Cluster: %u\n", entriesPerCluster);
-    printf("FAT Address: 0x%lx\n", fatAddress);
+    printf("FAT Address: 0x%lx\n\n", fatAddress);
 
     // read directory tree starting at the root
     printFileStructure(drive, bootSector, fatAddress, bootSector.BPB_RootClus, 1);
@@ -246,7 +246,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
     read(drive, &nextCluster, sizeof(uint32_t));
 
     if (nextCluster >= 0x0FFFFFF8) {
-        printf("end of cluster...\n");
+        // printf("end of cluster...\n");
     }
     else {
         printf("proceeding to next cluster... [0x%lx]\n", nextCluster);
