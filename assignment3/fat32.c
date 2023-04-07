@@ -148,9 +148,17 @@ void list(char *driveName) {
     firstDataSector = bootSector.BPB_RsvdSecCnt + (bootSector.BPB_NumFATs * bootSector.BPB_FATSz32);
     rootAddress = (((bootSector.BPB_RootClus - 2) * bootSector.BPB_SecPerClus) + firstDataSector) * bootSector.BPB_BytesPerSec;
 
+    uint32_t sectorSize = bs.BPB_BytesPerSec;
+    uint32_t clusterSize = bs.BPB_SecPerClus * sectorSize;
+    
+    printf("SectorSize: %u\n", sectorSize);
+    printf("ClusterSize: %u\n", clusterSize);
     printf("\nRoot Cluster: %u\n", bootSector.BPB_RootClus);
     printf("Root Address: 0x%lx\n", rootAddress);
-    printf("fat32Dir size: %lu bytes\n", sizeof(fat32Dir));
+    printf("fat32Dir size: %lu\n", sizeof(fat32Dir));
+    
+    printf("EntrySize: %u\n", entrySize);
+    printf("fat32Dir Entries per Cluster: %u\n", entriesPerCluster);
 
     // read directory tree starting at the root
     printFileStructure(drive, rootAddress, fatAddress, bootSector);
@@ -163,14 +171,9 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
 
     char dirName[12];
 
-    uint32_t sectorSize = bs.BPB_BytesPerSec;
-    uint32_t clusterSize = bs.BPB_SecPerClus * sectorSize;
+    
     uint32_t entrySize = sizeof(fat32Dir);
     uint32_t entriesPerCluster = clusterSize / entrySize;
-    printf("\nSectorSize: %u\n", sectorSize);
-    printf("ClusterSize: %u\n", clusterSize);
-    printf("EntrySize: %u\n", entrySize);
-    printf("Entries per Cluster: %u\n", entriesPerCluster);
 
     off_t nextCluster;
     lseek(drive, (fat + bs.BPB_RootClus), SEEK_SET);
