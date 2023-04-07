@@ -160,9 +160,14 @@ void list(char *driveName) {
     read(drive, &dirEntry, sizeof(fat32Dir));
 
     printf("Root Cluster: %u\n", bootSector.BPB_RootClus);
-    printf("Root Address: 0x%x\n", rootAddress)
+    printf("Root Address: 0x%x\n", rootAddress);
+
+    off_t nextCluster;
+    lseek(drive, (fatAddress + bootSector.BPB_RootClus), SEEK_SET);
+    read(drive, &nextCluster, sizeof(nextCluster));
     
     printf("Dir Name: %s\n", dirEntry.dir_name);
+    ptintf("Next cluster: ")
 
 }
 
