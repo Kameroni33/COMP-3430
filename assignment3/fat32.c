@@ -13,7 +13,7 @@ void info(char *drive);
 void list(char *drive);
 void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int depth);
 off_t calcClustAddress(int cluster, fat32BS bs);
-void calcFileName(char entryName[12], char fileName[13]);
+void calcFileName(char entryName[12], char fileName[13], int extension);
 void get(char *drive, char *file);
 
 int main(int argc, char *argv[]) {
@@ -264,24 +264,29 @@ off_t calcClustAddress(int cluster, fat32BS bs) {
     return address;
 }
 
-void calcFileName(char entryName[12], char fileName[13]) {
+void calcFileName(char entryName[12], char fileName[13], int extension) {
     int index = 0;
+    int length = extension ? 8 : 11
     // add name
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < length; i++) {
         if (entryName[i] != ' ') {
             fileName[index] = entryName[i];
             index++;
         }
     }
+
     // add extension
-    fileName[index] = '.';
-    index++;
-    for (int i = 8; i < 11; i++) {
-        if (entryName[i] != ' ') {
-            fileName[index] = entryName[i];
-            index++;
+    if (extension) {
+        fileName[index] = '.';
+        index++;
+        for (int i = 8; i < 11; i++) {
+            if (entryName[i] != ' ') {
+                fileName[index] = entryName[i];
+                index++;
+            }
         }
     }
+    
     // add end of string character
     fileName[index] = '\0';
 }
