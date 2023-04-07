@@ -298,10 +298,11 @@ void calcFileName(char entryName[12], char fileName[13], int extension) {
     fileName[index] = '\0';
 }
 
-void get(char *driveName, char *file) {
+void get(char *driveName, char *fileName) {
     printf("\nreading drive '%s'...\n", driveName);
 
     int drive;
+    int download;
     off_t fatAddress;
     off_t targetCluster = 0;
     off_t targetAddress = 0;
@@ -322,16 +323,24 @@ void get(char *driveName, char *file) {
     fatAddress = bootSector.BPB_RsvdSecCnt * bootSector.BPB_BytesPerSec;
 
     // read directory tree starting at the root
-    searchFile(drive, bootSector, fatAddress, bootSector.BPB_RootClus, file, &targetCluster);
+    searchFile(drive, bootSector, fatAddress, bootSector.BPB_RootClus, fileName, &targetCluster);
 
     if (targetCluster != 0) {
+
         targetAddress = calcClustAddress(targetCluster, bootSector);
         printf("\nCluster: %lu\n", targetCluster);
         printf("Address: 0x%lx\n", targetAddress);
-        printf("\nFile %s coppied into local folder './downloads'\n", file);
+
+        // open file to writting
+        if ( (download = open(fileName, O_RDWR|O_CREAT)) < 0) {
+            printf("ERROR: unable to open download file '%s'.\n", fileName);
+            exit(1);
+        }
+
+        printf("\nFile %s coppied into local folder './downloads'\n", fileName);
     }
     else {
-        printf("\n%s not found...\n", file);
+        printf("\n%s not found...\n", fileName);
         printf("Try using command [list] to see available files\n");
     }
 }
