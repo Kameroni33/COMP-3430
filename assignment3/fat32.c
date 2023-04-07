@@ -261,6 +261,13 @@ off_t calcClustAddress(int cluster, fat32BS bs) {
     return address;
 }
 
+void calcFileName(char entryName[12], char fileName[12]) {
+    int index = 0;
+    for (int i = 0; i < 8) {
+        if (entryName[i] != ' ')
+    }
+}
+
 
 void get(char *drive, char *file) {
     printf("\nGET\n drive: %s\n file:  %s\n\n", drive, file);
