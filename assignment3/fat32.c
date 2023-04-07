@@ -342,8 +342,8 @@ void get(char *driveName, char *fileName) {
         printf("Address: 0x%lx\n", targetAddress);
 
         // open file to writting
-        strcat(downloadFileName
-        if ( (download = open(fileName, O_RDWR|O_CREAT|S_IRWXU|S_IRWXG|S_IRWXO)) < 0) {
+        strcat(downloadFileName, fileName);
+        if ( (download = open(downloadFileName, O_RDWR|O_CREAT|S_IRWXU|S_IRWXG|S_IRWXO)) < 0) {
             printf("ERROR: unable to open download file '%s'.\n", fileName);
             exit(1);
         }
