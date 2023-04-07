@@ -221,6 +221,10 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
 
                 printFileStructure(drive, bs, fat, newCluster, depth+1);
             }
+            // else if LONG_NAME entry
+            else if (entry.dir_attr == ATTR_LONG_NAME) {
+                
+            }
             // else FILE entry
             else {
                 for (int k = 0; k < depth; k++) printf("-");
