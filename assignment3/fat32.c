@@ -154,7 +154,7 @@ void list(char *driveName) {
 
     // read directory tree starting at the root
     for (int i = 0; i < 8; i++) {
-        printFileStructure(drive, rootAddress + (sizeof(fat32Dir) * i), fatAddress, bootSector);
+        printFileStructure(drive, rootAddress + (bootSector.BPB_BytesPerSec * i), fatAddress, bootSector);
     }
 
 }
