@@ -59,7 +59,7 @@ void printUsage() {
 }
 
 void info(char *driveName) {
-    printf("\nreading drive '%s'...\n\n", driveName);
+    printf("\nreading drive '%s'...\n", driveName);
 
     int drive;
     char volLabel[12];
@@ -95,7 +95,7 @@ void info(char *driveName) {
     freeSpace = (float)fileSysInfo.free_count * clusterSize;
 
     // print information about the drive
-    printf("OEM Name: %s\n", bootSector.BS_OEMName);
+    printf("\nOEM Name: %s\n", bootSector.BS_OEMName);
     printf("Volume ID: %u\n", bootSector.BS_VolID);
     printf("Volume Label: %s\n", volLabel);
     printf("File System Type: %s\n", FileSysType);
@@ -107,7 +107,7 @@ void info(char *driveName) {
 }
 
 void list(char *driveName) {
-    printf("\nreading drive '%s'...\n\n", driveName);
+    printf("\nreading drive '%s'...\n", driveName);
 
     int drive;
     int clusterSize;
@@ -130,16 +130,22 @@ void list(char *driveName) {
     lseek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
     read(drive, &fileSysInfo, sizeof(fat32FSInfo));
 
-    clusterSize = bootSector.BPB_BytesPerSec * bootSector.BPB_SecPerClus;
+    if (bootSector.BPB_RootEntCnt != 0) {
+        printf("WARNING: root entry count is 0\n");
+    }
+
+    // determine first sector of the root directory
+    int firstDataSector = bootSector.BPB_RsvdSecCnt + (bootSector.BPB_NumFATs * bootSector.BPB_FATSz32);
+    int firstRootSector = ((bootSector.BPB_RootClus - 2) * bootSector.BPB_SecPerClus) + firstDataSector;
 
     // read root directory
-    lseek(drive, (bootSector.BPB_RootClus * clusterSize), SEEK_SET);
+    lseek(drive, (firstRootSector * bootSector.BPB_BytesPerSec), SEEK_SET);
     read(drive, &dirEntry, sizeof(fat32Dir));
 
     printf("Root Cluster: %u\n", bootSector.BPB_RootClus);
     printf("Root Address: %u 0x%x\n", bootSector.BPB_RootClus * clusterSize, bootSector.BPB_RootClus * clusterSize);
-    printf("Dir Name: %s\n\n", dirEntry.dir_name);
-    
+    printf("Dir Name: %s\n", dirEntry.dir_name);
+
     printf("dir_attr: %d\n", dirEntry.dir_attr);
     printf("dir_ntres: %d\n", dirEntry.dir_ntres);
     printf("dir_crt_time_tenth: %d\n", dirEntry.dir_crt_time_tenth);
