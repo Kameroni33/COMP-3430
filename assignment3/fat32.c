@@ -337,7 +337,6 @@ void get(char *driveName, char *file) {
 off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFile) {
 
     fat32Dir entry;
-    int targetClusterFound = 0;
     off_t targetCluster = 0;
 
     uint32_t sectorSize;
@@ -392,8 +391,7 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
 
                 if (strcmp(fileName, targetFile)) {
                     targetCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
-                    targetClusterFound = 1;
-                    break
+                    break;
                 }
             }
         }
@@ -403,7 +401,7 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
     lseek(drive, (fat + cluster), SEEK_SET);
     read(drive, &nextCluster, sizeof(uint32_t));
 
-    if (nextCluster < 0x0FFFFFF8 && targetClusterFound == 0) {
+    if (nextCluster < 0x0FFFFFF8 && targetCluster == 0) {
         targetCluster = searchFile(drive, bs, fat, nextCluster, targetFile); 
     }
 
