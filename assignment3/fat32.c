@@ -138,7 +138,8 @@ void list(char *driveName) {
 
     printf("Root Cluster: %u\n", bootSector.BPB_RootClus);
     printf("Root Address: %u 0x%x\n", bootSector.BPB_RootClus * clusterSize, bootSector.BPB_RootClus * clusterSize);
-    printf("Dir Name: %s\n", dirEntry.dir_name);
+    printf("Dir Name: %s\n\n", dirEntry.dir_name);
+    
     printf("dir_attr: %d\n", dirEntry.dir_attr);
     printf("dir_ntres: %d\n", dirEntry.dir_ntres);
     printf("dir_crt_time_tenth: %d\n", dirEntry.dir_crt_time_tenth);
