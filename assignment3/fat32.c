@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
                 get(argv[1], argv[3]);
             }
             else {
-                printf("Error: No file specified.\n", argv[2]);
+                printf("Error: No file specified.\n");
             }
         }
         else {
