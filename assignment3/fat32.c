@@ -212,7 +212,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
 
             // if VOLUME entry
             if (entry.dir_attr == ATTR_VOLUME_ID) {
-                printf("[volume] %s\n", dirName);
+                printf("[volume] %s\n", entryName);
             }
             // else if . or .. entry
             else if (entryName[0] == '.') {
@@ -236,7 +236,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
             // else FILE entry
             else {
                 for (int k = 0; k < depth; k++) printf("-");
-                printf("[file] %s (%u bytes)\n", dirName, entry.dir_file_size);
+                printf("[file] %s (%u bytes)\n", entryName, entry.dir_file_size);
             }
         }
     }
