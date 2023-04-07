@@ -110,7 +110,8 @@ void list(char *driveName) {
     printf("\nreading drive '%s'...\n", driveName);
 
     int drive;
-    int clusterSize;
+    int firstDataSector
+    int firstRootSector
 
     fat32BS bootSector;
     fat32FSInfo fileSysInfo;
@@ -135,8 +136,8 @@ void list(char *driveName) {
     }
 
     // determine first sector of the root directory
-    int firstDataSector = bootSector.BPB_RsvdSecCnt + (bootSector.BPB_NumFATs * bootSector.BPB_FATSz32);
-    int firstRootSector = ((bootSector.BPB_RootClus - 2) * bootSector.BPB_SecPerClus) + firstDataSector;
+    firstDataSector = bootSector.BPB_RsvdSecCnt + (bootSector.BPB_NumFATs * bootSector.BPB_FATSz32);
+    firstRootSector = ((bootSector.BPB_RootClus - 2) * bootSector.BPB_SecPerClus) + firstDataSector;
 
     // read root directory
     lseek(drive, (firstRootSector * bootSector.BPB_BytesPerSec), SEEK_SET);
