@@ -106,7 +106,7 @@ void info(char *driveName) {
     printf("Free Space: %.1fkB\n", freeSpace);
 }
 
-void list(char *drive) {
+void list(char *driveName) {
     printf("\nreading drive '%s'...\n\n", driveName);
 
     int drive;
