@@ -257,7 +257,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
     }
 
     // check if there is another cluster to read for this directory
-    lseek(drive, (fat + cluster), SEEK_SET);
+    lseek(drive, fat + (cluster * 32), SEEK_SET);
     read(drive, &nextCluster, sizeof(uint32_t));
 
     if (nextCluster >= 0x0FFFFFF8) {
@@ -344,7 +344,8 @@ void get(char *driveName, char *fileName) {
         }
 
         // copy contents from drive -> download
-
+        lseek(drive, (fat + targetCluster), SEEK_SET);
+        read(drive, &nextCluster, sizeof(uint32_t));
 
         close(download);
 
