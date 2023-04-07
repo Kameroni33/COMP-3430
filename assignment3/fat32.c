@@ -219,6 +219,8 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
             }
             // else if . or .. entry
             else if (entryName[0] == '.') {
+                calcFileName(entryName, fileName, 0);
+                printf("[system] %s\n", fileName);
                 // ignore...
             }
             // else if HIDDEN entry
