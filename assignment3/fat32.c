@@ -229,9 +229,9 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
             }
             // else if SYSTEM entry
             else if (entry.dir_attr == ATTR_ARCHIVE) {
-                for (int k = 0; k < depth; k++) printf("-");
-                calcFileName(entryName, fileName, 0);
-                printf("[system] %s\n", fileName);
+                // for (int k = 0; k < depth; k++) printf("-");
+                // calcFileName(entryName, fileName, 0);
+                // printf("[system] %s\n", fileName);
             }
             // else if VOLUME entry
             else if (entry.dir_attr == ATTR_VOLUME_ID) {
