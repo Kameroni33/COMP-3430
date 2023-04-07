@@ -327,7 +327,7 @@ void get(char *driveName, char *file) {
 
     if (targetCluster != 0) {
         targetAddress = calcClustAddress(targetCluster, bootSector);
-        printf("\n%s found\n");
+        printf("\n%s found\n", file);
         printf(" Cluster: %lu\n", targetCluster);
         printf(" Address: 0x%lx\n", targetAddress);
         printf("\nFile coppied into local directory './downloads'\n");
