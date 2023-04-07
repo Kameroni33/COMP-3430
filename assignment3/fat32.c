@@ -62,6 +62,8 @@ void info(char *driveName) {
     printf("\nreading drive '%s'...\n\n", driveName);
 
     int drive;
+    char volLabel[11];
+    char FileSysType[8];
 
     fat32BS bootSector;
     fat32FSInfo fileSysInfo;
@@ -80,11 +82,14 @@ void info(char *driveName) {
     lseek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
     read(drive, &fileSysInfo, sizeof(fat32FSInfo));
 
+    strncpy(volLabel, bootSector.BS_VolLab, sizeof(volLabel));
+    strncpy(FileSysType, bootSector.BS_FilSysType, sizeof(FileSysType));
+
     // print information about the drive
     printf("OEM Name: %s\n", bootSector.BS_OEMName);
     printf("Volume ID: %d\n", bootSector.BS_VolID);
-    printf("Volume Label: %s\n", bootSector.BS_VolLab);
-    printf("File System Type: %s\n", bootSector.BS_FilSysType);
+    printf("Volume Label: %s\n", volLabel);
+    printf("File System Type: %s\n", FileSysType);
     printf("Bytes per Sector: %d\n", bootSector.BPB_BytesPerSec);
     printf("Sectors per Cluster: %d\n", bootSector.BPB_SecPerClus);
     printf("Cluster Size: %dkB\n", (bootSector.BPB_BytesPerSec * bootSector.BPB_SecPerClus) / 1000);
