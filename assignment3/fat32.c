@@ -182,7 +182,7 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
         read(drive, &entry, sizeof(fat32Dir));
 
 
-        uint32_t firstChar = (int)entry.dir_name[0] | 0xFF000000;
+        uint32_t firstChar = (int)entry.dir_name[0] & 0xFF;
         printf("\nFirst Character: 0x%x\n", firstChar);
         if (firstChar == 0xE5 || firstChar == 0x00) {
             printf("\n Empty Entry\n");
