@@ -215,7 +215,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
             
             // if LONG_NAME entry
             if (entry.dir_attr == (ATTR_LONG_NAME)) {
-                // printf("Long Name entry\n");
+                // do nothing...
             }
             // else if . or .. entry
             // else if (entryName[0] == '.') {
