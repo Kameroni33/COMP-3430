@@ -13,6 +13,7 @@ void info(char *drive);
 void list(char *drive);
 void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int depth);
 off_t calcClustAddress(int cluster, fat32BS bs);
+void calcFileName(char entryName[12], char fileName[13]);
 void get(char *drive, char *file);
 
 int main(int argc, char *argv[]) {
