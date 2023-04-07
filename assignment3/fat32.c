@@ -6,15 +6,15 @@
 
 
 void info(char *drive) {
-    printf("info\n");
+    printf("\nINFO\n  drive: %s\n", drive);
 }
 
 void list(char *drive) {
-    printf("list\n");
+    printf("\nLIST\n  drive: %s\n", drive);
 }
 
 void get(char *drive, char *file) {
-    printf("list\n");
+    printf("\nGET\n  drive: %s\n  file: %s", drive, file);
 }
 
 
