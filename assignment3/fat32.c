@@ -11,7 +11,7 @@
 void printUsage(void);
 void info(char *drive);
 void list(char *drive);
-void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs);
+void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs, int depth);
 void get(char *drive, char *file);
 
 int main(int argc, char *argv[]) {
