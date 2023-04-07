@@ -19,7 +19,7 @@ void get(char *drive, char *file) {
 
 
 int main(int argc, char *argv[]) {
-    printf("argc: %d\nargv[0]: %s\n\n", argc, argv[0]);
+    // printf("argc: %d\nargv[0]: %s\n\n", argc, argv[0]);
 
     if (argc >= 3) {
         if (strcmp(argv[2], "info")) {
