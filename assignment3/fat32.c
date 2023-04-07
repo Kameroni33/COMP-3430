@@ -221,7 +221,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth)
                 off_t nextAddress = calcDataClustAddress(nextCluster, bs);
                 printf("<< fatOffset: %u >>\n", fatOffset);
                 printf("<< nextCluster: %u >>\n", nextCluster);
-                printf("<< nextAddress: %u >>\n", nextAddress);
+                printf("<< nextAddress: 0x%x >>\n", nextAddress);
 
                 printFileStructure(drive, bs, fat, nextAddress, depth+1);
             }
