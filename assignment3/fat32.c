@@ -323,6 +323,7 @@ void get(char *driveName, char *file) {
 
     // read directory tree starting at the root
     targetCluster = searchFile(drive, bootSector, fatAddress, bootSector.BPB_RootClus, file);
+    printf("target cluster: (%ld)\n", targetCluster);
 
     if (targetCluster != 0) {
         targetAddress = calcClustAddress(targetCluster, bootSector);
