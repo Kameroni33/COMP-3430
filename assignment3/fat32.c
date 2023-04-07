@@ -114,7 +114,7 @@ void list(char *driveName) {
 
     fat32BS bootSector;
     fat32FSInfo fileSysInfo;
-    fat32Dir directoryEntry;
+    fat32Dir dirEntry;
 
     // open the drive
     if ( (drive = open(driveName, O_RDONLY)) < 0) {
