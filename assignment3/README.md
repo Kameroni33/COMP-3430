@@ -10,7 +10,7 @@ ronaldk1@myumanitoba.ca
 make  # compile fat32.c file & create ./downloads folder
 make clean  # remove compiled fat32 file adn ./downloads folder
 
-./fat32  # run to see a secription of the usages
+./fat32  # see usages (more detailed)
 ./fat32 [imagefile] [command] {file}  # basic usage
 ```
 
