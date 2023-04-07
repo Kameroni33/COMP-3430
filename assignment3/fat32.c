@@ -232,7 +232,7 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth
             // else FILE entry
             else {
                 for (int k = 0; k < depth; k++) printf("-");
-                printf("[file] %s\n", dirName);
+                printf("[file] %s (%u bytes)\n", dirName, entry.dir_file_size);
             }
             // printf("Directory Name: %s\n", dirName);
             // printf("Attributes: 0x%x\n", entry.dir_attr);
