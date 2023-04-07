@@ -14,13 +14,13 @@ int main(int argc, char *argv[]) {
 
     if (argc >= 3) {
         printf("argv[2]: %s", argv[2]);
-        if (strcmp(argv[2], "info")) {
+        if (strcmp(argv[2], "info") == 0) {
             info(argv[1]);
         }
-        else if (strcmp(argv[2], "list")) {
+        else if (strcmp(argv[2], "list") == 0) {
             list(argv[1]);
         }
-        else if (strcmp(argv[2], "get")) {
+        else if (strcmp(argv[2], "get") == 0) {
             if (argc >= 4) {
                 get(argv[1], argv[3]);
             }
