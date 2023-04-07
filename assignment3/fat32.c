@@ -67,12 +67,13 @@ void info(char *driveName) {
     fat32FSInfo fileSysInfo;
 
     // open the drive
-    if ( (drive = open(driveName)) > 0) {
+    if ( (drive = open(driveName, O_RDONLY)) > 0) {
         printf("ERROR: unable to open drive '%s'.\n", driveName);
         exit(1);
     }
 
     // read Boot Sector (BS)
+    lseek(drive, 0, SEEK_SET);
     read(drive, &bootSector, sizeof(fat32BS));
 
     // read File System Info (FSInfo)
