@@ -217,6 +217,18 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
                 calcFileName(entryName, fileName, 0);
                 printf("[volume] %s\n", fileName);
             }
+            // else if ARCHIVE entry
+            else if (entry.dir_attr == ATTR_ARCHIVE) {
+                for (int k = 0; k < depth; k++) printf("-");
+                calcFileName(entryName, fileName, 0);
+                printf("[archive] %s\n", fileName);
+            }
+            // else if SYSTEM entry
+            else if (entry.dir_attr == ATTR_ARCHIVE) {
+                for (int k = 0; k < depth; k++) printf("-");
+                calcFileName(entryName, fileName, 0);
+                printf("[system] %s\n", fileName);
+            }
             // else if . or .. entry
             else if (entryName[0] == '.') {
                 // do nothing...
@@ -234,10 +246,10 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
                 printFileStructure(drive, bs, fat, newCluster, depth+1);
             }
             // else if ARCHIVE entry
-            else if (entry.dir_attr == ATTR_ARCHIVE) {
+            else if (entry.dir_attr == ATTR_HIDDEN) {
                 for (int k = 0; k < depth; k++) printf("-");
                 calcFileName(entryName, fileName, 0);
-                printf("[archive] %s\n", fileName);
+                printf("[hidden] %s\n", fileName);
             }
             // else if LONG_NAME entry
             else if (entry.dir_attr == (ATTR_LONG_NAME)) {
