@@ -165,6 +165,8 @@ void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
 
     char dirName[12];
 
+    uint32_t clusterSize = bootSector.BPB_SecPerClus * bootSector.BPB_BytesPerSec;
+
     lseek(drive, (addr), SEEK_SET);
     read(drive, &entry, sizeof(fat32Dir));
 
