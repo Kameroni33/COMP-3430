@@ -330,7 +330,7 @@ void get(char *driveName, char *file) {
         printf("file downloaded to local directory './downloads'\n");
     }
     else {
-        printf("unable to find %s\n", file);
+        printf("\nunable to find %s\n", file);
     }
 }
 
