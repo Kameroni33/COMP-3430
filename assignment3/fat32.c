@@ -11,7 +11,7 @@
 void printUsage(void);
 void info(char *drive);
 void list(char *drive);
-void printFileStructure(int drive, fat32BS bs, off_t fat, off_t addr, int depth);
+void printFileStructure(int drive, fat32BS bs, off_t fat, int cluster, int depth);
 off_t calcClustAddress(int cluster, fat32BS bs);
 void get(char *drive, char *file);
 
