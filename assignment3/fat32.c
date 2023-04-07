@@ -266,7 +266,8 @@ off_t calcClustAddress(int cluster, fat32BS bs) {
 
 void calcFileName(char entryName[12], char fileName[13], int extension) {
     int index = 0;
-    int length = extension ? 8 : 11
+    int length = extension ? 8 : 11;
+
     // add name
     for (int i = 0; i < length; i++) {
         if (entryName[i] != ' ') {
