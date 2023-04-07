@@ -303,8 +303,8 @@ void get(char *driveName, char *file) {
 
     int drive;
     off_t fatAddress;
-    off_t targetCluster;
-    off_t targetAddress;
+    off_t targetCluster = 0;
+    off_t targetAddress = 0;
 
     fat32BS bootSector;
 
@@ -322,7 +322,7 @@ void get(char *driveName, char *file) {
     fatAddress = bootSector.BPB_RsvdSecCnt * bootSector.BPB_BytesPerSec;
 
     // read directory tree starting at the root
-    targetCluster = searchFile(drive, bootSector, fatAddress, bootSector.BPB_RootClus, file);
+    searchFile(drive, bootSector, fatAddress, bootSector.BPB_RootClus, file, &targetCluster);
     printf("target cluster: (%ld)\n", targetCluster);
 
     if (targetCluster != 0) {
@@ -335,10 +335,9 @@ void get(char *driveName, char *file) {
     }
 }
 
-off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFile) {
+off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFile, off_t *targetCluster) {
 
     fat32Dir entry;
-    off_t targetCluster = 0;
 
     uint32_t sectorSize;
     uint32_t clusterSize;
