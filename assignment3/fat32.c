@@ -334,7 +334,7 @@ void get(char *driveName, char *file) {
     }
     else {
         printf("\n%s not found...\n", file);
-        printf("Try using command [list] to see available files\n", file);
+        printf("Try using command [list] to see available files\n");
     }
 }
 
