@@ -1,5 +1,5 @@
-CC      = clang
-CFLAGS  = -Wall -Wpedantic -Wextra -Werror -g
+CC = clang
+CFLAGS = -Wall -Wpedantic -Wextra -Werror -g
 
 all: fat32 output
 
