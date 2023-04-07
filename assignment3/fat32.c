@@ -334,10 +334,9 @@ void get(char *driveName, char *file) {
     }
 }
 
-off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFile) {
+void searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFile, off_t *targetCluster) {
 
     fat32Dir entry;
-    off_t targetCluster = 0;
 
     uint32_t sectorSize;
     uint32_t clusterSize;
@@ -390,9 +389,9 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
                 calcFileName(entryName, fileName, 1);
 
                 if (strcmp(fileName, targetFile)) {
-                    targetCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
-                    printf("found %s == %s at cluster 0x%lx\n", fileName, targetFile, targetCluster);
-                    return targetCluster;
+                    *targetCluster = ((uint32_t)(entry.dir_first_cluster_hi) << 16) + (uint32_t)(entry.dir_first_cluster_lo);
+                    printf("found %s == %s at cluster 0x%lx\n", fileName, targetFile, *targetCluster);
+                    return;
                 }
             }
         }
@@ -405,6 +404,4 @@ off_t searchFile(int drive, fat32BS bs, off_t fat, off_t cluster, char *targetFi
     if (nextCluster < 0x0FFFFFF8) {
         targetCluster = searchFile(drive, bs, fat, nextCluster, targetFile); 
     }
-
-    return targetCluster;
 }
