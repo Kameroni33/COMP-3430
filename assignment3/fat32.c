@@ -55,5 +55,5 @@ void list(char *drive) {
 }
 
 void get(char *drive, char *file) {
-    printf("\nGET\n  drive: %s\n  file: %s", drive, file);
+    printf("\nGET\n  drive: %s\n  file: %s\n", drive, file);
 }
