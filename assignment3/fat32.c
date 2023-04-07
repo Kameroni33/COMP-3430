@@ -161,11 +161,11 @@ void list(char *driveName) {
     printf("fat32Dir Entries per Cluster: %u\n", entriesPerCluster);
 
     // read directory tree starting at the root
-    printFileStructure(drive, rootAddress, fatAddress, bootSector);
+    printFileStructure(drive, rootAddress, fatAddress, bootSector, 0);
 
 }
 
-void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs) {
+void printFileStructure(int drive, off_t addr, off_t fat, fat32BS bs, int depth) {
 
     fat32Dir entry;
 
