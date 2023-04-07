@@ -82,8 +82,8 @@ void info(char *driveName) {
     lseek(drive, (bootSector.BPB_FSInfo * bootSector.BPB_BytesPerSec), SEEK_SET);
     read(drive, &fileSysInfo, sizeof(fat32FSInfo));
 
-    strncpy(volLabel, bootSector.BS_VolLab, sizeof(volLabel));
-    strncpy(FileSysType, bootSector.BS_FilSysType, sizeof(FileSysType));
+    strncpy(volLabel, bootSector.BS_VolLab, 11);
+    strncpy(FileSysType, bootSector.BS_FilSysType, 8);
 
     // print information about the drive
     printf("OEM Name: %s\n", bootSector.BS_OEMName);
