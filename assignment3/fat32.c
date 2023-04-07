@@ -222,33 +222,33 @@ void printFileStructure(int drive, fat32BS bs, off_t fat, off_t cluster, int dep
                 // ignore...
             }
             // else if HIDDEN entry
-            else if ((entry.dir_attr | ATTR_HIDDEN) == ATTR_HIDDEN) {
+            else if ((entry.dir_attr & ATTR_HIDDEN) == ATTR_HIDDEN) {
                 // for (int k = 0; k < depth; k++) printf("-");
                 // calcFileName(entryName, fileName, 0);
                 // printf("[hidden] %s\n", fileName);
                 // ignore...
             }
             // else if SYSTEM entry
-            else if (entry.dir_attr == ATTR_ARCHIVE) {
+            else if ((entry.dir_attr & ATTR_SYSTEM) == ATTR_SYSTEM) {
                 // for (int k = 0; k < depth; k++) printf("-");
                 // calcFileName(entryName, fileName, 0);
                 // printf("[system] %s\n", fileName);
                 // ignore...
             }
             // else if ARCHIVE entry
-            else if (entry.dir_attr == ATTR_ARCHIVE) {
+            else if ((entry.dir_attr & ATTR_ARCHIVE) == ATTR_ARCHIVE) {
                 // for (int k = 0; k < depth; k++) printf("-");
                 // calcFileName(entryName, fileName, 0);
                 // printf("[archive] %s\n", fileName);
                 // ignore...
             }
             // else if VOLUME entry
-            else if (entry.dir_attr == ATTR_VOLUME_ID) {
+            else if ((entry.dir_attr & ATTR_VOLUME_ID) == ATTR_VOLUME_ID) {
                 calcFileName(entryName, fileName, 0);
                 printf("[volume] %s\n", fileName);
             }
             // else if DIRECTORY entry
-            else if (entry.dir_attr == ATTR_DIRECTORY) {
+            else if ((entry.dir_attr & ATTR_DIRECTORY) == ATTR_DIRECTORY) {
                 for (int k = 0; k < depth; k++) printf("-");
                 calcFileName(entryName, fileName, 0);
                 printf("[directory] %s\n", fileName);
