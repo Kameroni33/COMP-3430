@@ -84,8 +84,8 @@ void info(char *driveName) {
 
     strncpy(volLabel, bootSector.BS_VolLab, 11);
     strncpy(FileSysType, bootSector.BS_FilSysType, 8);
-    volLabel[11] = EOF;
-    FileSysType[8] = EOF;
+    volLabel[11] = '\0';
+    FileSysType[8] = '\0';
 
     // print information about the drive
     printf("OEM Name: %s\n", bootSector.BS_OEMName);
